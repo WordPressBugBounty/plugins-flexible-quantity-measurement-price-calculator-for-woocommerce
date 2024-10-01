@@ -1,0 +1,47 @@
+{
+    "name": "wpdesk\/wp-translation",
+    "description": "WP Translation",
+    "authors": [
+        {
+            "name": "Piotr Potrebka",
+            "email": "piotr.potrebka@wpdesk.pl"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4.33"
+        },
+        "allow-plugins": {
+            "phpstan\/extension-installer": true,
+            "dealerdirect\/phpcodesniffer-composer-installer": true
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "psr\/log": "^1.1.0"
+    },
+    "require-dev": {
+        "10up\/wp_mock": "*",
+        "mockery\/mockery": "*",
+        "phpstan\/phpstan": "^0.12",
+        "phpunit\/phpunit": "9"
+    },
+    "autoload": {
+        "psr-4": {
+            "WDFQVendorFree\\WPDesk\\Translation\\": "src\/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WDFQVendorFree\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "phpunit-unit": "phpunit --configuration phpunit-unit.xml --coverage-text --colors=never",
+        "phpunit-unit-fast": "phpunit --configuration phpunit-unit.xml --no-coverage",
+        "phpunit-integration": "phpunit --configuration phpunit-integration.xml --coverage-text --colors=never",
+        "phpunit-integration-fast": "phpunit --configuration phpunit-integration.xml --no-coverage"
+    }
+}

@@ -5,14 +5,14 @@ namespace WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\Ajax;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\ProductPage;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\ProductPageScripts;
-class CalculatorFormAjax implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class CalculatorFormAjax implements Hookable
 {
     /**
      * @var ProductPage
      */
     private $product_page;
     public const ACTION = 'calculator_form';
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\ProductPage $product_page)
+    public function __construct(ProductPage $product_page)
     {
         $this->product_page = $product_page;
     }
@@ -24,7 +24,7 @@ class CalculatorFormAjax implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\
     public function calculator_form()
     {
         global $product;
-        if (!isset($_POST['nonce']) || !\wp_verify_nonce($_POST['nonce'], \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\ProductPageScripts::NONCE_CONTEXT)) {
+        if (!isset($_POST['nonce']) || !\wp_verify_nonce($_POST['nonce'], ProductPageScripts::NONCE_CONTEXT)) {
             \wp_send_json_error('Invalid nonce');
         }
         $variation_id = \sanitize_key($_POST['variation_id'] ?? 0);

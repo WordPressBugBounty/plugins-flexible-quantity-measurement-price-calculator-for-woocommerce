@@ -2,7 +2,7 @@
 
 namespace WDFQVendorFree;
 
-if (!\interface_exists('WDFQVendorFree\\WPDesk_Translable')) {
+if (!\interface_exists('WDFQVendorFree\WPDesk_Translable')) {
     require_once 'Translable.php';
 }
 /**
@@ -10,7 +10,7 @@ if (!\interface_exists('WDFQVendorFree\\WPDesk_Translable')) {
  *
  * have to be compatible with PHP 5.2.x
  */
-interface WPDesk_Translatable extends \WDFQVendorFree\WPDesk_Translable
+interface WPDesk_Translatable extends WPDesk_Translable
 {
     /** @return string */
     public function get_text_domain();

@@ -10,21 +10,21 @@ use WDFQVendorFree\Doctrine\Inflector\Rules\Word;
 class Inflectible
 {
     /** @return Transformation[] */
-    public static function getSingular() : iterable
+    public static function getSingular(): iterable
     {
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Transformation(new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('/re$/i'), 'r'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Transformation(new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('/er$/i'), ''));
+        yield new Transformation(new Pattern('/re$/i'), 'r');
+        yield new Transformation(new Pattern('/er$/i'), '');
     }
     /** @return Transformation[] */
-    public static function getPlural() : iterable
+    public static function getPlural(): iterable
     {
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Transformation(new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('/e$/i'), 'er'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Transformation(new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('/r$/i'), 're'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Transformation(new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('/$/'), 'er'));
+        yield new Transformation(new Pattern('/e$/i'), 'er');
+        yield new Transformation(new Pattern('/r$/i'), 're');
+        yield new Transformation(new Pattern('/$/'), 'er');
     }
     /** @return Substitution[] */
-    public static function getIrregular() : iterable
+    public static function getIrregular(): iterable
     {
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Substitution(new \WDFQVendorFree\Doctrine\Inflector\Rules\Word('konto'), new \WDFQVendorFree\Doctrine\Inflector\Rules\Word('konti')));
+        yield new Substitution(new Word('konto'), new Word('konti'));
     }
 }

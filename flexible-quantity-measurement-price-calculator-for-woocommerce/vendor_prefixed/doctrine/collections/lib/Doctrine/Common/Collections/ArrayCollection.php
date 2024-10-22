@@ -39,7 +39,7 @@ use const ARRAY_FILTER_USE_BOTH;
  * @template-implements Selectable<TKey,T>
  * @psalm-consistent-constructor
  */
-class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Collection, \WDFQVendorFree\Doctrine\Common\Collections\Selectable
+class ArrayCollection implements Collection, Selectable
 {
     /**
      * An array containing the entries of this collection.
@@ -70,7 +70,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function first()
     {
-        return \reset($this->elements);
+        return reset($this->elements);
     }
     /**
      * Creates a new instance from the specified elements.
@@ -96,35 +96,35 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function last()
     {
-        return \end($this->elements);
+        return end($this->elements);
     }
     /**
      * {@inheritDoc}
      */
     public function key()
     {
-        return \key($this->elements);
+        return key($this->elements);
     }
     /**
      * {@inheritDoc}
      */
     public function next()
     {
-        return \next($this->elements);
+        return next($this->elements);
     }
     /**
      * {@inheritDoc}
      */
     public function current()
     {
-        return \current($this->elements);
+        return current($this->elements);
     }
     /**
      * {@inheritDoc}
      */
     public function remove($key)
     {
-        if (!isset($this->elements[$key]) && !\array_key_exists($key, $this->elements)) {
+        if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
             return null;
         }
         $removed = $this->elements[$key];
@@ -136,7 +136,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function removeElement($element)
     {
-        $key = \array_search($element, $this->elements, \true);
+        $key = array_search($element, $this->elements, \true);
         if ($key === \false) {
             return \false;
         }
@@ -201,7 +201,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function containsKey($key)
     {
-        return isset($this->elements[$key]) || \array_key_exists($key, $this->elements);
+        return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
     /**
      * {@inheritDoc}
@@ -210,12 +210,12 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function contains($element)
     {
-        return \in_array($element, $this->elements, \true);
+        return in_array($element, $this->elements, \true);
     }
     /**
      * {@inheritDoc}
      */
-    public function exists(\Closure $p)
+    public function exists(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
             if ($p($key, $element)) {
@@ -235,7 +235,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function indexOf($element)
     {
-        return \array_search($element, $this->elements, \true);
+        return array_search($element, $this->elements, \true);
     }
     /**
      * {@inheritDoc}
@@ -249,14 +249,14 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function getKeys()
     {
-        return \array_keys($this->elements);
+        return array_keys($this->elements);
     }
     /**
      * {@inheritDoc}
      */
     public function getValues()
     {
-        return \array_values($this->elements);
+        return array_values($this->elements);
     }
     /**
      * {@inheritDoc}
@@ -266,7 +266,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
     #[ReturnTypeWillChange]
     public function count()
     {
-        return \count($this->elements);
+        return count($this->elements);
     }
     /**
      * {@inheritDoc}
@@ -304,7 +304,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
     #[ReturnTypeWillChange]
     public function getIterator()
     {
-        return new \ArrayIterator($this->elements);
+        return new ArrayIterator($this->elements);
     }
     /**
      * {@inheritDoc}
@@ -316,9 +316,9 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      *
      * @psalm-template U
      */
-    public function map(\Closure $func)
+    public function map(Closure $func)
     {
-        return $this->createFrom(\array_map($func, $this->elements));
+        return $this->createFrom(array_map($func, $this->elements));
     }
     /**
      * {@inheritDoc}
@@ -326,14 +326,14 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      * @return static
      * @psalm-return static<TKey,T>
      */
-    public function filter(\Closure $p)
+    public function filter(Closure $p)
     {
-        return $this->createFrom(\array_filter($this->elements, $p, \ARRAY_FILTER_USE_BOTH));
+        return $this->createFrom(array_filter($this->elements, $p, ARRAY_FILTER_USE_BOTH));
     }
     /**
      * {@inheritDoc}
      */
-    public function forAll(\Closure $p)
+    public function forAll(Closure $p)
     {
         foreach ($this->elements as $key => $element) {
             if (!$p($key, $element)) {
@@ -345,7 +345,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
     /**
      * {@inheritDoc}
      */
-    public function partition(\Closure $p)
+    public function partition(Closure $p)
     {
         $matches = $noMatches = [];
         foreach ($this->elements as $key => $element) {
@@ -364,7 +364,7 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function __toString()
     {
-        return self::class . '@' . \spl_object_hash($this);
+        return self::class . '@' . spl_object_hash($this);
     }
     /**
      * {@inheritDoc}
@@ -378,32 +378,32 @@ class ArrayCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Col
      */
     public function slice($offset, $length = null)
     {
-        return \array_slice($this->elements, $offset, $length, \true);
+        return array_slice($this->elements, $offset, $length, \true);
     }
     /**
      * {@inheritDoc}
      */
-    public function matching(\WDFQVendorFree\Doctrine\Common\Collections\Criteria $criteria)
+    public function matching(Criteria $criteria)
     {
         $expr = $criteria->getWhereExpression();
         $filtered = $this->elements;
         if ($expr) {
-            $visitor = new \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor();
+            $visitor = new ClosureExpressionVisitor();
             $filter = $visitor->dispatch($expr);
-            $filtered = \array_filter($filtered, $filter);
+            $filtered = array_filter($filtered, $filter);
         }
         $orderings = $criteria->getOrderings();
         if ($orderings) {
             $next = null;
-            foreach (\array_reverse($orderings) as $field => $ordering) {
-                $next = \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::sortByField($field, $ordering === \WDFQVendorFree\Doctrine\Common\Collections\Criteria::DESC ? -1 : 1, $next);
+            foreach (array_reverse($orderings) as $field => $ordering) {
+                $next = ClosureExpressionVisitor::sortByField($field, $ordering === Criteria::DESC ? -1 : 1, $next);
             }
-            \uasort($filtered, $next);
+            uasort($filtered, $next);
         }
         $offset = $criteria->getFirstResult();
         $length = $criteria->getMaxResults();
         if ($offset || $length) {
-            $filtered = \array_slice($filtered, (int) $offset, $length);
+            $filtered = array_slice($filtered, (int) $offset, $length);
         }
         return $this->createFrom($filtered);
     }

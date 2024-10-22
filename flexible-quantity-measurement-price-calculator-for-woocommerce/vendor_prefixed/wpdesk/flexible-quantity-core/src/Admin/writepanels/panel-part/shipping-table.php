@@ -80,10 +80,10 @@ echo \wc_help_tip(\__('New shipping class.', 'flexible-quantity-measurement-pric
 					<?php 
 $items = isset($settings['fq']['shipping_table']['items']['from']) ? $settings['fq']['shipping_table']['items']['from'] : [];
 if (empty($items)) {
-    \WDFQVendorFree\fq_get_shipping_table_row(0, $settings);
+    fq_get_shipping_table_row(0, $settings);
 } else {
     foreach ($items as $key => $val) {
-        \WDFQVendorFree\fq_get_shipping_table_row($key, $settings);
+        fq_get_shipping_table_row($key, $settings);
     }
 }
 ?>

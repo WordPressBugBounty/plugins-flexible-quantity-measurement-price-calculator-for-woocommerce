@@ -4,13 +4,13 @@ namespace WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services;
 
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Collections\SettingsBag;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings as OldSettings;
-class Settings extends \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings
+class Settings extends OldSettings
 {
     /**
      * @var SettingsBag
      */
     private $settings_bag;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Collections\SettingsBag $settings_bag)
+    public function __construct(SettingsBag $settings_bag)
     {
         $this->settings_bag = $settings_bag;
     }
@@ -40,7 +40,7 @@ class Settings extends \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCo
     {
         $price = $this->settings_bag->bag('fq')->getString('price');
         if ($price !== '') {
-            return \abs($price);
+            return abs($price);
         }
         return '';
     }
@@ -48,7 +48,7 @@ class Settings extends \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCo
     {
         $price = $this->settings_bag->bag('fq')->getString('sale_price');
         if ($price !== '') {
-            return \abs($price);
+            return abs($price);
         }
         return '';
     }
@@ -76,9 +76,9 @@ class Settings extends \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCo
     protected function set_pricing_rules($pricing_rules)
     {
         $this->pricing_rules = [];
-        if (\is_array($pricing_rules)) {
+        if (is_array($pricing_rules)) {
             foreach ($pricing_rules as $rule) {
-                if (isset($rule['range_start'], $rule['regular_price']) && \is_numeric($rule['range_start']) && $rule['range_start'] >= 0 && \is_numeric($rule['regular_price']) && $rule['regular_price'] >= 0) {
+                if (isset($rule['range_start'], $rule['regular_price']) && is_numeric($rule['range_start']) && $rule['range_start'] >= 0 && is_numeric($rule['regular_price']) && $rule['regular_price'] >= 0) {
                     $this->pricing_rules[] = $rule;
                 }
             }

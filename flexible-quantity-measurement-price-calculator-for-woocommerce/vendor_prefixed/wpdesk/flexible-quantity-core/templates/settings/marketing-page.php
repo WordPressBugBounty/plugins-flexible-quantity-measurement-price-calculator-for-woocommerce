@@ -16,7 +16,7 @@ if (!$boxes) {
 	<div id="marketing-page-wrapper">
 		<?php 
 echo $boxes->get_boxes()->get_all();
-//phpcs:ignore
+//phpcs:ignore 
 ?>
 
 		<div class="marketing-buttons">

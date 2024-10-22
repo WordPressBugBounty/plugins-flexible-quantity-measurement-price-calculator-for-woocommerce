@@ -14,7 +14,7 @@ class PriceCalculator
      * @var Settings
      */
     private $settings;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings $settings)
+    public function __construct(Settings $settings)
     {
         $this->settings = $settings;
     }
@@ -26,7 +26,7 @@ class PriceCalculator
      *
      * @return float
      */
-    public function calculate(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement, float $price) : float
+    public function calculate(Measurement $measurement, float $price): float
     {
         // if this calculator uses pricing rules, retrieve the price based on the product measurements.
         $rule_price = $this->settings->get_pricing_rules_price($measurement);

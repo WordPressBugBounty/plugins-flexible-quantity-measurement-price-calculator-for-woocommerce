@@ -6,6 +6,6 @@ namespace WDFQVendorFree\Brick\Math\Exception;
 /**
  * Exception thrown when attempting to perform an unsupported operation, such as a square root, on a negative number.
  */
-class NegativeNumberException extends \WDFQVendorFree\Brick\Math\Exception\MathException
+class NegativeNumberException extends MathException
 {
 }

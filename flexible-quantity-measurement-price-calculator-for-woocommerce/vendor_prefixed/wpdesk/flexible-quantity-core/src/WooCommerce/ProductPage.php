@@ -8,13 +8,13 @@ use WC_Product_Variation;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\PluginConfig;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
-class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class ProductPage implements Hookable
 {
     /** @var float $default_step the default step based on the calculator precision */
     private $default_step;
     private $plugin_url;
     private $settings_container;
-    public function __construct($plugin_url, \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer $settings_container)
+    public function __construct($plugin_url, SettingsContainer $settings_container)
     {
         $this->plugin_url = $plugin_url;
         $this->settings_container = $settings_container;
@@ -27,25 +27,25 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     public function hooks()
     {
         // make all product variations visible for pricing calculator with pricing table products
-        \add_filter('woocommerce_product_is_visible', [$this, 'variable_product_is_visible'], 1, 2);
+        add_filter('woocommerce_product_is_visible', [$this, 'variable_product_is_visible'], 1, 2);
         // make all pricing calculator with pricing table products purchasable
-        \add_filter('woocommerce_is_purchasable', [$this, 'product_is_purchasable'], 1, 2);
-        \add_filter('woocommerce_variation_is_visible', [$this, 'variation_is_visible'], 10, 3);
+        add_filter('woocommerce_is_purchasable', [$this, 'product_is_purchasable'], 1, 2);
+        add_filter('woocommerce_variation_is_visible', [$this, 'variation_is_visible'], 10, 3);
         // display the pricing calculator price per unit on the frontend (catalog and product page)
         $this->add_price_html_filters();
         // add the price and product measurements into the variation JSON object
-        \add_filter('woocommerce_available_variation', [$this, 'available_variation'], 10, 3);
+        add_filter('woocommerce_available_variation', [$this, 'available_variation'], 10, 3);
         // display the calculator styling, html and javascript on the frontend product detail page
-        \add_action('wp_print_styles', [$this, 'render_embedded_styles'], 1);
+        add_action('wp_print_styles', [$this, 'render_embedded_styles'], 1);
         // fix sale flash on pricing rules products
-        \add_filter('woocommerce_product_is_on_sale', [$this, 'is_on_sale'], 10, 2);
+        add_filter('woocommerce_product_is_on_sale', [$this, 'is_on_sale'], 10, 2);
         // add the weight per unit label to product attribues template
-        \add_action('woocommerce_before_template_part', [$this, 'add_weight_per_unit_label_filter']);
-        \add_action('woocommerce_after_template_part', [$this, 'remove_weight_per_unit_label_filter']);
+        add_action('woocommerce_before_template_part', [$this, 'add_weight_per_unit_label_filter']);
+        add_action('woocommerce_after_template_part', [$this, 'remove_weight_per_unit_label_filter']);
         // adjust the max value in quantity inputs when calculated inventory is enabled
-        \add_filter('woocommerce_quantity_input_max', [$this, 'remove_max_quantity_calculated_inventory'], 100, 2);
+        add_filter('woocommerce_quantity_input_max', [$this, 'remove_max_quantity_calculated_inventory'], 100, 2);
         // set the default step based on grabbing the filtered precision
-        \add_filter('fq_price_calculator_measurement_precision', [$this, 'set_default_step'], 9999);
+        add_filter('fq_price_calculator_measurement_precision', [$this, 'set_default_step'], 9999);
     }
     /**
      * Add all price_html product filters
@@ -54,8 +54,8 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      */
     private function add_price_html_filters()
     {
-        \add_filter('woocommerce_get_price_html', [$this, 'price_per_unit_html'], 10, 2);
-        \add_filter('woocommerce_empty_price_html', [$this, 'price_per_unit_html'], 10, 2);
+        add_filter('woocommerce_get_price_html', [$this, 'price_per_unit_html'], 10, 2);
+        add_filter('woocommerce_empty_price_html', [$this, 'price_per_unit_html'], 10, 2);
     }
     /** Price methods *********************************************************/
     /**
@@ -68,7 +68,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      * @return string the price
      * @since 3.5.2
      */
-    public function is_on_sale(string $is_on_sale, \WC_Product $product) : string
+    public function is_on_sale(string $is_on_sale, WC_Product $product): string
     {
         $settings = $this->settings_container->get($product);
         if ($settings->pricing_rules_enabled()) {
@@ -89,10 +89,10 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      * @return boolean true if the product is purchasable, false otherwise
      * @since 3.0
      */
-    public function product_is_purchasable(bool $is_purchasable, \WC_Product $product) : bool
+    public function product_is_purchasable(bool $is_purchasable, WC_Product $product): bool
     {
         // even if the product isn't purchasable, if it has pricing rules set, then we'll change that
-        if (!$is_purchasable && \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculator_enabled($product)) {
+        if (!$is_purchasable && Product::pricing_calculator_enabled($product)) {
             $settings = $this->settings_container->get($product);
             if ($settings->pricing_rules_enabled()) {
                 $is_purchasable = \true;
@@ -132,8 +132,8 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      */
     public function variable_product_is_visible(bool $visible, int $product_id)
     {
-        $product = \wc_get_product($product_id);
-        if (!$visible && $product && $product->is_type('variable') && \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculator_enabled($product)) {
+        $product = wc_get_product($product_id);
+        if (!$visible && $product && $product->is_type('variable') && Product::pricing_calculator_enabled($product)) {
             $settings = $this->settings_container->get($product);
             if ($settings->pricing_rules_enabled()) {
                 $visible = \true;
@@ -155,10 +155,10 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     {
         // if this is a product variation, get the parent product which holds the calculator settings
         $_product = $product;
-        if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_per_unit_enabled($_product)) {
+        if (Product::pricing_per_unit_enabled($_product)) {
             $settings = $this->settings_container->get($product);
             $basic_regular_price = $product->get_price();
-            $price_html = \is_numeric($basic_regular_price) ? \wc_price($basic_regular_price) : $price_html;
+            $price_html = \is_numeric($basic_regular_price) ? wc_price($basic_regular_price) : $price_html;
             // if this is a quantity calculator, the displayed price per unit will have to be calculated from
             // the product price and pricing measurement.  alternatively, for a pricing calculator product,
             // the price set in the admin *is* the price per unit, so we just need to format it by adding the units
@@ -167,26 +167,26 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
                 // for variable products we must go synchronize price levels to our per unit price
                 if ($product->is_type('variable')) {
                     // synchronize to the price per unit pricing
-                    \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::variable_product_sync($product, $settings);
+                    Product::variable_product_sync($product, $settings);
                     // get price suffix
                     $price_suffix = $product->get_price_suffix();
                     // then remove it from the price html
-                    \add_filter('woocommerce_get_price_suffix', '__return_empty_string');
+                    add_filter('woocommerce_get_price_suffix', '__return_empty_string');
                     // get the appropriate price html
                     $price_html = $product->get_price_html();
                     // re-add price suffix
-                    \remove_filter('woocommerce_get_price_suffix', '__return_empty_string');
+                    remove_filter('woocommerce_get_price_suffix', '__return_empty_string');
                     $pricing_label = $settings->get_pricing_label();
                     // add units
                     $price_html .= ' ' . $pricing_label;
                     // add price suffix
                     $price_html .= $price_suffix;
                     /** this filter is documented in /src/class-wc-price-calculator-product.php */
-                    $price_html = (string) \apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
+                    $price_html = (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
                     // restore the original values
-                    \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::variable_product_unsync($product);
+                    Product::variable_product_unsync($product);
                     // other product types
-                } elseif ($measurement = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_product_measurement($product, $settings)) {
+                } elseif ($measurement = Product::get_product_measurement($product, $settings)) {
                     $measurement->set_unit($settings->get_pricing_unit());
                     if ($measurement && '' !== $price_html && $measurement->get_value()) {
                         // save the original price and remove the filter that we're currently within, to avoid an infinite loop
@@ -200,15 +200,15 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
                         }
                         // save new prices with WC 3.x compatibility
                         $product->set_props($new_prices);
-                        $product = \apply_filters('fq_price_calculator_quantity_price_per_unit', $product, $measurement);
+                        $product = apply_filters('fq_price_calculator_quantity_price_per_unit', $product, $measurement);
                         // get price suffix
                         $price_suffix = $product->get_price_suffix();
                         // remove it from the price html
-                        \add_filter('woocommerce_get_price_suffix', '__return_empty_string');
+                        add_filter('woocommerce_get_price_suffix', '__return_empty_string');
                         // get the appropriate price html
                         $price_html = $product->get_price_html();
                         // re-add price suffix
-                        \remove_filter('woocommerce_get_price_suffix', '__return_empty_string');
+                        remove_filter('woocommerce_get_price_suffix', '__return_empty_string');
                         // restore the original product price and price_html filters (WC 3.x compatibility)
                         $product->set_props($original_prices);
                         $pricing_label = $settings->get_pricing_label();
@@ -217,13 +217,13 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
                         // add price suffix
                         $price_html .= $price_suffix;
                         /** this filter is documented in /src/class-wc-price-calculator-product.php */
-                        $price_html = (string) \apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
+                        $price_html = (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
                     }
                 }
                 // pricing calculator
             } elseif ($settings->pricing_rules_enabled()) {
                 // pricing rules product
-                $price_html = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_pricing_rules_price_html($product, $settings);
+                $price_html = Product::get_pricing_rules_price_html($product, $settings);
             } elseif ('' !== $price_html) {
                 $pricing_label = $settings->get_pricing_label();
                 // $price_html = wc_price( 123 );
@@ -232,7 +232,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
                 // add price suffix
                 $price_html .= $product->get_price_suffix();
                 if ($_product->is_on_sale()) {
-                    $price_html = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_price_html_from_to($_product->get_regular_price(), $_product->get_sale_price(), $pricing_label);
+                    $price_html = Product::get_price_html_from_to($_product->get_regular_price(), $_product->get_sale_price(), $pricing_label);
                 } else {
                     /** this filter is documented in /src/class-wc-price-calculator-product.php */
                     $price_html = (string) \apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \false, \false);
@@ -254,21 +254,21 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      * @return array $variation_data
      * @since 3.0
      */
-    public function available_variation(array $variation_data, \WC_Product $product, \WC_Product_Variation $variation)
+    public function available_variation(array $variation_data, WC_Product $product, WC_Product_Variation $variation)
     {
         $settings = $this->settings_container->get($product);
         // is the calculator enabled for this product?
-        if (!$product || !\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::calculator_enabled($product, $settings)) {
+        if (!$product || !Product::calculator_enabled($product, $settings)) {
             return $variation_data;
         }
-        $variation_data['price'] = \wc_get_price_to_display($variation);
+        $variation_data['price'] = wc_get_price_to_display($variation);
         $variation_data['minimum_price'] = $variation->get_meta('_fq_price_calculator_min_price');
         // add the pricing unit to the weight display
-        if (!empty($variation_data['weight_html']) && $variation && $variation->get_weight() && \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculated_weight_enabled($product)) {
+        if (!empty($variation_data['weight_html']) && $variation && $variation->get_weight() && Product::pricing_calculated_weight_enabled($product)) {
             $variation_data['weight_html'] = $variation_data['weight_html'] . ' / ' . $settings->get_pricing_unit();
         }
         // this is the measurement that represents one quantity of the product
-        $product_measurement = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_product_measurement($variation, $settings);
+        $product_measurement = Product::get_product_measurement($variation, $settings);
         // if we have the required product physical attributes
         if ($product_measurement && $product_measurement->get_value()) {
             $variation_data['product_measurement_value'] = $product_measurement->get_value();
@@ -288,12 +288,12 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     {
         global $post;
         $product = null;
-        if (\is_product()) {
-            $product = \wc_get_product($post->ID);
+        if (is_product()) {
+            $product = wc_get_product($post->ID);
             $settings = $this->settings_container->get($product);
         }
         // is the calculator enabled for this product?
-        if (!$product || !\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::calculator_enabled($product, $settings)) {
+        if (!$product || !Product::calculator_enabled($product, $settings)) {
             return;
         }
         ?>
@@ -438,7 +438,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     public function add_weight_per_unit_label_filter($template_name)
     {
         if ('single-product/product-attributes.php' === $template_name) {
-            \add_filter('woocommerce_format_weight', [$this, 'add_weight_per_unit_label']);
+            add_filter('woocommerce_format_weight', [$this, 'add_weight_per_unit_label']);
         }
     }
     /**
@@ -452,7 +452,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     public function remove_weight_per_unit_label_filter($template_name)
     {
         if ('single-product/product-attributes.php' === $template_name) {
-            \remove_filter('woocommerce_format_weight', [$this, 'add_weight_per_unit_label']);
+            remove_filter('woocommerce_format_weight', [$this, 'add_weight_per_unit_label']);
         }
     }
     /**
@@ -468,12 +468,12 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
         global $product;
         $settings = $this->settings_container->get($product);
         // bail if the calculator isn't enabled for this product
-        if (!$product || !\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::calculator_enabled($product, $settings)) {
+        if (!$product || !Product::calculator_enabled($product, $settings)) {
             return $weight_unit;
         }
         // bail if the calculator isn't enabled for this product
         // check that a weight is set first, to avoid displaying something like "N/A / cm"
-        if (!$product->get_weight() || !\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculated_weight_enabled($product)) {
+        if (!$product->get_weight() || !Product::pricing_calculated_weight_enabled($product)) {
             return $weight_unit;
         }
         return $weight_unit . ' / ' . $settings->get_pricing_unit();
@@ -499,7 +499,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
         if ($product->is_sold_individually()) {
             return $max_value;
         }
-        return \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculator_inventory_enabled($product) ? '' : $max_value;
+        return Product::pricing_calculator_inventory_enabled($product) ? '' : $max_value;
     }
     /**
      * Register/queue frontend scripts.
@@ -509,7 +509,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     public function enqueue_frontend_scripts()
     {
         global $post, $post_id;
-        if ($post && \is_product()) {
+        if ($post && is_product()) {
             $post_id = $post->ID;
         } else {
             /**
@@ -520,20 +520,20 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
              *
              * @since 3.13.5
              */
-            $post_id = (int) \apply_filters('fq_price_calculator_frontend_scripts_override_post_id', (int) $post_id);
+            $post_id = (int) apply_filters('fq_price_calculator_frontend_scripts_override_post_id', (int) $post_id);
         }
-        $product = $post_id > 0 ? \wc_get_product($post_id) : null;
+        $product = $post_id > 0 ? wc_get_product($post_id) : null;
         if (null === $product) {
             return;
         }
         $settings = $this->settings_container->get($product);
-        if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::calculator_enabled($product, $settings)) {
+        if (Product::calculator_enabled($product, $settings)) {
             $version = 1.0;
-            \wp_register_script('jquery-tiptip', \WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', ['jquery'], \defined('WC_VERSION') ? \WC_VERSION : $version, \true);
-            \wp_register_script('wc-price-calculator-bignumber', $this->plugin_url . '/assets/js/vendor/bignumber.min.js', null, '9.0.1', \true);
-            \wp_enqueue_script('fq-input-filter', $this->plugin_url . '/assets/js/input-filter.js', ['jquery'], $version);
-            \wp_enqueue_script('jquery-validate', $this->plugin_url . '/assets/js/vendor/jquery.validate.min.js', ['jquery'], $version);
-            \wp_enqueue_script('wc-price-calculator', $this->plugin_url . '/assets/js/frontend/fq-price-calculator.min.js', ['jquery', 'jquery-cookie', 'jquery-validate', 'jquery-tiptip', 'wc-price-calculator-bignumber', 'fq-input-filter'], $version);
+            wp_register_script('jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', ['jquery'], defined('WC_VERSION') ? \WC_VERSION : $version, \true);
+            wp_register_script('wc-price-calculator-bignumber', $this->plugin_url . '/assets/js/vendor/bignumber.min.js', null, '9.0.1', \true);
+            wp_enqueue_script('fq-input-filter', $this->plugin_url . '/assets/js/input-filter.js', ['jquery'], $version);
+            wp_enqueue_script('jquery-validate', $this->plugin_url . '/assets/js/vendor/jquery.validate.min.js', ['jquery'], $version);
+            wp_enqueue_script('wc-price-calculator', $this->plugin_url . '/assets/js/frontend/fq-price-calculator.min.js', ['jquery', 'jquery-cookie', 'jquery-validate', 'jquery-tiptip', 'wc-price-calculator-bignumber', 'fq-input-filter'], $version);
             /**
              * Filters the measurement precision.
              *
@@ -541,18 +541,18 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
              *
              * @since 3.0
              */
-            $measurement_precision = \apply_filters('fq_price_calculator_measurement_precision', 3);
+            $measurement_precision = apply_filters('fq_price_calculator_measurement_precision', 3);
             // Variables for JS scripts
-            $fq_price_calculator_params = ['woocommerce_currency_symbol' => \get_woocommerce_currency_symbol(), 'woocommerce_price_num_decimals' => \wc_get_price_decimals(), 'woocommerce_currency_pos' => \get_option('woocommerce_currency_pos', 'left'), 'woocommerce_price_decimal_sep' => \stripslashes(\wc_get_price_decimal_separator()), 'woocommerce_price_thousand_sep' => \stripslashes(\wc_get_price_thousand_separator()), 'woocommerce_price_trim_zeros' => \get_option('woocommerce_price_trim_zeros'), 'unit_normalize_table' => \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::get_normalize_table(), 'unit_conversion_table' => \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::get_conversion_table(), 'measurement_precision' => $measurement_precision, 'measurement_type' => $settings->get_calculator_type(), 'cookie_name' => 'wc_price_calc_inputs_' . $product->get_id(), 'ajax_url' => \admin_url('admin-ajax.php'), 'filter_calculated_price_nonce' => \wp_create_nonce('filter-calculated-price'), 'product_id' => $product->get_id(), 'stock_warning' => \esc_html__("Unfortunately we don't have enough", 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'input_filter' => \__('Only digits allowed.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')];
-            $fq_price_calculator_params['validator'] = ['rangelength' => \esc_html__('Please enter a value between {0} and {1} characters long.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'range' => \esc_html__('Please enter a value between {0} and {1}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'max' => \esc_html__('Please enter a value less than or equal to {0}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'min' => \esc_html__('Please enter a value greater than or equal to {0}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'step' => \esc_html__('Enter the multiple of the digit {0}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'required' => \esc_html__('This field is required.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')];
+            $fq_price_calculator_params = ['woocommerce_currency_symbol' => get_woocommerce_currency_symbol(), 'woocommerce_price_num_decimals' => wc_get_price_decimals(), 'woocommerce_currency_pos' => get_option('woocommerce_currency_pos', 'left'), 'woocommerce_price_decimal_sep' => stripslashes(wc_get_price_decimal_separator()), 'woocommerce_price_thousand_sep' => stripslashes(wc_get_price_thousand_separator()), 'woocommerce_price_trim_zeros' => get_option('woocommerce_price_trim_zeros'), 'unit_normalize_table' => Measurement::get_normalize_table(), 'unit_conversion_table' => Measurement::get_conversion_table(), 'measurement_precision' => $measurement_precision, 'measurement_type' => $settings->get_calculator_type(), 'cookie_name' => 'wc_price_calc_inputs_' . $product->get_id(), 'ajax_url' => admin_url('admin-ajax.php'), 'filter_calculated_price_nonce' => wp_create_nonce('filter-calculated-price'), 'product_id' => $product->get_id(), 'stock_warning' => esc_html__("Unfortunately we don't have enough", 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'input_filter' => __('Only digits allowed.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')];
+            $fq_price_calculator_params['validator'] = ['rangelength' => esc_html__('Please enter a value between {0} and {1} characters long.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'range' => esc_html__('Please enter a value between {0} and {1}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'max' => esc_html__('Please enter a value less than or equal to {0}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'min' => esc_html__('Please enter a value greater than or equal to {0}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'step' => esc_html__('Enter the multiple of the digit {0}.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'required' => esc_html__('This field is required.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')];
             $min_price = $product->get_meta('_fq_price_calculator_min_price');
-            $fq_price_calculator_params['minimum_price'] = \is_numeric($min_price) ? \wc_get_price_to_display($product, ['price' => $min_price]) : '';
+            $fq_price_calculator_params['minimum_price'] = is_numeric($min_price) ? wc_get_price_to_display($product, ['price' => $min_price]) : '';
             // information required for either pricing or quantity calculator to function
             $fq_price_calculator_params['product_price'] = $product->is_type('variable') ? '' : $product->get_price();
             $fq_price_calculator_params['base_price'] = $product->get_price();
-            $fq_price_calculator_params['base_price_html'] = \wc_price($product->get_price());
+            $fq_price_calculator_params['base_price_html'] = wc_price($product->get_price());
             // get the product total measurement (ie Area), get a measurement (ie length), and determine the product total measurement common unit based on the measurements common unit
-            $product_measurement = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_product_measurement($product, $settings);
+            $product_measurement = Product::get_product_measurement($product, $settings);
             if (!$product_measurement) {
                 return;
             }
@@ -560,7 +560,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
             $product_measurement->set_common_unit($measurement->get_unit_common());
             // this is the unit that the product total measurement will be in, ie it's how we know what unit we get for the Volume (AxH) calculator after multiplying A * H
             $fq_price_calculator_params['product_total_measurement_common_unit'] = $product_measurement->get_unit_common();
-            if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculator_enabled($product, $settings)) {
+            if (Product::pricing_calculator_enabled($product, $settings)) {
                 // product information required for the pricing calculator javascript to function
                 $fq_price_calculator_params['calculator_type'] = 'pricing';
                 $fq_price_calculator_params['product_price_unit'] = $settings->get_pricing_unit();
@@ -576,7 +576,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
             } else {
                 // product information required for the quantity calculator javascript to function
                 $fq_price_calculator_params['calculator_type'] = 'quantity';
-                $quantity_range = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_quantity_range($product);
+                $quantity_range = Product::get_quantity_range($product);
                 $fq_price_calculator_params['quantity_range_min_value'] = $quantity_range['min_value'];
                 $fq_price_calculator_params['quantity_range_max_value'] = $quantity_range['max_value'];
                 if ($product->is_type('simple')) {
@@ -592,7 +592,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
                     $fq_price_calculator_params['product_measurement_unit'] = '';
                 }
             }
-            \wp_localize_script('wc-price-calculator', 'fq_price_calculator_params', $fq_price_calculator_params);
+            wp_localize_script('wc-price-calculator', 'fq_price_calculator_params', $fq_price_calculator_params);
         }
     }
     /**
@@ -609,14 +609,14 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
         // 	return;
         // }
         // ensure the calculator doesn't display twice on variable products (the `woocommerce_single_variation` action adds the calculator for variable product types)
-        if (\doing_action('woocommerce_before_add_to_cart_button') && $product->is_type(['variable', 'variable-subscription'])) {
+        if (doing_action('woocommerce_before_add_to_cart_button') && $product->is_type(['variable', 'variable-subscription'])) {
             return;
         }
         $calculator_mode = $settings->is_pricing_calculator_enabled() ? 'user-defined-mode' : 'quantity-based-mode';
-        if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculator_enabled($product, $settings)) {
+        if (Product::pricing_calculator_enabled($product, $settings)) {
             // pricing calculator with custom dimensions and a price "per unit"
             // get the product total measurement (ie Area or Volume, etc)
-            $product_measurement = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_product_measurement($product, $settings);
+            $product_measurement = Product::get_product_measurement($product, $settings);
             if (!$product_measurement) {
                 return;
             }
@@ -626,7 +626,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
             list($measurement) = $measurements;
             $product_measurement->set_common_unit($measurement->get_unit_common());
             // pricing calculator enabled, get the template
-            \wc_get_template('single-product/price-calculator.php', ['product_measurement' => $product_measurement, 'settings' => $settings, 'calculator_mode' => $calculator_mode, 'measurements' => $measurements, 'default_step' => $this->default_step], '', \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\PluginConfig::get_full_core_path() . '/templates/');
+            wc_get_template('single-product/price-calculator.php', ['product_measurement' => $product_measurement, 'settings' => $settings, 'calculator_mode' => $calculator_mode, 'measurements' => $measurements, 'default_step' => $this->default_step], '', PluginConfig::get_full_core_path() . '/templates/');
             // need an element to contain the price for simple pricing rule products
             if ($product->is_type('simple') && $settings->pricing_rules_enabled()) {
                 echo '<div class="single_variation"></div>';
@@ -635,11 +635,11 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
             return;
             // quantity calculator.  where the quantity of product needed is based on the configured product dimensions.  This is a actually bit more complex
             // get the starting quantity, max quantity, and total product measurement in product units
-            $quantity_range = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_quantity_range($product);
+            $quantity_range = Product::get_quantity_range($product);
             // set the product measurement based on the minimum quantity value, and set the unit to the frontend calculator unit
             $measurements = $settings->get_calculator_measurements();
             // The product measurement will be used to create the 'amount actual' field.
-            $product_measurement = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_product_measurement($product, $settings);
+            $product_measurement = Product::get_product_measurement($product, $settings);
             if (!$product_measurement) {
                 return;
             }
@@ -648,7 +648,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
             foreach ($measurements as $measurement) {
                 if (!$measurements_unit) {
                     $measurements_unit = $measurement->get_unit();
-                } elseif (!\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::compare_units($measurements_unit, $measurement->get_unit())) {
+                } elseif (!Measurement::compare_units($measurements_unit, $measurement->get_unit())) {
                     $measurements_unit = \false;
                     break;
                 }
@@ -659,15 +659,15 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
             if ($measurements_unit) {
                 switch ($product_measurement->get_type()) {
                     case 'area':
-                        $measurements_unit = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::to_area_unit($measurements_unit);
+                        $measurements_unit = Measurement::to_area_unit($measurements_unit);
                         break;
                     case 'volume':
-                        $measurements_unit = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::to_volume_unit($measurements_unit);
+                        $measurements_unit = Measurement::to_volume_unit($measurements_unit);
                         break;
                 }
             }
             // if the price per unit is displayed for this product, default to the pricing units for the 'amount actual' field
-            if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_per_unit_enabled($product)) {
+            if (Product::pricing_per_unit_enabled($product)) {
                 $measurements_unit = $settings->get_pricing_unit();
             }
             // if a measurement unit other than the default was determined, set it
@@ -685,14 +685,14 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
                 }
                 // figure out the starting measurement amount
                 // multiply the starting quantity by the measurement value
-                $product_measurement->set_value(\round($quantity_range['min_value'] * $product_measurement->get_value(), 2));
-                $total_price = \wc_price($quantity_range['min_value'] * \wc_get_price_to_display($product), 2);
+                $product_measurement->set_value(round($quantity_range['min_value'] * $product_measurement->get_value(), 2));
+                $total_price = wc_price($quantity_range['min_value'] * wc_get_price_to_display($product), 2);
             } elseif ($product->is_type('variable')) {
                 // clear the product measurement value for variable products, since we can't really know what it is ahead of time (except for when a default is set)
                 $product_measurement->set_value('');
             }
             // pricing calculator enabled, get the template
-            \wc_get_template('single-product/quantity-calculator.php', ['calculator_type' => $settings->get_calculator_type(), 'calculator_mode' => $calculator_mode, 'product_measurement' => $product_measurement, 'measurements' => $measurements, 'total_price' => $total_price], '', \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\PluginConfig::get_full_core_path() . '/templates/');
+            wc_get_template('single-product/quantity-calculator.php', ['calculator_type' => $settings->get_calculator_type(), 'calculator_mode' => $calculator_mode, 'product_measurement' => $product_measurement, 'measurements' => $measurements, 'total_price' => $total_price], '', PluginConfig::get_full_core_path() . '/templates/');
         }
     }
     /**
@@ -710,7 +710,7 @@ class ProductPage implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
     public function set_default_step($precision)
     {
         if (!$this->default_step) {
-            $this->default_step = \pow(10, -$precision);
+            $this->default_step = pow(10, -$precision);
         }
         return $precision;
     }

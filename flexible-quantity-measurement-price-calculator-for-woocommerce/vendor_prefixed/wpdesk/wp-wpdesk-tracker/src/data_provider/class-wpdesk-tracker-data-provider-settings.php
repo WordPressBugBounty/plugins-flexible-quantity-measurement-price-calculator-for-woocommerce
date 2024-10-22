@@ -14,7 +14,7 @@ namespace WDFQVendorFree;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('WDFQVendorFree\\WPDesk_Tracker_Data_Provider_Settings')) {
+if (!\class_exists('WDFQVendorFree\WPDesk_Tracker_Data_Provider_Settings')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Settings
      */

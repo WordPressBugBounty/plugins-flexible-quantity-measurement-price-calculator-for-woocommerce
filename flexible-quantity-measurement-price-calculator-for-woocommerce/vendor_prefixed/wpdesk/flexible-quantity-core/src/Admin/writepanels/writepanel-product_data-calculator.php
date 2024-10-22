@@ -8,11 +8,11 @@ use WDFQVendorFree\SkyVerge\WooCommerce\PluginFramework\v5_5_0 as Framework;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Admin\ProductPanel;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings;
-\add_action('woocommerce_product_write_panel_tabs', __NAMESPACE__ . '\\fq_price_calculator_product_rates_panel_tab', 99);
-\add_action('woocommerce_product_data_panels', __NAMESPACE__ . '\\fq_price_calculator_product_rates_panel_content');
-\add_action('wp_ajax_' . \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Admin\ProductPanel::FQ_AJAX_ACTION, __NAMESPACE__ . '\\fq_generate_decimals_template_from_ajax');
+\add_action('woocommerce_product_write_panel_tabs', __NAMESPACE__ . '\fq_price_calculator_product_rates_panel_tab', 99);
+\add_action('woocommerce_product_data_panels', __NAMESPACE__ . '\fq_price_calculator_product_rates_panel_content');
+\add_action('wp_ajax_' . ProductPanel::FQ_AJAX_ACTION, __NAMESPACE__ . '\fq_generate_decimals_template_from_ajax');
 // If called from admin panel
-\add_action('wp_ajax_nopriv_' . \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Admin\ProductPanel::FQ_AJAX_ACTION, __NAMESPACE__ . '\\fq_generate_decimals_template_from_ajax');
+\add_action('wp_ajax_nopriv_' . ProductPanel::FQ_AJAX_ACTION, __NAMESPACE__ . '\fq_generate_decimals_template_from_ajax');
 // If called from front end
 /**
  * Adds the "Calculator" tab to the Product Data postbox in the admin product interface
@@ -100,26 +100,26 @@ function fq_generate_decimals_template($settings, $unit = '')
     $other = ['other'];
     $default_unit = isset($settings['fq']['unit']) ? $settings['fq']['unit'] : '';
     $unit = !empty($unit) ? $unit : $default_unit;
-    $dimension = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::get_calculator_type($unit);
-    $units = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::get_unit_options($unit);
+    $dimension = Units::get_calculator_type($unit);
+    $units = Units::get_unit_options($unit);
     \ob_start();
     if (\in_array($dimension, $other)) {
-        \WDFQVendorFree\fq_generate_decimals_template_parts('other', \esc_html__('Other', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
+        fq_generate_decimals_template_parts('other', \esc_html__('Other', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
     }
     if (\in_array($dimension, $weight)) {
-        \WDFQVendorFree\fq_generate_decimals_template_parts('weight', \esc_html__('Weight', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
+        fq_generate_decimals_template_parts('weight', \esc_html__('Weight', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
     }
     if (\in_array($dimension, $volume)) {
-        \WDFQVendorFree\fq_generate_decimals_template_parts('volume', \esc_html__('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
+        fq_generate_decimals_template_parts('volume', \esc_html__('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
     }
     if (\in_array($dimension, $length)) {
-        \WDFQVendorFree\fq_generate_decimals_template_parts('length', \esc_html__('Length', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
+        fq_generate_decimals_template_parts('length', \esc_html__('Length', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
     }
     if (\in_array($dimension, $width)) {
-        \WDFQVendorFree\fq_generate_decimals_template_parts('width', \esc_html__('Width', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
+        fq_generate_decimals_template_parts('width', \esc_html__('Width', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
     }
     if (\in_array($dimension, $height)) {
-        \WDFQVendorFree\fq_generate_decimals_template_parts('height', \esc_html__('Height', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
+        fq_generate_decimals_template_parts('height', \esc_html__('Height', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $settings, $units);
     }
     $content = \ob_get_contents();
     \ob_clean();
@@ -129,14 +129,14 @@ function fq_generate_decimals_template_from_ajax()
 {
     $result = ['result' => \false, 'content' => \__('Ups. something goes wrong with your ajax request. Please try again.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')];
     $settings = [];
-    if (isset($_POST['nonce']) && isset($_POST['product_id']) && \wp_verify_nonce(\wc_clean(\wp_unslash($_POST['nonce'])), \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Admin\ProductPanel::FQ_AJAX_ADMIN_NONCE)) {
+    if (isset($_POST['nonce']) && isset($_POST['product_id']) && \wp_verify_nonce(\wc_clean(\wp_unslash($_POST['nonce'])), ProductPanel::FQ_AJAX_ADMIN_NONCE)) {
         //phpcs:ignore
         if (!empty($_POST['product_id'])) {
             $product_id = \wc_clean(\wp_unslash($_POST['product_id']));
-            $settings = (new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings((int) $product_id))->get_settings();
+            $settings = (new Settings((int) $product_id))->get_settings();
         }
         $unit = \wc_clean(\wp_unslash(isset($_POST['unit']) ? $_POST['unit'] : ''));
-        $content = \WDFQVendorFree\fq_generate_decimals_template($settings, $unit);
+        $content = fq_generate_decimals_template($settings, $unit);
         $result = ['result' => \true, 'content' => $content];
     }
     \wp_send_json($result);
@@ -147,8 +147,8 @@ function fq_generate_decimals_template_from_ajax()
 function fq_price_calculator_product_rates_panel_content()
 {
     global $post;
-    $measurement_units = ['weight' => \WDFQVendorFree\fq_price_calculator_get_weight_units(), 'dimension' => \WDFQVendorFree\fq_price_calculator_get_dimension_units(), 'area' => \WDFQVendorFree\fq_price_calculator_get_area_units(), 'volume' => \WDFQVendorFree\fq_price_calculator_get_volume_units()];
-    $container = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($post->ID);
+    $measurement_units = ['weight' => fq_price_calculator_get_weight_units(), 'dimension' => fq_price_calculator_get_dimension_units(), 'area' => fq_price_calculator_get_area_units(), 'volume' => fq_price_calculator_get_volume_units()];
+    $container = new Settings($post->ID);
     $settings = $container->get_settings();
     $pricing_weight_wrapper_class = '';
     if ('no' === \get_option('woocommerce_enable_weight', \true)) {
@@ -192,9 +192,9 @@ function fq_price_calculator_product_rates_panel_content()
 
 				<div class="flex-row-item">
 					<?php 
-    echo \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::unit_select(
+    echo Units::unit_select(
         //phpcs:ignore
-        ['id' => 'fq_unit', 'name' => 'fq[unit]', 'value' => isset($settings['fq']['unit']) ? $settings['fq']['unit'] : '', 'placeholder' => '', 'class' => 'wqm-select fq_unit', 'label' => \esc_html__('Unit of measure', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'options' => \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::get_all(), 'desc_tip' => \true, 'description' => \esc_html__('Choose the new unit of measure for the product.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]
+        ['id' => 'fq_unit', 'name' => 'fq[unit]', 'value' => isset($settings['fq']['unit']) ? $settings['fq']['unit'] : '', 'placeholder' => '', 'class' => 'wqm-select fq_unit', 'label' => \esc_html__('Unit of measure', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'options' => Units::get_all(), 'desc_tip' => \true, 'description' => \esc_html__('Choose the new unit of measure for the product.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]
     );
     ?>
 				</div>
@@ -269,7 +269,7 @@ function fq_price_calculator_product_rates_panel_content()
 	<?php 
 }
 // Hooked after the WC core handler
-\add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\\fq_price_calculator_process_product_meta_measurement', 10, 2);
+\add_action('woocommerce_process_product_meta', __NAMESPACE__ . '\fq_price_calculator_process_product_meta_measurement', 10, 2);
 /**
  * Save the custom fields
  *
@@ -280,7 +280,7 @@ function fq_price_calculator_process_product_meta_measurement($post_id, $post)
 {
     if (isset($_POST['fq']) && \is_array($_POST['fq'])) {
         $settings_data = ['fq' => \wc_clean($_POST['fq'])];
-        $container = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($post_id);
+        $container = new Settings($post_id);
         $container->set_raw_settings($settings_data);
         $settings = $container->get_settings();
         if (isset($settings['fq']['enable']) && $settings['fq']['enable'] == 'yes') {
@@ -375,7 +375,7 @@ function fq_price_calculator_get_options_post($input_name)
     if (empty($input_value)) {
         $values = [];
         // try to explode based on a semi-colon if a semi-colon exists in the input
-    } elseif (\WDFQVendorFree\SkyVerge\WooCommerce\PluginFramework\v5_5_0\SV_WC_Helper::str_exists($input_value, ';')) {
+    } elseif (Framework\SV_WC_Helper::str_exists($input_value, ';')) {
         $values = \array_map('trim', \explode(';', $input_value));
     } else {
         $values = \array_map('trim', \explode(',', $input_value));

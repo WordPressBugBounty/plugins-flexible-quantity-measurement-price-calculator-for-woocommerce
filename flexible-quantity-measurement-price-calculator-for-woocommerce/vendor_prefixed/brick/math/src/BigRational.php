@@ -14,7 +14,7 @@ use WDFQVendorFree\Brick\Math\Exception\RoundingNecessaryException;
  *
  * @psalm-immutable
  */
-final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
+final class BigRational extends BigNumber
 {
     /**
      * The numerator.
@@ -37,11 +37,11 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws DivisionByZeroException If the denominator is zero.
      */
-    protected function __construct(\WDFQVendorFree\Brick\Math\BigInteger $numerator, \WDFQVendorFree\Brick\Math\BigInteger $denominator, bool $checkDenominator)
+    protected function __construct(BigInteger $numerator, BigInteger $denominator, bool $checkDenominator)
     {
         if ($checkDenominator) {
             if ($denominator->isZero()) {
-                throw \WDFQVendorFree\Brick\Math\Exception\DivisionByZeroException::denominatorMustNotBeZero();
+                throw DivisionByZeroException::denominatorMustNotBeZero();
             }
             if ($denominator->isNegative()) {
                 $numerator = $numerator->negated();
@@ -62,7 +62,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @psalm-pure
      */
-    public static function of($value) : \WDFQVendorFree\Brick\Math\BigNumber
+    public static function of($value): BigNumber
     {
         return parent::of($value)->toBigRational();
     }
@@ -83,11 +83,11 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @psalm-pure
      */
-    public static function nd($numerator, $denominator) : \WDFQVendorFree\Brick\Math\BigRational
+    public static function nd($numerator, $denominator): BigRational
     {
-        $numerator = \WDFQVendorFree\Brick\Math\BigInteger::of($numerator);
-        $denominator = \WDFQVendorFree\Brick\Math\BigInteger::of($denominator);
-        return new \WDFQVendorFree\Brick\Math\BigRational($numerator, $denominator, \true);
+        $numerator = BigInteger::of($numerator);
+        $denominator = BigInteger::of($denominator);
+        return new BigRational($numerator, $denominator, \true);
     }
     /**
      * Returns a BigRational representing zero.
@@ -96,7 +96,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @psalm-pure
      */
-    public static function zero() : \WDFQVendorFree\Brick\Math\BigRational
+    public static function zero(): BigRational
     {
         /**
          * @psalm-suppress ImpureStaticVariable
@@ -104,7 +104,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
          */
         static $zero;
         if ($zero === null) {
-            $zero = new \WDFQVendorFree\Brick\Math\BigRational(\WDFQVendorFree\Brick\Math\BigInteger::zero(), \WDFQVendorFree\Brick\Math\BigInteger::one(), \false);
+            $zero = new BigRational(BigInteger::zero(), BigInteger::one(), \false);
         }
         return $zero;
     }
@@ -115,7 +115,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @psalm-pure
      */
-    public static function one() : \WDFQVendorFree\Brick\Math\BigRational
+    public static function one(): BigRational
     {
         /**
          * @psalm-suppress ImpureStaticVariable
@@ -123,7 +123,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
          */
         static $one;
         if ($one === null) {
-            $one = new \WDFQVendorFree\Brick\Math\BigRational(\WDFQVendorFree\Brick\Math\BigInteger::one(), \WDFQVendorFree\Brick\Math\BigInteger::one(), \false);
+            $one = new BigRational(BigInteger::one(), BigInteger::one(), \false);
         }
         return $one;
     }
@@ -134,7 +134,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @psalm-pure
      */
-    public static function ten() : \WDFQVendorFree\Brick\Math\BigRational
+    public static function ten(): BigRational
     {
         /**
          * @psalm-suppress ImpureStaticVariable
@@ -142,21 +142,21 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
          */
         static $ten;
         if ($ten === null) {
-            $ten = new \WDFQVendorFree\Brick\Math\BigRational(\WDFQVendorFree\Brick\Math\BigInteger::ten(), \WDFQVendorFree\Brick\Math\BigInteger::one(), \false);
+            $ten = new BigRational(BigInteger::ten(), BigInteger::one(), \false);
         }
         return $ten;
     }
     /**
      * @return BigInteger
      */
-    public function getNumerator() : \WDFQVendorFree\Brick\Math\BigInteger
+    public function getNumerator(): BigInteger
     {
         return $this->numerator;
     }
     /**
      * @return BigInteger
      */
-    public function getDenominator() : \WDFQVendorFree\Brick\Math\BigInteger
+    public function getDenominator(): BigInteger
     {
         return $this->denominator;
     }
@@ -165,7 +165,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @return BigInteger
      */
-    public function quotient() : \WDFQVendorFree\Brick\Math\BigInteger
+    public function quotient(): BigInteger
     {
         return $this->numerator->quotient($this->denominator);
     }
@@ -174,7 +174,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @return BigInteger
      */
-    public function remainder() : \WDFQVendorFree\Brick\Math\BigInteger
+    public function remainder(): BigInteger
     {
         return $this->numerator->remainder($this->denominator);
     }
@@ -183,7 +183,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @return BigInteger[]
      */
-    public function quotientAndRemainder() : array
+    public function quotientAndRemainder(): array
     {
         return $this->numerator->quotientAndRemainder($this->denominator);
     }
@@ -196,13 +196,13 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws MathException If the number is not valid.
      */
-    public function plus($that) : \WDFQVendorFree\Brick\Math\BigRational
+    public function plus($that): BigRational
     {
-        $that = \WDFQVendorFree\Brick\Math\BigRational::of($that);
+        $that = BigRational::of($that);
         $numerator = $this->numerator->multipliedBy($that->denominator);
         $numerator = $numerator->plus($that->numerator->multipliedBy($this->denominator));
         $denominator = $this->denominator->multipliedBy($that->denominator);
-        return new \WDFQVendorFree\Brick\Math\BigRational($numerator, $denominator, \false);
+        return new BigRational($numerator, $denominator, \false);
     }
     /**
      * Returns the difference of this number and the given one.
@@ -213,13 +213,13 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws MathException If the number is not valid.
      */
-    public function minus($that) : \WDFQVendorFree\Brick\Math\BigRational
+    public function minus($that): BigRational
     {
-        $that = \WDFQVendorFree\Brick\Math\BigRational::of($that);
+        $that = BigRational::of($that);
         $numerator = $this->numerator->multipliedBy($that->denominator);
         $numerator = $numerator->minus($that->numerator->multipliedBy($this->denominator));
         $denominator = $this->denominator->multipliedBy($that->denominator);
-        return new \WDFQVendorFree\Brick\Math\BigRational($numerator, $denominator, \false);
+        return new BigRational($numerator, $denominator, \false);
     }
     /**
      * Returns the product of this number and the given one.
@@ -230,12 +230,12 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws MathException If the multiplier is not a valid number.
      */
-    public function multipliedBy($that) : \WDFQVendorFree\Brick\Math\BigRational
+    public function multipliedBy($that): BigRational
     {
-        $that = \WDFQVendorFree\Brick\Math\BigRational::of($that);
+        $that = BigRational::of($that);
         $numerator = $this->numerator->multipliedBy($that->numerator);
         $denominator = $this->denominator->multipliedBy($that->denominator);
-        return new \WDFQVendorFree\Brick\Math\BigRational($numerator, $denominator, \false);
+        return new BigRational($numerator, $denominator, \false);
     }
     /**
      * Returns the result of the division of this number by the given one.
@@ -246,12 +246,12 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws MathException If the divisor is not a valid number, or is zero.
      */
-    public function dividedBy($that) : \WDFQVendorFree\Brick\Math\BigRational
+    public function dividedBy($that): BigRational
     {
-        $that = \WDFQVendorFree\Brick\Math\BigRational::of($that);
+        $that = BigRational::of($that);
         $numerator = $this->numerator->multipliedBy($that->denominator);
         $denominator = $this->denominator->multipliedBy($that->numerator);
-        return new \WDFQVendorFree\Brick\Math\BigRational($numerator, $denominator, \true);
+        return new BigRational($numerator, $denominator, \true);
     }
     /**
      * Returns this number exponentiated to the given value.
@@ -262,16 +262,16 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws \InvalidArgumentException If the exponent is not in the range 0 to 1,000,000.
      */
-    public function power(int $exponent) : \WDFQVendorFree\Brick\Math\BigRational
+    public function power(int $exponent): BigRational
     {
         if ($exponent === 0) {
-            $one = \WDFQVendorFree\Brick\Math\BigInteger::one();
-            return new \WDFQVendorFree\Brick\Math\BigRational($one, $one, \false);
+            $one = BigInteger::one();
+            return new BigRational($one, $one, \false);
         }
         if ($exponent === 1) {
             return $this;
         }
-        return new \WDFQVendorFree\Brick\Math\BigRational($this->numerator->power($exponent), $this->denominator->power($exponent), \false);
+        return new BigRational($this->numerator->power($exponent), $this->denominator->power($exponent), \false);
     }
     /**
      * Returns the reciprocal of this BigRational.
@@ -282,104 +282,104 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws DivisionByZeroException If the numerator is zero.
      */
-    public function reciprocal() : \WDFQVendorFree\Brick\Math\BigRational
+    public function reciprocal(): BigRational
     {
-        return new \WDFQVendorFree\Brick\Math\BigRational($this->denominator, $this->numerator, \true);
+        return new BigRational($this->denominator, $this->numerator, \true);
     }
     /**
      * Returns the absolute value of this BigRational.
      *
      * @return BigRational
      */
-    public function abs() : \WDFQVendorFree\Brick\Math\BigRational
+    public function abs(): BigRational
     {
-        return new \WDFQVendorFree\Brick\Math\BigRational($this->numerator->abs(), $this->denominator, \false);
+        return new BigRational($this->numerator->abs(), $this->denominator, \false);
     }
     /**
      * Returns the negated value of this BigRational.
      *
      * @return BigRational
      */
-    public function negated() : \WDFQVendorFree\Brick\Math\BigRational
+    public function negated(): BigRational
     {
-        return new \WDFQVendorFree\Brick\Math\BigRational($this->numerator->negated(), $this->denominator, \false);
+        return new BigRational($this->numerator->negated(), $this->denominator, \false);
     }
     /**
      * Returns the simplified value of this BigRational.
      *
      * @return BigRational
      */
-    public function simplified() : \WDFQVendorFree\Brick\Math\BigRational
+    public function simplified(): BigRational
     {
         $gcd = $this->numerator->gcd($this->denominator);
         $numerator = $this->numerator->quotient($gcd);
         $denominator = $this->denominator->quotient($gcd);
-        return new \WDFQVendorFree\Brick\Math\BigRational($numerator, $denominator, \false);
+        return new BigRational($numerator, $denominator, \false);
     }
     /**
      * {@inheritdoc}
      */
-    public function compareTo($that) : int
+    public function compareTo($that): int
     {
         return $this->minus($that)->getSign();
     }
     /**
      * {@inheritdoc}
      */
-    public function getSign() : int
+    public function getSign(): int
     {
         return $this->numerator->getSign();
     }
     /**
      * {@inheritdoc}
      */
-    public function toBigInteger() : \WDFQVendorFree\Brick\Math\BigInteger
+    public function toBigInteger(): BigInteger
     {
         $simplified = $this->simplified();
         if (!$simplified->denominator->isEqualTo(1)) {
-            throw new \WDFQVendorFree\Brick\Math\Exception\RoundingNecessaryException('This rational number cannot be represented as an integer value without rounding.');
+            throw new RoundingNecessaryException('This rational number cannot be represented as an integer value without rounding.');
         }
         return $simplified->numerator;
     }
     /**
      * {@inheritdoc}
      */
-    public function toBigDecimal() : \WDFQVendorFree\Brick\Math\BigDecimal
+    public function toBigDecimal(): BigDecimal
     {
         return $this->numerator->toBigDecimal()->exactlyDividedBy($this->denominator);
     }
     /**
      * {@inheritdoc}
      */
-    public function toBigRational() : \WDFQVendorFree\Brick\Math\BigRational
+    public function toBigRational(): BigRational
     {
         return $this;
     }
     /**
      * {@inheritdoc}
      */
-    public function toScale(int $scale, int $roundingMode = \WDFQVendorFree\Brick\Math\RoundingMode::UNNECESSARY) : \WDFQVendorFree\Brick\Math\BigDecimal
+    public function toScale(int $scale, int $roundingMode = RoundingMode::UNNECESSARY): BigDecimal
     {
         return $this->numerator->toBigDecimal()->dividedBy($this->denominator, $scale, $roundingMode);
     }
     /**
      * {@inheritdoc}
      */
-    public function toInt() : int
+    public function toInt(): int
     {
         return $this->toBigInteger()->toInt();
     }
     /**
      * {@inheritdoc}
      */
-    public function toFloat() : float
+    public function toFloat(): float
     {
         return $this->numerator->toFloat() / $this->denominator->toFloat();
     }
     /**
      * {@inheritdoc}
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         $numerator = (string) $this->numerator;
         $denominator = (string) $this->denominator;
@@ -395,7 +395,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @return array{numerator: BigInteger, denominator: BigInteger}
      */
-    public function __serialize() : array
+    public function __serialize(): array
     {
         return ['numerator' => $this->numerator, 'denominator' => $this->denominator];
     }
@@ -411,7 +411,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws \LogicException
      */
-    public function __unserialize(array $data) : void
+    public function __unserialize(array $data): void
     {
         if (isset($this->numerator)) {
             throw new \LogicException('__unserialize() is an internal function, it must not be called directly.');
@@ -426,7 +426,7 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @return string
      */
-    public function serialize() : string
+    public function serialize(): string
     {
         return $this->numerator . '/' . $this->denominator;
     }
@@ -442,13 +442,13 @@ final class BigRational extends \WDFQVendorFree\Brick\Math\BigNumber
      *
      * @throws \LogicException
      */
-    public function unserialize($value) : void
+    public function unserialize($value): void
     {
         if (isset($this->numerator)) {
             throw new \LogicException('unserialize() is an internal function, it must not be called directly.');
         }
         [$numerator, $denominator] = \explode('/', $value);
-        $this->numerator = \WDFQVendorFree\Brick\Math\BigInteger::of($numerator);
-        $this->denominator = \WDFQVendorFree\Brick\Math\BigInteger::of($denominator);
+        $this->numerator = BigInteger::of($numerator);
+        $this->denominator = BigInteger::of($denominator);
     }
 }

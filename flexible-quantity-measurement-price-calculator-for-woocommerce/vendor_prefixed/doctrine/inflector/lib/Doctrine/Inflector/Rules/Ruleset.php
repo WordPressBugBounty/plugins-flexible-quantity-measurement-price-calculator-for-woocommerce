@@ -11,21 +11,21 @@ class Ruleset
     private $uninflected;
     /** @var Substitutions */
     private $irregular;
-    public function __construct(\WDFQVendorFree\Doctrine\Inflector\Rules\Transformations $regular, \WDFQVendorFree\Doctrine\Inflector\Rules\Patterns $uninflected, \WDFQVendorFree\Doctrine\Inflector\Rules\Substitutions $irregular)
+    public function __construct(Transformations $regular, Patterns $uninflected, Substitutions $irregular)
     {
         $this->regular = $regular;
         $this->uninflected = $uninflected;
         $this->irregular = $irregular;
     }
-    public function getRegular() : \WDFQVendorFree\Doctrine\Inflector\Rules\Transformations
+    public function getRegular(): Transformations
     {
         return $this->regular;
     }
-    public function getUninflected() : \WDFQVendorFree\Doctrine\Inflector\Rules\Patterns
+    public function getUninflected(): Patterns
     {
         return $this->uninflected;
     }
-    public function getIrregular() : \WDFQVendorFree\Doctrine\Inflector\Rules\Substitutions
+    public function getIrregular(): Substitutions
     {
         return $this->irregular;
     }

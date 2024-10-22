@@ -17,11 +17,11 @@ class Product
     public static function calculator_enabled($product, $settings = null)
     {
         // basic checks
-        if (!$product instanceof \WC_Product || $product->is_type('grouped')) {
+        if (!$product instanceof WC_Product || $product->is_type('grouped')) {
             return \false;
         }
         // see whether a calculator is configured for this product
-        $settings === null && ($settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product));
+        $settings === null && $settings = new Settings($product);
         return $settings->is_calculator_enabled();
     }
     /**
@@ -33,9 +33,9 @@ class Product
      */
     public static function pricing_calculator_enabled($product, $settings = null)
     {
-        if ($product instanceof \WC_Product && self::calculator_enabled($product, $settings)) {
+        if ($product instanceof WC_Product && self::calculator_enabled($product, $settings)) {
             // see whether a calculator is configured for this product
-            $settings === null && ($settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product));
+            $settings === null && $settings = new Settings($product);
             return $settings->is_pricing_calculator_enabled();
         }
         return \false;
@@ -50,9 +50,9 @@ class Product
      */
     public static function pricing_per_unit_enabled($product)
     {
-        if ($product instanceof \WC_Product && self::calculator_enabled($product)) {
+        if ($product instanceof WC_Product && self::calculator_enabled($product)) {
             // see whether a calculator is configured for this product
-            $settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product);
+            $settings = new Settings($product);
             return $settings->is_pricing_enabled();
         }
         return \false;
@@ -68,9 +68,9 @@ class Product
     {
         // TODO: also verify that stock is being managed for the product?
         // Use case: stock management turned on, pricing calculator inventory enabled, stock management is disabled
-        if ($product instanceof \WC_Product && self::calculator_enabled($product)) {
+        if ($product instanceof WC_Product && self::calculator_enabled($product)) {
             // see whether a calculator is configured for this product
-            $settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product);
+            $settings = new Settings($product);
             return $settings->is_pricing_inventory_enabled();
         }
         return \false;
@@ -79,9 +79,9 @@ class Product
     {
         // TODO: also verify that stock is being managed for the product?
         // Use case: stock management turned on, pricing calculator inventory enabled, stock management is disabled
-        if ($product instanceof \WC_Product && self::calculator_enabled($product)) {
+        if ($product instanceof WC_Product && self::calculator_enabled($product)) {
             // see whether a calculator is configured for this product
-            $settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product);
+            $settings = new Settings($product);
             return $settings->is_pricing_inventory_enabled();
         }
         return \false;
@@ -95,10 +95,10 @@ class Product
      */
     public static function pricing_calculated_weight_enabled($product)
     {
-        if ($product instanceof \WC_Product && self::calculator_enabled($product)) {
-            if ('no' !== \get_option('woocommerce_enable_weight', \true)) {
+        if ($product instanceof WC_Product && self::calculator_enabled($product)) {
+            if ('no' !== get_option('woocommerce_enable_weight', \true)) {
                 // see whether a calculator is configured for this product
-                $settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product);
+                $settings = new Settings($product);
                 return $settings->is_pricing_calculated_weight_enabled();
             }
         }
@@ -146,7 +146,7 @@ class Product
     {
         // get the one (and only) measurement object
         list($measurement) = $measurements;
-        $unit = \get_option('woocommerce_dimension_unit');
+        $unit = get_option('woocommerce_dimension_unit');
         $measurement_name = $measurement->get_name();
         /**
          * Filter dimension measurement value.
@@ -157,8 +157,8 @@ class Product
          *
          *@since 3.5.2
          */
-        $measurement_value = \apply_filters('fq_price_calculator_measurement_dimension', \is_callable([$product, "get_{$measurement_name}"]) ? $product->{"get_{$measurement_name}"}() : null, $product, $measurement);
-        return new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($unit, $measurement_value, $measurement_name, \ucwords($measurement_name));
+        $measurement_value = apply_filters('fq_price_calculator_measurement_dimension', is_callable([$product, "get_{$measurement_name}"]) ? $product->{"get_{$measurement_name}"}() : null, $product, $measurement);
+        return new Measurement($unit, $measurement_value, $measurement_name, ucwords($measurement_name));
     }
     /**
      * Gets the area of the product, if one is defined, in woocommerce product units
@@ -174,7 +174,7 @@ class Product
         $length = $product->get_length();
         $width = $product->get_width();
         // if a length and width are defined, use that
-        if (\is_numeric($length) && \is_numeric($width)) {
+        if (is_numeric($length) && is_numeric($width)) {
             $area = $length * $width;
             /**
              * Filter area measurement value.
@@ -183,27 +183,27 @@ class Product
              * @param float $area The area measurement value
              * @param WC_Product $product
              */
-            $area = \apply_filters('fq_price_calculator_measurement_area', $area, $product);
-            $unit = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::to_area_unit(\get_option('woocommerce_dimension_unit'));
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($unit, $area, 'area', \__('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $area = apply_filters('fq_price_calculator_measurement_area', $area, $product);
+            $unit = Measurement::to_area_unit(get_option('woocommerce_dimension_unit'));
+            $measurement = new Measurement($unit, $area, 'area', __('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
             // convert to the product area units
-            $measurement->set_unit(\get_option('woocommerce_area_unit'));
+            $measurement->set_unit(get_option('woocommerce_area_unit'));
         }
         // if they overrode the length/width with an area value, use that
         $area = $product->get_meta('_area');
         // fallback to parent meta for variations if not set
         if (!$area && $product->is_type('variation')) {
-            $parent_product = \wc_get_product($product->get_parent_id());
+            $parent_product = wc_get_product($product->get_parent_id());
             if ($parent_product) {
                 $area = $parent_product->get_meta('_area');
             }
         }
         if (!empty($area)) {
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_area_unit'), $area, 'area', \__('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $measurement = new Measurement(get_option('woocommerce_area_unit'), $area, 'area', __('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         // if no measurement, just create a default empty one
         if (!$measurement) {
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_area_unit'), 0, 'area', \__('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $measurement = new Measurement(get_option('woocommerce_area_unit'), 0, 'area', __('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         return $measurement;
     }
@@ -221,7 +221,7 @@ class Product
         $length = $product->get_length();
         $width = $product->get_width();
         // if a length and width are defined, use that
-        if (\is_numeric($length) && \is_numeric($width)) {
+        if (is_numeric($length) && is_numeric($width)) {
             $perimeter = 2 * $length + 2 * $width;
             /**
              * Filter perimeter measurement value.
@@ -230,12 +230,12 @@ class Product
              * @param float $perimeter The perimeter measurement value
              * @param WC_Product $product
              */
-            $perimeter = \apply_filters('fq_price_calculator_measurement_perimeter', $perimeter, $product);
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_dimension_unit'), $perimeter, 'length', \__('Perimeter', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $perimeter = apply_filters('fq_price_calculator_measurement_perimeter', $perimeter, $product);
+            $measurement = new Measurement(get_option('woocommerce_dimension_unit'), $perimeter, 'length', __('Perimeter', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         // if no measurement, just create a default empty one
         if (!$measurement) {
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_dimension_unit'), 0, 'length', \__('Perimeter', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $measurement = new Measurement(get_option('woocommerce_dimension_unit'), 0, 'length', __('Perimeter', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         return $measurement;
     }
@@ -254,7 +254,7 @@ class Product
         $width = $product->get_width();
         $height = $product->get_height();
         // if a length and width are defined, use that
-        if (\is_numeric($length) && \is_numeric($width) && \is_numeric($height)) {
+        if (is_numeric($length) && is_numeric($width) && is_numeric($height)) {
             $surface_area = 2 * ($length * $width + $width * $height + $length * $height);
             /**
              * Filter surface area value.
@@ -263,12 +263,12 @@ class Product
              * @param float $surface_area The calculated surface area.
              * @param WC_Product $product
              */
-            $surface_area = \apply_filters('fq_price_calculator_measurement_surface_area', $surface_area, $product);
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_dimension_unit'), $surface_area, 'area', \__('Surface Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $surface_area = apply_filters('fq_price_calculator_measurement_surface_area', $surface_area, $product);
+            $measurement = new Measurement(get_option('woocommerce_dimension_unit'), $surface_area, 'area', __('Surface Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         // if no measurement, just create a default empty one
         if (!$measurement) {
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_dimension_unit'), 0, 'area', \__('Surface Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $measurement = new Measurement(get_option('woocommerce_dimension_unit'), 0, 'area', __('Surface Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         return $measurement;
     }
@@ -290,9 +290,9 @@ class Product
         // (mm, km, mi) which don't make much sense to use as volumes, but
         // we have no choice but to support them to some extent, so convert
         // them to something more reasonable
-        if (\is_numeric($length) && \is_numeric($width) && \is_numeric($height)) {
+        if (is_numeric($length) && is_numeric($width) && is_numeric($height)) {
             $volume = $length * $width * $height;
-            switch (\get_option('woocommerce_dimension_unit')) {
+            switch (get_option('woocommerce_dimension_unit')) {
                 case 'mm':
                     $volume *= 0.001;
                     // convert to ml
@@ -313,26 +313,26 @@ class Product
              * @param float $volume The volume measurement value
              * @param WC_Product $product
              */
-            $volume = \apply_filters('fq_price_calculator_measurement_volume', $volume, $product);
-            $unit = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::to_volume_unit(\get_option('woocommerce_dimension_unit'));
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($unit, $volume, 'volume', \__('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $volume = apply_filters('fq_price_calculator_measurement_volume', $volume, $product);
+            $unit = Measurement::to_volume_unit(get_option('woocommerce_dimension_unit'));
+            $measurement = new Measurement($unit, $volume, 'volume', __('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
             // convert to the product volume units
-            $measurement->set_unit(\get_option('woocommerce_volume_unit'));
+            $measurement->set_unit(get_option('woocommerce_volume_unit'));
         }
         // if there's an area and height, next use that
         $area = $product->get_meta('_area');
         // fallback to parent meta for variations if not set
         if (!$area && $product->is_type('variation')) {
-            $parent_product = \wc_get_product($product->get_parent_id());
+            $parent_product = wc_get_product($product->get_parent_id());
             if ($parent_product) {
                 $area = $parent_product->get_meta('_area');
             }
         }
-        if (!empty($area) && \is_numeric($height)) {
-            $area_unit = \get_option('woocommerce_area_unit');
-            $area_measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($area_unit, $area);
-            $dimension_unit = \get_option('woocommerce_dimension_unit');
-            $dimension_measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($dimension_unit, $product->get_height());
+        if (!empty($area) && is_numeric($height)) {
+            $area_unit = get_option('woocommerce_area_unit');
+            $area_measurement = new Measurement($area_unit, $area);
+            $dimension_unit = get_option('woocommerce_dimension_unit');
+            $dimension_measurement = new Measurement($dimension_unit, $product->get_height());
             // determine the volume, in common units
             $dimension_measurement->set_common_unit($area_measurement->get_unit_common());
             $volume = $area_measurement->get_value_common() * $dimension_measurement->get_value_common();
@@ -343,27 +343,27 @@ class Product
              * @param float $volume The volume measurement value
              * @param WC_Product $product
              */
-            $volume = \apply_filters('fq_price_calculator_measurement_volume', $volume, $product);
-            $volume_unit = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::to_volume_unit($area_measurement->get_unit_common());
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($volume_unit, $volume, 'volume', \__('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $volume = apply_filters('fq_price_calculator_measurement_volume', $volume, $product);
+            $volume_unit = Measurement::to_volume_unit($area_measurement->get_unit_common());
+            $measurement = new Measurement($volume_unit, $volume, 'volume', __('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
             // and convert to final volume units
-            $measurement->set_unit(\get_option('woocommerce_volume_unit'));
+            $measurement->set_unit(get_option('woocommerce_volume_unit'));
         }
         // finally if they overrode the length/width/height with a volume value, use that
         $volume = $product->get_meta('_volume');
         // fallback to parent meta for variations if not set
         if (!$volume && $product->is_type('variation')) {
-            $parent_product = \wc_get_product($product->get_parent_id());
+            $parent_product = wc_get_product($product->get_parent_id());
             if ($parent_product) {
                 $volume = $parent_product->get_meta('_volume');
             }
         }
         if (!empty($volume)) {
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_volume_unit'), $volume, 'volume', \__('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $measurement = new Measurement(get_option('woocommerce_volume_unit'), $volume, 'volume', __('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         // if no measurement, just create a default empty one
         if (!$measurement) {
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_volume_unit'), 0, 'volume', \__('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $measurement = new Measurement(get_option('woocommerce_volume_unit'), 0, 'volume', __('Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         return $measurement;
     }
@@ -377,11 +377,11 @@ class Product
      */
     public static function get_weight_measurement($product)
     {
-        return new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement(\get_option('woocommerce_weight_unit'), $product->get_weight(), 'weight', \__('Weight', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+        return new Measurement(get_option('woocommerce_weight_unit'), $product->get_weight(), 'weight', __('Weight', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
     }
     public static function get_other_measurement($product)
     {
-        return new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement('item', 1, 'other', \__('Other', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+        return new Measurement('item', 1, 'other', \__('Other', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
     }
     /**
      * Get the min/max quantity range for this given product.  At least, do
@@ -412,7 +412,7 @@ class Product
          * @param array $args the input arguments
          * @param WC_Product $product the product instance
          */
-        return \apply_filters('woocommerce_quantity_input_args', \wp_parse_args($args, $defaults), $product);
+        return apply_filters('woocommerce_quantity_input_args', wp_parse_args($args, $defaults), $product);
     }
     /**
      * Calculate the item price based on the given measurements
@@ -428,13 +428,13 @@ class Product
     {
         // get the parent product if there is one
         if ($product->is_type('variation')) {
-            $parent = \wc_get_product($product->get_parent_id());
+            $parent = wc_get_product($product->get_parent_id());
         } else {
             $parent = $product;
         }
         $price = $product->get_price();
         if (self::pricing_calculator_enabled($parent, $settings)) {
-            $measurement_needed = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($measurement_needed_value_unit, (float) $measurement_needed_value);
+            $measurement_needed = new Measurement($measurement_needed_value_unit, (float) $measurement_needed_value);
             // if this calculator uses pricing rules, retrieve the price based on the product measurements
             $rule_price = $settings->get_pricing_rules_price($measurement_needed);
             if ($rule_price) {
@@ -445,7 +445,7 @@ class Product
             $price = $price * $measurement_needed->get_value($settings->get_pricing_unit());
             // is there a minimum price to use?
             $min_price = $product->get_meta('_fq_price_calculator_min_price');
-            if (\is_numeric($min_price) && $min_price > $price) {
+            if (is_numeric($min_price) && $min_price > $price) {
                 $price = $min_price;
             }
         }
@@ -456,8 +456,8 @@ class Product
          * @param bool $round if true, the returned price will be rounded to two decimal places.
          * @param WC_Product $product the product.
          */
-        if (\true === \apply_filters('fq_price_calculator_round_calculated_price', $round, $product)) {
-            $price = \round($price, \wc_get_price_decimals());
+        if (\true === apply_filters('fq_price_calculator_round_calculated_price', $round, $product)) {
+            $price = round($price, wc_get_price_decimals());
         }
         /**
          * Filters the final calculated price.
@@ -469,7 +469,7 @@ class Product
          * @param float $measurement_needed_value the total measurement needed
          * @param string $measurement_needed_value_unit the unit of $measurement_needed_value
          */
-        return \apply_filters('fq_price_calculator_calculate_price', $price, $product, $measurement_needed_value, $measurement_needed_value_unit);
+        return apply_filters('fq_price_calculator_calculate_price', $price, $product, $measurement_needed_value, $measurement_needed_value_unit);
     }
     /**
      * Returns the price html for the pricing rules table associated with $product.
@@ -493,23 +493,23 @@ class Product
         $min_regular_price = $settings->get_pricing_rules_minimum_regular_price();
         $max_price = $settings->get_pricing_rules_maximum_price();
         $max_regular_price = $settings->get_pricing_rules_maximum_regular_price();
-        $sep = \apply_filters('fq_price_calculator_pricing_label_separator', '/');
+        $sep = apply_filters('fq_price_calculator_pricing_label_separator', '/');
         $pricing_label = $sep . ' ' . $settings->get_pricing_label();
         // Get the price
         if ($price > 0) {
             // Regular price
             if ($settings->pricing_rules_is_on_sale() && $min_regular_price !== $price) {
                 if (!$min_price || $min_price !== $max_price) {
-                    $from = \wc_price($min_regular_price) . ' - ' . \wc_price($max_regular_price) . ' ' . $pricing_label;
-                    $to = \wc_price($min_price) . ' - ' . \wc_price($max_price) . ' ' . $pricing_label;
+                    $from = wc_price($min_regular_price) . ' - ' . wc_price($max_regular_price) . ' ' . $pricing_label;
+                    $to = wc_price($min_price) . ' - ' . wc_price($max_price) . ' ' . $pricing_label;
                     $price_html .= self::get_price_html_from_to($from, $to, '') . $product->get_price_suffix();
                 } else {
                     $price_html .= self::get_price_html_from_to($min_regular_price, $price, $pricing_label) . $product->get_price_suffix();
                 }
             } else {
-                $price_html .= \wc_price($price);
+                $price_html .= wc_price($price);
                 if ($min_price !== $max_price) {
-                    $price_html .= ' - ' . \wc_price($max_price);
+                    $price_html .= ' - ' . wc_price($max_price);
                 }
                 $price_html .= ' ' . $pricing_label . $product->get_price_suffix();
             }
@@ -519,16 +519,16 @@ class Product
             // Free price
             if ($min_regular_price !== $price && $settings->pricing_rules_is_on_sale()) {
                 if ($min_price !== $max_price) {
-                    $from = \wc_price($min_regular_price) . ' - ' . \wc_price($max_regular_price) . ' ' . $pricing_label;
-                    $to = \wc_price(0) . ' - ' . \wc_price($max_price) . ' ' . $pricing_label;
+                    $from = wc_price($min_regular_price) . ' - ' . wc_price($max_regular_price) . ' ' . $pricing_label;
+                    $to = wc_price(0) . ' - ' . wc_price($max_price) . ' ' . $pricing_label;
                     $price_html .= self::get_price_html_from_to($from, $to, '') . $product->get_price_suffix();
                 } else {
-                    $price_html .= self::get_price_html_from_to($min_regular_price, \wc_price(0), $pricing_label);
+                    $price_html .= self::get_price_html_from_to($min_regular_price, wc_price(0), $pricing_label);
                 }
             } else {
-                $price_html .= \wc_price(0);
+                $price_html .= wc_price(0);
                 if ($min_price !== $max_price) {
-                    $price_html .= ' - ' . \wc_price($max_price);
+                    $price_html .= ' - ' . wc_price($max_price);
                 }
                 $price_html .= ' ' . $pricing_label;
             }
@@ -548,7 +548,7 @@ class Product
          * @param bool $quantity_calculator_enabled whether the quantity calculator is enabled for the product
          * @param bool $pricing_rules_enabled whether pricing rules are enabled for the product
          */
-        return (string) \apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \false, \true);
+        return (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \false, \true);
     }
     /**
      * Functions for getting parts of a price, in html, used by get_price_html.
@@ -561,7 +561,7 @@ class Product
      */
     public static function get_price_html_from_to($from, $to, $pricing_label)
     {
-        return '<del>' . (\is_numeric($from) ? \wc_price($from) . ' ' . $pricing_label : $from) . '</del> <ins>' . (\is_numeric($to) ? \wc_price($to) . ' ' . $pricing_label : $to) . '</ins>';
+        return '<del>' . (is_numeric($from) ? wc_price($from) . ' ' . $pricing_label : $from) . '</del> <ins>' . (is_numeric($to) ? wc_price($to) . ' ' . $pricing_label : $to) . '</ins>';
     }
     /**
      * Returns an array of measurements for the given product
@@ -573,7 +573,7 @@ class Product
     public static function get_product_measurements($product)
     {
         if (self::pricing_calculator_enabled($product)) {
-            $settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings($product);
+            $settings = new Settings($product);
             return $settings->get_calculator_measurements();
         }
     }
@@ -603,7 +603,7 @@ class Product
         $product_new_prices = ['min_variation_price' => '', 'min_variation_regular_price' => '', 'min_variation_sale_price' => '', 'max_variation_price' => '', 'max_variation_regular_price' => '', 'max_variation_sale_price' => ''];
         $product->set_props($product_new_prices);
         foreach ($product->get_children() as $variation_product_id) {
-            $variation_product = \apply_filters('fq_price_calculator_variable_product_sync', \wc_get_product($variation_product_id), $product);
+            $variation_product = apply_filters('fq_price_calculator_variable_product_sync', wc_get_product($variation_product_id), $product);
             $child_price = $variation_product->get_price('edit');
             $child_regular_price = $variation_product->get_regular_price('edit');
             $child_sale_price = $variation_product->get_sale_price('edit');
@@ -632,10 +632,10 @@ class Product
             if ($child_regular_price !== '') {
                 // convert to price per unit
                 $child_regular_price /= $measurement_value > 0 ? $measurement_value : 1;
-                if (!\is_numeric($min_variation_regular_price) || $child_regular_price < $min_variation_regular_price) {
+                if (!is_numeric($min_variation_regular_price) || $child_regular_price < $min_variation_regular_price) {
                     $product_new_prices['min_variation_regular_price'] = $child_regular_price;
                 }
-                if (!\is_numeric($max_variation_regular_price) || $child_regular_price > $max_variation_regular_price) {
+                if (!is_numeric($max_variation_regular_price) || $child_regular_price > $max_variation_regular_price) {
                     $product_new_prices['max_variation_regular_price'] = $child_regular_price;
                 }
             }
@@ -644,10 +644,10 @@ class Product
                 // convert to price per unit
                 $child_sale_price /= $measurement_value > 0 ? $measurement_value : 1;
                 if ($child_price == $child_sale_price) {
-                    if (!\is_numeric($min_variation_sale_price) || $child_sale_price < $min_variation_sale_price) {
+                    if (!is_numeric($min_variation_sale_price) || $child_sale_price < $min_variation_sale_price) {
                         $product_new_prices['min_variation_sale_price'] = $child_sale_price;
                     }
-                    if (!\is_numeric($max_variation_sale_price) || $child_sale_price > $max_variation_sale_price) {
+                    if (!is_numeric($max_variation_sale_price) || $child_sale_price > $max_variation_sale_price) {
                         $product_new_prices['max_variation_sale_price'] = $child_sale_price;
                     }
                 }

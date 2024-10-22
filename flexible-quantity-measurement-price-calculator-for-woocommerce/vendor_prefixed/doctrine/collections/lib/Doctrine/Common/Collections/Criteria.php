@@ -44,7 +44,7 @@ class Criteria
     public static function expr()
     {
         if (self::$expressionBuilder === null) {
-            self::$expressionBuilder = new \WDFQVendorFree\Doctrine\Common\Collections\ExpressionBuilder();
+            self::$expressionBuilder = new ExpressionBuilder();
         }
         return self::$expressionBuilder;
     }
@@ -55,11 +55,11 @@ class Criteria
      * @param int|null      $firstResult
      * @param int|null      $maxResults
      */
-    public function __construct(?\WDFQVendorFree\Doctrine\Common\Collections\Expr\Expression $expression = null, ?array $orderings = null, $firstResult = null, $maxResults = null)
+    public function __construct(?Expression $expression = null, ?array $orderings = null, $firstResult = null, $maxResults = null)
     {
         $this->expression = $expression;
-        if ($firstResult === null && \func_num_args() > 2) {
-            \WDFQVendorFree\Doctrine\Deprecations\Deprecation::trigger('doctrine/collections', 'https://github.com/doctrine/collections/pull/311', 'Passing null as $firstResult to the constructor of %s is deprecated. Pass 0 instead or omit the argument.', self::class);
+        if ($firstResult === null && func_num_args() > 2) {
+            Deprecation::trigger('doctrine/collections', 'https://github.com/doctrine/collections/pull/311', 'Passing null as $firstResult to the constructor of %s is deprecated. Pass 0 instead or omit the argument.', self::class);
         }
         $this->setFirstResult($firstResult);
         $this->setMaxResults($maxResults);
@@ -73,7 +73,7 @@ class Criteria
      *
      * @return $this
      */
-    public function where(\WDFQVendorFree\Doctrine\Common\Collections\Expr\Expression $expression)
+    public function where(Expression $expression)
     {
         $this->expression = $expression;
         return $this;
@@ -84,12 +84,12 @@ class Criteria
      *
      * @return $this
      */
-    public function andWhere(\WDFQVendorFree\Doctrine\Common\Collections\Expr\Expression $expression)
+    public function andWhere(Expression $expression)
     {
         if ($this->expression === null) {
             return $this->where($expression);
         }
-        $this->expression = new \WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression(\WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression::TYPE_AND, [$this->expression, $expression]);
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_AND, [$this->expression, $expression]);
         return $this;
     }
     /**
@@ -98,12 +98,12 @@ class Criteria
      *
      * @return $this
      */
-    public function orWhere(\WDFQVendorFree\Doctrine\Common\Collections\Expr\Expression $expression)
+    public function orWhere(Expression $expression)
     {
         if ($this->expression === null) {
             return $this->where($expression);
         }
-        $this->expression = new \WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression(\WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression::TYPE_OR, [$this->expression, $expression]);
+        $this->expression = new CompositeExpression(CompositeExpression::TYPE_OR, [$this->expression, $expression]);
         return $this;
     }
     /**
@@ -138,8 +138,8 @@ class Criteria
      */
     public function orderBy(array $orderings)
     {
-        $this->orderings = \array_map(static function (string $ordering) : string {
-            return \strtoupper($ordering) === \WDFQVendorFree\Doctrine\Common\Collections\Criteria::ASC ? \WDFQVendorFree\Doctrine\Common\Collections\Criteria::ASC : \WDFQVendorFree\Doctrine\Common\Collections\Criteria::DESC;
+        $this->orderings = array_map(static function (string $ordering): string {
+            return strtoupper($ordering) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
         }, $orderings);
         return $this;
     }
@@ -162,7 +162,7 @@ class Criteria
     public function setFirstResult($firstResult)
     {
         if ($firstResult === null) {
-            \WDFQVendorFree\Doctrine\Deprecations\Deprecation::triggerIfCalledFromOutside('doctrine/collections', 'https://github.com/doctrine/collections/pull/311', 'Passing null to %s() is deprecated, pass 0 instead.', __METHOD__);
+            Deprecation::triggerIfCalledFromOutside('doctrine/collections', 'https://github.com/doctrine/collections/pull/311', 'Passing null to %s() is deprecated, pass 0 instead.', __METHOD__);
         }
         $this->firstResult = $firstResult;
         return $this;

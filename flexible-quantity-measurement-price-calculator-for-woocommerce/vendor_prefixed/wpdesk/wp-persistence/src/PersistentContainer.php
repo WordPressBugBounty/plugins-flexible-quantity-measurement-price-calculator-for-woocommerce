@@ -2,15 +2,15 @@
 
 namespace WDFQVendorFree\WPDesk\Persistence;
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
+use WDFQVendorFree\Psr\Container\ContainerExceptionInterface;
+use WDFQVendorFree\Psr\Container\ContainerInterface;
 /**
  * Container that you can use to save some values.
  * When class require only read capabilities use ContainerInterface. When requires to write use this interface.
  *
  * @package WPDesk\Persistence
  */
-interface PersistentContainer extends \Psr\Container\ContainerInterface
+interface PersistentContainer extends ContainerInterface
 {
     /**
      * Similar to ::get but throws no exception when element has not been found.
@@ -44,5 +44,5 @@ interface PersistentContainer extends \Psr\Container\ContainerInterface
     /**
      * @inheritDoc
      */
-    public function has($id) : bool;
+    public function has($id): bool;
 }

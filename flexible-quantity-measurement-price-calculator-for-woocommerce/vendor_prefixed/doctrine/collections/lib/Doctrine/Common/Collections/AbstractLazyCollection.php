@@ -13,7 +13,7 @@ use Traversable;
  * @psalm-template T
  * @template-implements Collection<TKey,T>
  */
-abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common\Collections\Collection
+abstract class AbstractLazyCollection implements Collection
 {
     /**
      * The backed collection to use
@@ -176,7 +176,7 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
     /**
      * {@inheritDoc}
      */
-    public function exists(\Closure $p)
+    public function exists(Closure $p)
     {
         $this->initialize();
         return $this->collection->exists($p);
@@ -184,7 +184,7 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
     /**
      * {@inheritDoc}
      */
-    public function filter(\Closure $p)
+    public function filter(Closure $p)
     {
         $this->initialize();
         return $this->collection->filter($p);
@@ -192,7 +192,7 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
     /**
      * {@inheritDoc}
      */
-    public function forAll(\Closure $p)
+    public function forAll(Closure $p)
     {
         $this->initialize();
         return $this->collection->forAll($p);
@@ -200,7 +200,7 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
     /**
      * {@inheritDoc}
      */
-    public function map(\Closure $func)
+    public function map(Closure $func)
     {
         $this->initialize();
         return $this->collection->map($func);
@@ -208,7 +208,7 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
     /**
      * {@inheritDoc}
      */
-    public function partition(\Closure $p)
+    public function partition(Closure $p)
     {
         $this->initialize();
         return $this->collection->partition($p);
@@ -314,7 +314,7 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
         $this->doInitialize();
         $this->initialized = \true;
         if ($this->collection === null) {
-            throw new \LogicException('You must initialize the collection property in the doInitialize() method.');
+            throw new LogicException('You must initialize the collection property in the doInitialize() method.');
         }
     }
     /**
@@ -322,5 +322,5 @@ abstract class AbstractLazyCollection implements \WDFQVendorFree\Doctrine\Common
      *
      * @return void
      */
-    protected abstract function doInitialize();
+    abstract protected function doInitialize();
 }

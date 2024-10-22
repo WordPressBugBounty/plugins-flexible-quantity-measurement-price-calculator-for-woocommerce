@@ -19,7 +19,7 @@ use function sprintf;
 use function strlen;
 use function unserialize;
 use const PHP_VERSION_ID;
-final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\InstantiatorInterface
+final class Instantiator implements InstantiatorInterface
 {
     /**
      * Markers used internally by PHP to define whether {@see \unserialize} should invoke
@@ -81,7 +81,7 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
     {
         $factory = self::$cachedInstantiators[$className] = $this->buildFactory($className);
         $instance = $factory();
-        if ($this->isSafeToClone(new \ReflectionClass($instance))) {
+        if ($this->isSafeToClone(new ReflectionClass($instance))) {
             self::$cachedCloneables[$className] = clone $instance;
         }
         return $instance;
@@ -100,16 +100,16 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function buildFactory(string $className) : callable
+    private function buildFactory(string $className): callable
     {
         $reflectionClass = $this->getReflectionClass($className);
         if ($this->isInstantiableViaReflection($reflectionClass)) {
             return [$reflectionClass, 'newInstanceWithoutConstructor'];
         }
-        $serializedString = \sprintf('%s:%d:"%s":0:{}', \is_subclass_of($className, \Serializable::class) ? self::SERIALIZATION_FORMAT_USE_UNSERIALIZER : self::SERIALIZATION_FORMAT_AVOID_UNSERIALIZER, \strlen($className), $className);
+        $serializedString = sprintf('%s:%d:"%s":0:{}', is_subclass_of($className, Serializable::class) ? self::SERIALIZATION_FORMAT_USE_UNSERIALIZER : self::SERIALIZATION_FORMAT_AVOID_UNSERIALIZER, strlen($className), $className);
         $this->checkIfUnSerializationIsSupported($reflectionClass, $serializedString);
-        return static function () use($serializedString) {
-            return \unserialize($serializedString);
+        return static function () use ($serializedString) {
+            return unserialize($serializedString);
         };
     }
     /**
@@ -122,17 +122,17 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function getReflectionClass(string $className) : \ReflectionClass
+    private function getReflectionClass(string $className): ReflectionClass
     {
-        if (!\class_exists($className)) {
-            throw \WDFQVendorFree\Doctrine\Instantiator\Exception\InvalidArgumentException::fromNonExistingClass($className);
+        if (!class_exists($className)) {
+            throw InvalidArgumentException::fromNonExistingClass($className);
         }
-        if (\PHP_VERSION_ID >= 80100 && \enum_exists($className, \false)) {
-            throw \WDFQVendorFree\Doctrine\Instantiator\Exception\InvalidArgumentException::fromEnum($className);
+        if (PHP_VERSION_ID >= 80100 && enum_exists($className, \false)) {
+            throw InvalidArgumentException::fromEnum($className);
         }
-        $reflection = new \ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
         if ($reflection->isAbstract()) {
-            throw \WDFQVendorFree\Doctrine\Instantiator\Exception\InvalidArgumentException::fromAbstractClass($reflection);
+            throw InvalidArgumentException::fromAbstractClass($reflection);
         }
         return $reflection;
     }
@@ -143,16 +143,16 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function checkIfUnSerializationIsSupported(\ReflectionClass $reflectionClass, string $serializedString) : void
+    private function checkIfUnSerializationIsSupported(ReflectionClass $reflectionClass, string $serializedString): void
     {
-        \set_error_handler(static function (int $code, string $message, string $file, int $line) use($reflectionClass, &$error) : bool {
-            $error = \WDFQVendorFree\Doctrine\Instantiator\Exception\UnexpectedValueException::fromUncleanUnSerialization($reflectionClass, $message, $code, $file, $line);
+        set_error_handler(static function (int $code, string $message, string $file, int $line) use ($reflectionClass, &$error): bool {
+            $error = UnexpectedValueException::fromUncleanUnSerialization($reflectionClass, $message, $code, $file, $line);
             return \true;
         });
         try {
             $this->attemptInstantiationViaUnSerialization($reflectionClass, $serializedString);
         } finally {
-            \restore_error_handler();
+            restore_error_handler();
         }
         if ($error) {
             throw $error;
@@ -165,12 +165,12 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function attemptInstantiationViaUnSerialization(\ReflectionClass $reflectionClass, string $serializedString) : void
+    private function attemptInstantiationViaUnSerialization(ReflectionClass $reflectionClass, string $serializedString): void
     {
         try {
-            \unserialize($serializedString);
-        } catch (\Exception $exception) {
-            throw \WDFQVendorFree\Doctrine\Instantiator\Exception\UnexpectedValueException::fromSerializationTriggeredException($reflectionClass, $exception);
+            unserialize($serializedString);
+        } catch (Exception $exception) {
+            throw UnexpectedValueException::fromSerializationTriggeredException($reflectionClass, $exception);
         }
     }
     /**
@@ -178,7 +178,7 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function isInstantiableViaReflection(\ReflectionClass $reflectionClass) : bool
+    private function isInstantiableViaReflection(ReflectionClass $reflectionClass): bool
     {
         return !($this->hasInternalAncestors($reflectionClass) && $reflectionClass->isFinal());
     }
@@ -189,7 +189,7 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function hasInternalAncestors(\ReflectionClass $reflectionClass) : bool
+    private function hasInternalAncestors(ReflectionClass $reflectionClass): bool
     {
         do {
             if ($reflectionClass->isInternal()) {
@@ -208,8 +208,8 @@ final class Instantiator implements \WDFQVendorFree\Doctrine\Instantiator\Instan
      *
      * @template T of object
      */
-    private function isSafeToClone(\ReflectionClass $reflectionClass) : bool
+    private function isSafeToClone(ReflectionClass $reflectionClass): bool
     {
-        return $reflectionClass->isCloneable() && !$reflectionClass->hasMethod('__clone') && !$reflectionClass->isSubclassOf(\ArrayIterator::class);
+        return $reflectionClass->isCloneable() && !$reflectionClass->hasMethod('__clone') && !$reflectionClass->isSubclassOf(ArrayIterator::class);
     }
 }

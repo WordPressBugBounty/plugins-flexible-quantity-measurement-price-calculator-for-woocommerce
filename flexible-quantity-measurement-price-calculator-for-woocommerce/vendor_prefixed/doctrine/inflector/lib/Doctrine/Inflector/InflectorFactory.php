@@ -13,27 +13,27 @@ use InvalidArgumentException;
 use function sprintf;
 final class InflectorFactory
 {
-    public static function create() : \WDFQVendorFree\Doctrine\Inflector\LanguageInflectorFactory
+    public static function create(): LanguageInflectorFactory
     {
-        return self::createForLanguage(\WDFQVendorFree\Doctrine\Inflector\Language::ENGLISH);
+        return self::createForLanguage(Language::ENGLISH);
     }
-    public static function createForLanguage(string $language) : \WDFQVendorFree\Doctrine\Inflector\LanguageInflectorFactory
+    public static function createForLanguage(string $language): LanguageInflectorFactory
     {
         switch ($language) {
-            case \WDFQVendorFree\Doctrine\Inflector\Language::ENGLISH:
-                return new \WDFQVendorFree\Doctrine\Inflector\Rules\English\InflectorFactory();
-            case \WDFQVendorFree\Doctrine\Inflector\Language::FRENCH:
-                return new \WDFQVendorFree\Doctrine\Inflector\Rules\French\InflectorFactory();
-            case \WDFQVendorFree\Doctrine\Inflector\Language::NORWEGIAN_BOKMAL:
-                return new \WDFQVendorFree\Doctrine\Inflector\Rules\NorwegianBokmal\InflectorFactory();
-            case \WDFQVendorFree\Doctrine\Inflector\Language::PORTUGUESE:
-                return new \WDFQVendorFree\Doctrine\Inflector\Rules\Portuguese\InflectorFactory();
-            case \WDFQVendorFree\Doctrine\Inflector\Language::SPANISH:
-                return new \WDFQVendorFree\Doctrine\Inflector\Rules\Spanish\InflectorFactory();
-            case \WDFQVendorFree\Doctrine\Inflector\Language::TURKISH:
-                return new \WDFQVendorFree\Doctrine\Inflector\Rules\Turkish\InflectorFactory();
+            case Language::ENGLISH:
+                return new English\InflectorFactory();
+            case Language::FRENCH:
+                return new French\InflectorFactory();
+            case Language::NORWEGIAN_BOKMAL:
+                return new NorwegianBokmal\InflectorFactory();
+            case Language::PORTUGUESE:
+                return new Portuguese\InflectorFactory();
+            case Language::SPANISH:
+                return new Spanish\InflectorFactory();
+            case Language::TURKISH:
+                return new Turkish\InflectorFactory();
             default:
-                throw new \InvalidArgumentException(\sprintf('Language "%s" is not supported.', $language));
+                throw new InvalidArgumentException(sprintf('Language "%s" is not supported.', $language));
         }
     }
 }

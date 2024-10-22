@@ -19,7 +19,7 @@ global $post;
 ?></span>
 			<?php 
 echo \wc_help_tip(\wp_kses_post(\__('Configure the starting-ending range, inclusive, of measurements to match this rule.  The first matched rule will be used to determine the price.  The final rule can be defined without an ending range to match all measurements greater than or equal to its starting range.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')));
-//phpcs:ignore
+//phpcs:ignore 
 ?>
 		</th>
 		<th class="price-per-unit-column">
@@ -30,7 +30,7 @@ echo \wc_help_tip(\wp_kses_post(\__('Configure the starting-ending range, inclus
 ?></span>
 			<?php 
 echo \wc_help_tip(\wp_kses_post(\__('Set the price per unit for the configured range.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')));
-//phpcs:ignore
+//phpcs:ignore 
 ?>
 		</th>
 		<th class="sale-price-per-unit-column">
@@ -41,14 +41,14 @@ echo \wc_help_tip(\wp_kses_post(\__('Set the price per unit for the configured r
 ?></span>
 			<?php 
 echo \wc_help_tip(\wp_kses_post(\__('Set a sale price per unit for the configured range.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')));
-//phpcs:ignore
+//phpcs:ignore 
 ?>
 		</th>
 	</tr>
 	</thead>
 	<tbody>
 		<?php 
-$settings = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings(\wc_get_product($post->ID));
+$settings = new Settings(\wc_get_product($post->ID));
 $raw_settings = $settings->get_settings();
 $rules = $product ? $product->get_meta('_wc_price_calculator_pricing_rules') : null;
 if (!empty($rules)) {

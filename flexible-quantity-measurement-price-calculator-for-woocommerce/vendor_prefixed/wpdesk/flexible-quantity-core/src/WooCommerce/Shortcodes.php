@@ -10,19 +10,19 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Shortcodes\PricingTable;
  *
  * @since 3.14.0
  */
-class Shortcodes implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class Shortcodes implements Hookable
 {
     public function hooks()
     {
-        \add_shortcode('fq_price_calculator_pricing_table', [$this, 'pricing_table_shortcode']);
+        add_shortcode('fq_price_calculator_pricing_table', [$this, 'pricing_table_shortcode']);
     }
     /**
      * @param array $atts associative array of shortcode parameters
      *
      * @return string shortcode content
      */
-    public function pricing_table_shortcode(array $atts) : string
+    public function pricing_table_shortcode(array $atts): string
     {
-        return \WC_Shortcodes::shortcode_wrapper([\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Shortcodes\PricingTable::class, 'output'], $atts, ['class' => 'wc-measurement-price-calculator']);
+        return WC_Shortcodes::shortcode_wrapper([PricingTable::class, 'output'], $atts, ['class' => 'wc-measurement-price-calculator']);
     }
 }

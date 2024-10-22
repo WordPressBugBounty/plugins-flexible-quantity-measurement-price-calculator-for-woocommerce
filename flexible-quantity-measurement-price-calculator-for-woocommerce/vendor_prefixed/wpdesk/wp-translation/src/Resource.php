@@ -27,11 +27,11 @@ class Resource implements \ArrayAccess, \Countable, \IteratorAggregate, \JsonSer
      *
      * @return \self
      */
-    public function from_json(string $json) : self
+    public function from_json(string $json): self
     {
-        $input = \json_decode($json, \true);
-        $data = \reset($input);
-        $locale = \key($input);
+        $input = json_decode($json, \true);
+        $data = reset($input);
+        $locale = key($input);
         return new self($locale, $data);
     }
     /**
@@ -50,62 +50,62 @@ class Resource implements \ArrayAccess, \Countable, \IteratorAggregate, \JsonSer
     /**
      * @return string
      */
-    public function get_locale() : string
+    public function get_locale(): string
     {
-        return \str_replace('_', '-', \Locale::composeLocale($this->locale));
+        return str_replace('_', '-', \Locale::composeLocale($this->locale));
     }
     /**
      * @param array   $data
      * @param boolean $overwrite
      */
-    public function add_data(array $data, bool $overwrite = \true) : void
+    public function add_data(array $data, bool $overwrite = \true): void
     {
         if ($overwrite) {
-            $this->data = \array_merge($this->data, $data);
+            $this->data = array_merge($this->data, $data);
         } else {
-            $this->data = \array_merge($data, $this->data);
+            $this->data = array_merge($data, $this->data);
         }
     }
-    public function merge(self $resource, bool $overwrite = \true) : void
+    public function merge(self $resource, bool $overwrite = \true): void
     {
         if ($this->get_locale() !== $resource->get_locale()) {
-            \trigger_error('Attempting to merge resources of different locale', \E_USER_NOTICE);
+            trigger_error('Attempting to merge resources of different locale', \E_USER_NOTICE);
         }
         $this->add_data($resource->data, $overwrite);
     }
     /**
      * @return int
      */
-    public function count() : int
+    public function count(): int
     {
-        return \sizeof($this->data);
+        return sizeof($this->data);
     }
-    public function getIterator() : \ArrayIterator
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->data);
+        return new ArrayIterator($this->data);
     }
-    public function offsetExists($offset) : bool
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
-    public function offsetGet($offset) : string
+    public function offsetGet($offset): string
     {
         return $this->data[$offset];
     }
-    public function offsetSet($offset, $value) : void
+    public function offsetSet($offset, $value): void
     {
         $this->data[$offset] = $value;
     }
-    public function offsetUnset($offset) : void
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
     /**
      * @return string
      */
-    public function jsonSerialize() : string
+    public function jsonSerialize(): string
     {
         $output = [$this->get_locale() => $this->data];
-        return \json_encode($output, \JSON_HEX_AMP | \JSON_HEX_APOS | \JSON_HEX_QUOT | \JSON_HEX_TAG);
+        return json_encode($output, \JSON_HEX_AMP | \JSON_HEX_APOS | \JSON_HEX_QUOT | \JSON_HEX_TAG);
     }
 }

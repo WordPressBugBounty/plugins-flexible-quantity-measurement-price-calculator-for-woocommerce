@@ -9,7 +9,7 @@ use WDFQVendorFree\WPDesk\Persistence\PersistentContainer;
  * Can store data using WordPress Post metadata.
  * Warning: stored string '' is considered unset.
  */
-final class TemplatePersistentContainer implements \WDFQVendorFree\WPDesk\Persistence\PersistentContainer
+final class TemplatePersistentContainer implements PersistentContainer
 {
     use FallbackFromGetTrait;
     /** @var int */
@@ -24,7 +24,7 @@ final class TemplatePersistentContainer implements \WDFQVendorFree\WPDesk\Persis
     public function set(string $key, $value)
     {
         if ($value !== null) {
-            \update_post_meta($this->post_id, $key, $value);
+            update_post_meta($this->post_id, $key, $value);
         } else {
             $this->delete($key);
         }
@@ -32,14 +32,14 @@ final class TemplatePersistentContainer implements \WDFQVendorFree\WPDesk\Persis
     public function add(string $key, $value)
     {
         if ($value !== null) {
-            \add_post_meta($this->post_id, $key, $value);
+            add_post_meta($this->post_id, $key, $value);
         }
     }
     public function get($key)
     {
-        $meta = \get_post_meta($this->post_id, $key);
-        if (\count($meta) === 0) {
-            throw new \WDFQVendorFree\WPDesk\Persistence\ElementNotExistsException(\sprintf('Element %s not exists!', $key));
+        $meta = get_post_meta($this->post_id, $key);
+        if (count($meta) === 0) {
+            throw new ElementNotExistsException(sprintf('Element %s not exists!', $key));
         }
         return $meta[0];
     }
@@ -48,12 +48,12 @@ final class TemplatePersistentContainer implements \WDFQVendorFree\WPDesk\Persis
      *
      * @return bool
      */
-    public function has($id) : bool
+    public function has($id): bool
     {
-        return \metadata_exists('post', $this->post_id, $id);
+        return metadata_exists('post', $this->post_id, $id);
     }
     public function delete(string $key)
     {
-        \delete_post_meta($this->post_id, $key);
+        delete_post_meta($this->post_id, $key);
     }
 }

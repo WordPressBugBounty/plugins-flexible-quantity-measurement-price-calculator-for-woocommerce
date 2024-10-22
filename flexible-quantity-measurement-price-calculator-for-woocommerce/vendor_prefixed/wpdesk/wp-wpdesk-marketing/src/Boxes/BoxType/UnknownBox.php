@@ -7,7 +7,7 @@
  */
 namespace WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType;
 
-class UnknownBox extends \WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType\Box
+class UnknownBox extends Box
 {
     const TYPE = 'unknown';
     /**
@@ -15,7 +15,7 @@ class UnknownBox extends \WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType\
      *
      * @return string
      */
-    public function render(array $args = []) : string
+    public function render(array $args = []): string
     {
         return '<!-- unknown marketing box -->';
     }

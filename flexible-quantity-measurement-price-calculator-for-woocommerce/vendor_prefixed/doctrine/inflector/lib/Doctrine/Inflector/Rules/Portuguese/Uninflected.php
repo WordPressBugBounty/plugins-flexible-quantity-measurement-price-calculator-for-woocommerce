@@ -7,22 +7,22 @@ use WDFQVendorFree\Doctrine\Inflector\Rules\Pattern;
 final class Uninflected
 {
     /** @return Pattern[] */
-    public static function getSingular() : iterable
+    public static function getSingular(): iterable
     {
         yield from self::getDefault();
     }
     /** @return Pattern[] */
-    public static function getPlural() : iterable
+    public static function getPlural(): iterable
     {
         yield from self::getDefault();
     }
     /** @return Pattern[] */
-    private static function getDefault() : iterable
+    private static function getDefault(): iterable
     {
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('tórax'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('tênis'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('ônibus'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('lápis'));
-        (yield new \WDFQVendorFree\Doctrine\Inflector\Rules\Pattern('fênix'));
+        yield new Pattern('tórax');
+        yield new Pattern('tênis');
+        yield new Pattern('ônibus');
+        yield new Pattern('lápis');
+        yield new Pattern('fênix');
     }
 }

@@ -13,7 +13,7 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\Price
  * 1. Before add to cart (regular product) - price from FQ settings (template)
  * 2. After add to cart (product item) - price calculated based on mesurements (quantity)
  */
-class PriceModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class PriceModifier implements Hookable
 {
     /**
      * @var SettingsContainer
@@ -23,7 +23,7 @@ class PriceModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hooka
      * @var bool
      */
     private $inside_calulate_totals = \false;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer $settings_container)
+    public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;
     }
@@ -123,7 +123,7 @@ class PriceModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hooka
             return $price;
         }
         $total_quantity = $quantity * $measurement_needed;
-        $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($settings->get_pricing_unit(), $total_quantity);
+        $measurement = new Measurement($settings->get_pricing_unit(), $total_quantity);
         $rule_price = $settings->get_pricing_rules_price($measurement);
         return $rule_price > 0 ? (float) $rule_price * $measurement_needed : $price;
     }

@@ -26,5 +26,5 @@ interface Selectable
      * @return Collection<mixed>&Selectable<mixed>
      * @psalm-return Collection<TKey,T>&Selectable<TKey,T>
      */
-    public function matching(\WDFQVendorFree\Doctrine\Common\Collections\Criteria $criteria);
+    public function matching(Criteria $criteria);
 }

@@ -7,13 +7,13 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContaine
 /**
  * Modifies product settings.
  */
-class ProductModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class ProductModifier implements Hookable
 {
     /**
      * @var SettingsContainer
      */
     private $settings_container;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer $settings_container)
+    public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;
     }

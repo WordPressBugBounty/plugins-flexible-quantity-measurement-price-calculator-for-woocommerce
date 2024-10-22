@@ -65,7 +65,7 @@ echo \esc_attr($measurement->get_unit_common());
 			autocomplete="off"
 			<?php 
 echo \implode(' ', $attributes);
-// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 ?>
 		/>
 

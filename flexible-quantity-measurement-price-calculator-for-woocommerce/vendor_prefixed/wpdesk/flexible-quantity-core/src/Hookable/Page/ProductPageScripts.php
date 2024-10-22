@@ -4,7 +4,7 @@ namespace WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page;
 
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
-class ProductPageScripts implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class ProductPageScripts implements Hookable
 {
     /**
      * @var SettingsContainer
@@ -19,7 +19,7 @@ class ProductPageScripts implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\
      */
     private $script_version;
     public const NONCE_CONTEXT = 'fq_calculator_nonce';
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer $settings_container, string $assets_url, string $script_version)
+    public function __construct(SettingsContainer $settings_container, string $assets_url, string $script_version)
     {
         $this->settings_container = $settings_container;
         $this->assets_url = $assets_url;
@@ -27,7 +27,7 @@ class ProductPageScripts implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\
     }
     public function hooks()
     {
-        \add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
     }
     /**
      * Enqueue scripts

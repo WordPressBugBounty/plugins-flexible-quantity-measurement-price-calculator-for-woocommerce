@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -16,7 +16,7 @@ WooCommerce price calculator. Sell products by unit, dimension or volume. Calcul
 
 Flexible Quantity - Measurement Price Calculator for WooCommerce is a plugin that will let you sell products based on their weight, dimension, area, or volume. Your customers will be able to choose the quantity of a new unit of measure. You will be able to set the price for the unit, set the increment value of the unit, and set the minimum and maximum product quantity.
 
-### Measurement Price Calculator for WooCommerce - Plugin Features 🪟
+### Measurement Price Calculator for WooCommerce - Plugin Features ✅
 
 See the main features of the free version:
 
@@ -31,9 +31,8 @@ See the main features of the free version:
 * Set the **minimum and maximum product quantity**,
 * Extend the WooCommerce product with **new units and prices**,
 * Compatible with the [Flexible PDF Invoices for WooCommerce & WordPress plugin](https://wordpress.org/plugins/flexible-invoices/). Sell with **new units of measure** and show them on your WooCommerce PDF invoices!
-* Compatible with product variations
-* Create measurement setting templates to save your time
-* [NEW] more user-friendly dashboard
+* [NEW] Create measurement setting templates to save your time,
+* [NEW] more user-friendly dashboard.
 
 #### Measurement Price Calculator in WooCommerce for free 🚀
 
@@ -96,7 +95,8 @@ Do you need a more complex solution like setting unit dimensions, a pricing tabl
 * [PRO] **Shipping class based on the product quantity**,
 * [PRO] WooCommerce quantity based product pricing and flexible shipping cost,
 * [PRO] **Dynamic Price per quantity**,
-* [PRO] Add custom units of measure, for example, box, bundle, or pallet.
+* [PRO] Add custom units of measure, for example, box, bundle, or pallet,
+* [PRO] Support for **product variations**.
 
 As you can see, the Measurement Price Calculator for WooCommerce PRO gives you **custom units of measure, unit dimensions, and advanced product price calculations** 🚀!
 
@@ -165,7 +165,7 @@ In the free version of the plugin, you can use the following product units of me
 * **Item** 🛒
 * **Weight** (g, kg, t, oz, lbs, tn) ⚖️
 * **Dimension** (mm, cm, m, km, in, ft, yd, mi) 📏
-* **Area** (sq mm, sq cm, sq m, sq km, acs, ha, sq. in., sq. ft., sq. yd.) 🪟
+* **Area** (sq mm, sq cm, sq m, sq km, acs, ha, sq. in., sq. ft., sq. yd.)
 * **Volume** (ml, l, cup, pt, qt, gal, fl. oz.) 🥤
 * **Volume dimensions** (cu cm, cu m, cu. in, cu. ft., cu. yt.) 🧊
 
@@ -330,6 +330,9 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.1.4 - 2024-10-22 =
+* Readme update
 
 = 2.1.3 - 2024-09-07 =
 * Added support for WooCommerce 9.3

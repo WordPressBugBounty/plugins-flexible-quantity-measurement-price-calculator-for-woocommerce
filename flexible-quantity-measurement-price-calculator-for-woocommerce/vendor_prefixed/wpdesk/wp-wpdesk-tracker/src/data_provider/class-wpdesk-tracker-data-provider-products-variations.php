@@ -14,7 +14,7 @@ namespace WDFQVendorFree;
 if (!\defined('ABSPATH')) {
     exit;
 }
-if (!\class_exists('WDFQVendorFree\\WPDesk_Tracker_Data_Provider_Products_Variations')) {
+if (!\class_exists('WDFQVendorFree\WPDesk_Tracker_Data_Provider_Products_Variations')) {
     /**
      * Class WPDesk_Tracker_Data_Provider_Products_Variations
      */

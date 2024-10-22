@@ -3,9 +3,9 @@
 declare (strict_types=1);
 namespace WDFQVendorFree\Doctrine\Inflector;
 
-class NoopWordInflector implements \WDFQVendorFree\Doctrine\Inflector\WordInflector
+class NoopWordInflector implements WordInflector
 {
-    public function inflect(string $word) : string
+    public function inflect(string $word): string
     {
         return $word;
     }

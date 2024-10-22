@@ -2,8 +2,8 @@
 
 namespace WDFQVendorFree\WPDesk\Translation;
 
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
+use WDFQVendorFree\Psr\Log\LoggerInterface;
+use WDFQVendorFree\Psr\Log\NullLogger;
 class Translate
 {
     const DEFAULT_LANG = 'en';
@@ -25,28 +25,28 @@ class Translate
     public function __construct(string $lang)
     {
         $this->lang = $lang;
-        $this->set_logger(new \Psr\Log\NullLogger());
+        $this->set_logger(new NullLogger());
     }
     /**
      * @param LoggerInterface $logger
      *
      * @return void
      */
-    public function set_logger(\Psr\Log\LoggerInterface $logger) : void
+    public function set_logger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }
-    private function debug($message) : void
+    private function debug($message): void
     {
         $this->logger->debug($message, ['resource' => 'wpdesk-translation']);
     }
     /**
      * @param string $file
      */
-    public function add_resource_file(string $file) : void
+    public function add_resource_file(string $file): void
     {
-        if (\is_file($file)) {
-            $contents = \file_get_contents($file);
+        if (is_file($file)) {
+            $contents = file_get_contents($file);
             if ($contents === \false) {
                 $this->debug('Unable to load file: ' . $file);
             } else {
@@ -59,14 +59,14 @@ class Translate
     /**
      * @param string $resource
      */
-    public function add_resource_string(string $resource) : void
+    public function add_resource_string(string $resource): void
     {
-        $data = \json_decode($resource, \true);
-        if (\json_last_error() !== \JSON_ERROR_NONE) {
-            if (\function_exists('json_last_error_msg')) {
-                $this->debug(\json_last_error_msg());
+        $data = json_decode($resource, \true);
+        if (json_last_error() !== \JSON_ERROR_NONE) {
+            if (function_exists('json_last_error_msg')) {
+                $this->debug(json_last_error_msg());
             }
-            $this->debug('Error parsing JSON: ' . \json_last_error());
+            $this->debug('Error parsing JSON: ' . json_last_error());
         } else {
             $this->add_resource_array($data);
         }
@@ -74,7 +74,7 @@ class Translate
     /**
      * @param array $resource The resource array
      */
-    public function add_resource_array(array $resource) : void
+    public function add_resource_array(array $resource): void
     {
         foreach ($resource as $locale => $value) {
             $this->add_subresource($value, $locale);
@@ -86,9 +86,9 @@ class Translate
      * @param array  $subresource The sub-resource value
      * @param string $locale
      */
-    private function add_subresource(array $subresource, string $locale) : void
+    private function add_subresource(array $subresource, string $locale): void
     {
-        $resource = new \WDFQVendorFree\WPDesk\Translation\Resource($locale, $subresource);
+        $resource = new Resource($locale, $subresource);
         if (isset($this->data[$locale])) {
             $this->data[$locale]->merge($resource);
         } else {
@@ -101,7 +101,7 @@ class Translate
      *
      * @return string
      */
-    public function __(string $key, ?string $lang = null) : string
+    public function __(string $key, ?string $lang = null): string
     {
         if ($lang === null) {
             $lang = $this->lang;
@@ -120,7 +120,7 @@ class Translate
      * @param string      $key
      * @param string|null $lang
      */
-    public function _e(string $key, ?string $lang = null) : void
+    public function _e(string $key, ?string $lang = null): void
     {
         echo $this->__($key, $lang);
     }

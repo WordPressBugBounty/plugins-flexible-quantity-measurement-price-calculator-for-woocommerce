@@ -35,7 +35,9 @@
 			"wpdesk/wp-logs": true
 		},
 		"platform-check": false,
-		"gitlab-domains": ["gitlab.wpdesk.dev"]
+		"gitlab-domains": [
+			"gitlab.wpdesk.dev"
+		]
 	},
 	"prefer-stable": true,
 	"minimum-stability": "stable",
@@ -49,8 +51,7 @@
 	"require-dev": {
 		"10up/wp_mock": "*",
 		"phpunit/phpunit": "^9",
-		"composer/composer": "1.10.25",
-		"wpdesk/wp-wpdesk-composer": "^2",
+		"wpdesk/wp-wpdesk-composer": "^3.0",
 		"wpdesk/wp-codeception": "^2",
 		"wpdesk/wp-plugin-flow-free": "*",
 		"wpdesk/wp-logs": "^1",
@@ -77,20 +78,10 @@
 		"phpunit-integration": "phpunit --configuration phpunit-integration.xml --coverage-text --colors=never",
 		"docs": "apigen generate"
 	},
-	"repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.packagist.org",
-            "options": {
-                "priority": 0
-            }
-        },
-        {
-            "type": "composer",
-            "url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer",
-            "options": {
-                "priority": 1
-            }
-        }
-    ]
+	"repositories": {
+		"wpdesk": {
+			"type": "composer",
+			"url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
+		}
+	}
 }

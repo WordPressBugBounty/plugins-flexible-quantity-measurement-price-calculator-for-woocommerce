@@ -23,7 +23,7 @@ use function substr;
  * This closure can be used with {@Collection#filter()} and is used internally
  * by {@ArrayCollection#select()}.
  */
-class ClosureExpressionVisitor extends \WDFQVendorFree\Doctrine\Common\Collections\Expr\ExpressionVisitor
+class ClosureExpressionVisitor extends ExpressionVisitor
 {
     /**
      * Accesses the field of a given object. This field has to be public
@@ -37,42 +37,42 @@ class ClosureExpressionVisitor extends \WDFQVendorFree\Doctrine\Common\Collectio
      */
     public static function getObjectFieldValue($object, $field)
     {
-        if (\strpos($field, '.') !== \false) {
-            [$field, $subField] = \explode('.', $field, 2);
+        if (strpos($field, '.') !== \false) {
+            [$field, $subField] = explode('.', $field, 2);
             $object = self::getObjectFieldValue($object, $field);
             return self::getObjectFieldValue($object, $subField);
         }
-        if (\is_array($object)) {
+        if (is_array($object)) {
             return $object[$field];
         }
         $accessors = ['get', 'is', ''];
         foreach ($accessors as $accessor) {
             $accessor .= $field;
-            if (\method_exists($object, $accessor)) {
+            if (method_exists($object, $accessor)) {
                 return $object->{$accessor}();
             }
         }
-        if (\preg_match('/^is[A-Z]+/', $field) === 1 && \method_exists($object, $field)) {
+        if (preg_match('/^is[A-Z]+/', $field) === 1 && method_exists($object, $field)) {
             return $object->{$field}();
         }
         // __call should be triggered for get.
         $accessor = $accessors[0] . $field;
-        if (\method_exists($object, '__call')) {
+        if (method_exists($object, '__call')) {
             return $object->{$accessor}();
         }
-        if ($object instanceof \ArrayAccess) {
+        if ($object instanceof ArrayAccess) {
             return $object[$field];
         }
         if (isset($object->{$field})) {
             return $object->{$field};
         }
         // camelcase field name to support different variable naming conventions
-        $ccField = \preg_replace_callback('/_(.?)/', static function ($matches) {
-            return \strtoupper($matches[1]);
+        $ccField = preg_replace_callback('/_(.?)/', static function ($matches) {
+            return strtoupper($matches[1]);
         }, $field);
         foreach ($accessors as $accessor) {
             $accessor .= $ccField;
-            if (\method_exists($object, $accessor)) {
+            if (method_exists($object, $accessor)) {
                 return $object->{$accessor}();
             }
         }
@@ -86,16 +86,16 @@ class ClosureExpressionVisitor extends \WDFQVendorFree\Doctrine\Common\Collectio
      *
      * @return Closure
      */
-    public static function sortByField($name, $orientation = 1, ?\Closure $next = null)
+    public static function sortByField($name, $orientation = 1, ?Closure $next = null)
     {
         if (!$next) {
-            $next = static function () : int {
+            $next = static function (): int {
                 return 0;
             };
         }
-        return static function ($a, $b) use($name, $next, $orientation) : int {
-            $aValue = \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($a, $name);
-            $bValue = \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($b, $name);
+        return static function ($a, $b) use ($name, $next, $orientation): int {
+            $aValue = ClosureExpressionVisitor::getObjectFieldValue($a, $name);
+            $bValue = ClosureExpressionVisitor::getObjectFieldValue($b, $name);
             if ($aValue === $bValue) {
                 return $next($a, $b);
             }
@@ -105,99 +105,99 @@ class ClosureExpressionVisitor extends \WDFQVendorFree\Doctrine\Common\Collectio
     /**
      * {@inheritDoc}
      */
-    public function walkComparison(\WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison $comparison)
+    public function walkComparison(Comparison $comparison)
     {
         $field = $comparison->getField();
         $value = $comparison->getValue()->getValue();
         // shortcut for walkValue()
         switch ($comparison->getOperator()) {
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::EQ:
-                return static function ($object) use($field, $value) : bool {
-                    return \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
+            case Comparison::EQ:
+                return static function ($object) use ($field, $value): bool {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) === $value;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::NEQ:
-                return static function ($object) use($field, $value) : bool {
-                    return \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
+            case Comparison::NEQ:
+                return static function ($object) use ($field, $value): bool {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) !== $value;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::LT:
-                return static function ($object) use($field, $value) : bool {
-                    return \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
+            case Comparison::LT:
+                return static function ($object) use ($field, $value): bool {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) < $value;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::LTE:
-                return static function ($object) use($field, $value) : bool {
-                    return \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
+            case Comparison::LTE:
+                return static function ($object) use ($field, $value): bool {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) <= $value;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::GT:
-                return static function ($object) use($field, $value) : bool {
-                    return \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
+            case Comparison::GT:
+                return static function ($object) use ($field, $value): bool {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) > $value;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::GTE:
-                return static function ($object) use($field, $value) : bool {
-                    return \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
+            case Comparison::GTE:
+                return static function ($object) use ($field, $value): bool {
+                    return ClosureExpressionVisitor::getObjectFieldValue($object, $field) >= $value;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::IN:
-                return static function ($object) use($field, $value) : bool {
-                    $fieldValue = \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    return \in_array($fieldValue, $value, \is_scalar($fieldValue));
+            case Comparison::IN:
+                return static function ($object) use ($field, $value): bool {
+                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                    return in_array($fieldValue, $value, is_scalar($fieldValue));
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::NIN:
-                return static function ($object) use($field, $value) : bool {
-                    $fieldValue = \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    return !\in_array($fieldValue, $value, \is_scalar($fieldValue));
+            case Comparison::NIN:
+                return static function ($object) use ($field, $value): bool {
+                    $fieldValue = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                    return !in_array($fieldValue, $value, is_scalar($fieldValue));
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::CONTAINS:
-                return static function ($object) use($field, $value) {
-                    return \strpos(\WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) !== \false;
+            case Comparison::CONTAINS:
+                return static function ($object) use ($field, $value) {
+                    return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) !== \false;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::MEMBER_OF:
-                return static function ($object) use($field, $value) : bool {
-                    $fieldValues = \WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field);
-                    if (!\is_array($fieldValues)) {
-                        $fieldValues = \iterator_to_array($fieldValues);
+            case Comparison::MEMBER_OF:
+                return static function ($object) use ($field, $value): bool {
+                    $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
+                    if (!is_array($fieldValues)) {
+                        $fieldValues = iterator_to_array($fieldValues);
                     }
-                    return \in_array($value, $fieldValues, \true);
+                    return in_array($value, $fieldValues, \true);
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::STARTS_WITH:
-                return static function ($object) use($field, $value) : bool {
-                    return \strpos(\WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) === 0;
+            case Comparison::STARTS_WITH:
+                return static function ($object) use ($field, $value): bool {
+                    return strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value) === 0;
                 };
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::ENDS_WITH:
-                return static function ($object) use($field, $value) : bool {
-                    return $value === \substr(\WDFQVendorFree\Doctrine\Common\Collections\Expr\ClosureExpressionVisitor::getObjectFieldValue($object, $field), -\strlen($value));
+            case Comparison::ENDS_WITH:
+                return static function ($object) use ($field, $value): bool {
+                    return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
             default:
-                throw new \RuntimeException('Unknown comparison operator: ' . $comparison->getOperator());
+                throw new RuntimeException('Unknown comparison operator: ' . $comparison->getOperator());
         }
     }
     /**
      * {@inheritDoc}
      */
-    public function walkValue(\WDFQVendorFree\Doctrine\Common\Collections\Expr\Value $value)
+    public function walkValue(Value $value)
     {
         return $value->getValue();
     }
     /**
      * {@inheritDoc}
      */
-    public function walkCompositeExpression(\WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression $expr)
+    public function walkCompositeExpression(CompositeExpression $expr)
     {
         $expressionList = [];
         foreach ($expr->getExpressionList() as $child) {
             $expressionList[] = $this->dispatch($child);
         }
         switch ($expr->getType()) {
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression::TYPE_AND:
+            case CompositeExpression::TYPE_AND:
                 return $this->andExpressions($expressionList);
-            case \WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression::TYPE_OR:
+            case CompositeExpression::TYPE_OR:
                 return $this->orExpressions($expressionList);
             default:
-                throw new \RuntimeException('Unknown composite ' . $expr->getType());
+                throw new RuntimeException('Unknown composite ' . $expr->getType());
         }
     }
     /** @param callable[] $expressions */
-    private function andExpressions(array $expressions) : callable
+    private function andExpressions(array $expressions): callable
     {
-        return static function ($object) use($expressions) : bool {
+        return static function ($object) use ($expressions): bool {
             foreach ($expressions as $expression) {
                 if (!$expression($object)) {
                     return \false;
@@ -207,9 +207,9 @@ class ClosureExpressionVisitor extends \WDFQVendorFree\Doctrine\Common\Collectio
         };
     }
     /** @param callable[] $expressions */
-    private function orExpressions(array $expressions) : callable
+    private function orExpressions(array $expressions): callable
     {
-        return static function ($object) use($expressions) : bool {
+        return static function ($object) use ($expressions): bool {
             foreach ($expressions as $expression) {
                 if ($expression($object)) {
                     return \true;

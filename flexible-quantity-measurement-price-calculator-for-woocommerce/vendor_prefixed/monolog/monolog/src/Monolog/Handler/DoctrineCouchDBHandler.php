@@ -20,11 +20,11 @@ use WDFQVendorFree\Doctrine\CouchDB\CouchDBClient;
  *
  * @author Markus Bachmann <markus.bachmann@bachi.biz>
  */
-class DoctrineCouchDBHandler extends \WDFQVendorFree\Monolog\Handler\AbstractProcessingHandler
+class DoctrineCouchDBHandler extends AbstractProcessingHandler
 {
     /** @var CouchDBClient */
     private $client;
-    public function __construct(\WDFQVendorFree\Doctrine\CouchDB\CouchDBClient $client, $level = \WDFQVendorFree\Monolog\Logger::DEBUG, bool $bubble = \true)
+    public function __construct(CouchDBClient $client, $level = Logger::DEBUG, bool $bubble = \true)
     {
         $this->client = $client;
         parent::__construct($level, $bubble);
@@ -32,12 +32,12 @@ class DoctrineCouchDBHandler extends \WDFQVendorFree\Monolog\Handler\AbstractPro
     /**
      * {@inheritDoc}
      */
-    protected function write(array $record) : void
+    protected function write(array $record): void
     {
         $this->client->postDocument($record['formatted']);
     }
-    protected function getDefaultFormatter() : \WDFQVendorFree\Monolog\Formatter\FormatterInterface
+    protected function getDefaultFormatter(): FormatterInterface
     {
-        return new \WDFQVendorFree\Monolog\Formatter\NormalizerFormatter();
+        return new NormalizerFormatter();
     }
 }

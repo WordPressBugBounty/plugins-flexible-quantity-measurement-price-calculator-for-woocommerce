@@ -26,18 +26,18 @@ class WeightCalculator
         $this->woo_product_weight = $woo_product_weight;
         $this->woo_weight_unit = $woo_weight_unit;
     }
-    public function calculate(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement) : float
+    public function calculate(Measurement $measurement): float
     {
         if ('weight' === $this->calculator_type) {
             return $this->calculate_for_weight_product_type($measurement);
         }
         return $this->calculate_default_measurement_type($measurement, $this->woo_product_weight);
     }
-    public function calculate_default_measurement_type(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement) : float
+    public function calculate_default_measurement_type(Measurement $measurement): float
     {
         return (float) $this->woo_product_weight * $measurement->get_value();
     }
-    public function calculate_for_weight_product_type(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement) : float
+    public function calculate_for_weight_product_type(Measurement $measurement): float
     {
         return (float) $measurement->get_value($this->woo_weight_unit);
     }

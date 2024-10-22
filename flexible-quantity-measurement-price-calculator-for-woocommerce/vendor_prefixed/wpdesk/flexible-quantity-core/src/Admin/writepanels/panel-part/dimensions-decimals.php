@@ -27,7 +27,7 @@ if (!\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\PluginConfig::is_unlock
 	</div>
 	<div id="fq-decimals-panel" class="fcm-panel-item-body fcm-body-decimal">
 		<?php 
-echo \WDFQVendorFree\fq_generate_decimals_template($settings);
+echo fq_generate_decimals_template($settings);
 ?>
 	</div>
 </div>

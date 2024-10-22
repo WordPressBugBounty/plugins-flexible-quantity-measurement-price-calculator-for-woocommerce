@@ -4,7 +4,7 @@ namespace WDFQVendorFree\WPDesk\Tracker;
 
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\HookableCollection;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\HookableParent;
-class OptInOptOut implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\HookableCollection
+class OptInOptOut implements HookableCollection
 {
     use HookableParent;
     /**
@@ -41,10 +41,10 @@ class OptInOptOut implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      */
     public function create_objects()
     {
-        $this->add_hookable(new \WDFQVendorFree\WPDesk\Tracker\PluginActionLinks($this->plugin_file, $this->plugin_slug, $this->shop_url));
-        $this->add_hookable(new \WDFQVendorFree\WPDesk\Tracker\OptInPage($this->plugin_file, $this->plugin_slug));
-        $this->add_hookable(new \WDFQVendorFree\WPDesk\Tracker\OptOut($this->plugin_slug, $this->plugin_name));
-        $this->add_hookable(new \WDFQVendorFree\WPDesk\Tracker\Assets($this->plugin_slug));
+        $this->add_hookable(new PluginActionLinks($this->plugin_file, $this->plugin_slug, $this->shop_url));
+        $this->add_hookable(new OptInPage($this->plugin_file, $this->plugin_slug));
+        $this->add_hookable(new OptOut($this->plugin_slug, $this->plugin_name));
+        $this->add_hookable(new Assets($this->plugin_slug));
     }
     public function hooks()
     {

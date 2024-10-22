@@ -96,10 +96,10 @@ echo \wc_help_tip(\__('New sale price per unit.', 'flexible-quantity-measurement
 					<?php 
 $items = isset($settings['fq']['pricing_table']['items']['from']) ? $settings['fq']['pricing_table']['items']['from'] : [];
 if (empty($items)) {
-    \WDFQVendorFree\fq_get_price_table_row(0, $settings);
+    fq_get_price_table_row(0, $settings);
 } else {
     foreach ($items as $key => $val) {
-        \WDFQVendorFree\fq_get_price_table_row($key, $settings);
+        fq_get_price_table_row($key, $settings);
     }
 }
 ?>

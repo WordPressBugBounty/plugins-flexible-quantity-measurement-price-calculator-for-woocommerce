@@ -5,7 +5,7 @@ namespace WDFQVendorFree\Doctrine\Common\Collections\Expr;
 /**
  * Comparison of a field with a value by the given operator.
  */
-class Comparison implements \WDFQVendorFree\Doctrine\Common\Collections\Expr\Expression
+class Comparison implements Expression
 {
     public const EQ = '=';
     public const NEQ = '<>';
@@ -34,8 +34,8 @@ class Comparison implements \WDFQVendorFree\Doctrine\Common\Collections\Expr\Exp
      */
     public function __construct($field, $operator, $value)
     {
-        if (!$value instanceof \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value) {
-            $value = new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value);
+        if (!$value instanceof Value) {
+            $value = new Value($value);
         }
         $this->field = $field;
         $this->op = $operator;
@@ -59,7 +59,7 @@ class Comparison implements \WDFQVendorFree\Doctrine\Common\Collections\Expr\Exp
     /**
      * {@inheritDoc}
      */
-    public function visit(\WDFQVendorFree\Doctrine\Common\Collections\Expr\ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkComparison($this);
     }

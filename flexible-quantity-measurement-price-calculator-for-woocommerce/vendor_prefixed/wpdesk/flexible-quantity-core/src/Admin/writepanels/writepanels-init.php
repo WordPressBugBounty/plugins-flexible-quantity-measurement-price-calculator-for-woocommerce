@@ -16,7 +16,7 @@ require_once __DIR__ . '/writepanel-product_data-calculator.php';
 function fq_price_calculator_get_wc_settings()
 {
     $plugin_path = \wc()->plugin_path();
-    if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\WooCompatibility::is_wc_version_gte('3.3')) {
+    if (WooCompatibility::is_wc_version_gte('3.3')) {
         if (!\class_exists('WC_Settings_Page', \false) || !\class_exists('WC_Settings_Products', \false)) {
             if (!\class_exists('WC_Admin_Settings', \false)) {
                 include_once $plugin_path . '/includes/admin/class-wc-admin-settings.php';
@@ -26,7 +26,7 @@ function fq_price_calculator_get_wc_settings()
         $settings_products = new \WC_Settings_Products();
     } else {
         include_once $plugin_path . '/includes/admin/settings/class-wc-settings-page.php';
-        $settings_products = (include $plugin_path . '/includes/admin/settings/class-wc-settings-products.php');
+        $settings_products = include $plugin_path . '/includes/admin/settings/class-wc-settings-products.php';
     }
     return $settings_products->get_settings();
 }
@@ -38,7 +38,7 @@ function fq_price_calculator_get_wc_settings()
  */
 function fq_price_calculator_get_weight_units()
 {
-    $settings = \WDFQVendorFree\fq_price_calculator_get_wc_settings();
+    $settings = fq_price_calculator_get_wc_settings();
     foreach ($settings as $setting) {
         if ('woocommerce_weight_unit' === $setting['id']) {
             return $setting['options'];
@@ -55,7 +55,7 @@ function fq_price_calculator_get_weight_units()
  */
 function fq_price_calculator_get_dimension_units()
 {
-    $settings = \WDFQVendorFree\fq_price_calculator_get_wc_settings();
+    $settings = fq_price_calculator_get_wc_settings();
     if ($settings) {
         foreach ($settings as $setting) {
             if ('woocommerce_dimension_unit' === $setting['id']) {
@@ -74,7 +74,7 @@ function fq_price_calculator_get_dimension_units()
  */
 function fq_price_calculator_get_area_units()
 {
-    $settings = \WDFQVendorFree\fq_price_calculator_get_wc_settings();
+    $settings = fq_price_calculator_get_wc_settings();
     if ($settings) {
         foreach ($settings as $setting) {
             if ('woocommerce_area_unit' === $setting['id']) {
@@ -93,7 +93,7 @@ function fq_price_calculator_get_area_units()
  */
 function fq_price_calculator_get_volume_units()
 {
-    $settings = \WDFQVendorFree\fq_price_calculator_get_wc_settings();
+    $settings = fq_price_calculator_get_wc_settings();
     if ($settings) {
         foreach ($settings as $setting) {
             if ('woocommerce_volume_unit' === $setting['id']) {
@@ -219,7 +219,7 @@ function fq_price_calculator_attributes_inputs($args)
 		</span>
 		<?php 
     echo \wc_help_tip(\esc_html__('If applicable, enter limits to restrict customer input, such as an accepted increment and/or maximum value.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
-    //phpcs:ignore
+    //phpcs:ignore 
     ?>
 	</p>
 	<?php 

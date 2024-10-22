@@ -17,7 +17,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
     /**
      * The regular expression used to parse integer, decimal and rational numbers.
      */
-    private const PARSE_REGEXP = '/^' . '(?<sign>[\\-\\+])?' . '(?:' . '(?:' . '(?<integral>[0-9]+)?' . '(?<point>\\.)?' . '(?<fractional>[0-9]+)?' . '(?:[eE](?<exponent>[\\-\\+]?[0-9]+))?' . ')|(?:' . '(?<numerator>[0-9]+)' . '\\/?' . '(?<denominator>[0-9]+)' . ')' . ')' . '$/';
+    private const PARSE_REGEXP = '/^' . '(?<sign>[\-\+])?' . '(?:' . '(?:' . '(?<integral>[0-9]+)?' . '(?<point>\.)?' . '(?<fractional>[0-9]+)?' . '(?:[eE](?<exponent>[\-\+]?[0-9]+))?' . ')|(?:' . '(?<numerator>[0-9]+)' . '\/?' . '(?<denominator>[0-9]+)' . ')' . ')' . '$/';
     /**
      * Creates a BigNumber of the given value.
      *
@@ -39,39 +39,39 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @psalm-pure
      */
-    public static function of($value) : \WDFQVendorFree\Brick\Math\BigNumber
+    public static function of($value): BigNumber
     {
-        if ($value instanceof \WDFQVendorFree\Brick\Math\BigNumber) {
+        if ($value instanceof BigNumber) {
             return $value;
         }
         if (\is_int($value)) {
-            return new \WDFQVendorFree\Brick\Math\BigInteger((string) $value);
+            return new BigInteger((string) $value);
         }
         /** @psalm-suppress RedundantCastGivenDocblockType We cannot trust the untyped $value here! */
         $value = \is_float($value) ? self::floatToString($value) : (string) $value;
-        $throw = static function () use($value) : void {
-            throw new \WDFQVendorFree\Brick\Math\Exception\NumberFormatException(\sprintf('The given value "%s" does not represent a valid number.', $value));
+        $throw = static function () use ($value): void {
+            throw new NumberFormatException(\sprintf('The given value "%s" does not represent a valid number.', $value));
         };
         if (\preg_match(self::PARSE_REGEXP, $value, $matches) !== 1) {
             $throw();
         }
-        $getMatch = static function (string $value) use($matches) : ?string {
+        $getMatch = static function (string $value) use ($matches): ?string {
             return isset($matches[$value]) && $matches[$value] !== '' ? $matches[$value] : null;
         };
         $sign = $getMatch('sign');
         $numerator = $getMatch('numerator');
         $denominator = $getMatch('denominator');
         if ($numerator !== null) {
-            \assert($denominator !== null);
+            assert($denominator !== null);
             if ($sign !== null) {
                 $numerator = $sign . $numerator;
             }
             $numerator = self::cleanUp($numerator);
             $denominator = self::cleanUp($denominator);
             if ($denominator === '0') {
-                throw \WDFQVendorFree\Brick\Math\Exception\DivisionByZeroException::denominatorMustNotBeZero();
+                throw DivisionByZeroException::denominatorMustNotBeZero();
             }
-            return new \WDFQVendorFree\Brick\Math\BigRational(new \WDFQVendorFree\Brick\Math\BigInteger($numerator), new \WDFQVendorFree\Brick\Math\BigInteger($denominator), \false);
+            return new BigRational(new BigInteger($numerator), new BigInteger($denominator), \false);
         }
         $point = $getMatch('point');
         $integral = $getMatch('integral');
@@ -87,7 +87,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
             $fractional = $fractional ?? '';
             $exponent = $exponent !== null ? (int) $exponent : 0;
             if ($exponent === \PHP_INT_MIN || $exponent === \PHP_INT_MAX) {
-                throw new \WDFQVendorFree\Brick\Math\Exception\NumberFormatException('Exponent too large.');
+                throw new NumberFormatException('Exponent too large.');
             }
             $unscaledValue = self::cleanUp(($sign ?? '') . $integral . $fractional);
             $scale = \strlen($fractional) - $exponent;
@@ -97,10 +97,10 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
                 }
                 $scale = 0;
             }
-            return new \WDFQVendorFree\Brick\Math\BigDecimal($unscaledValue, $scale);
+            return new BigDecimal($unscaledValue, $scale);
         }
         $integral = self::cleanUp(($sign ?? '') . $integral);
-        return new \WDFQVendorFree\Brick\Math\BigInteger($integral);
+        return new BigInteger($integral);
     }
     /**
      * Safely converts float to string, avoiding locale-dependent issues.
@@ -114,7 +114,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      * @psalm-pure
      * @psalm-suppress ImpureFunctionCall
      */
-    private static function floatToString(float $float) : string
+    private static function floatToString(float $float): string
     {
         $currentLocale = \setlocale(\LC_NUMERIC, '0');
         \setlocale(\LC_NUMERIC, 'C');
@@ -135,7 +135,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      * @psalm-suppress TooManyArguments
      * @psalm-suppress UnsafeInstantiation
      */
-    protected static function create(...$args) : \WDFQVendorFree\Brick\Math\BigNumber
+    protected static function create(...$args): BigNumber
     {
         return new static(...$args);
     }
@@ -154,7 +154,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-pure
      */
-    public static function min(...$values) : \WDFQVendorFree\Brick\Math\BigNumber
+    public static function min(...$values): BigNumber
     {
         $min = null;
         foreach ($values as $value) {
@@ -183,7 +183,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-pure
      */
-    public static function max(...$values) : \WDFQVendorFree\Brick\Math\BigNumber
+    public static function max(...$values): BigNumber
     {
         $max = null;
         foreach ($values as $value) {
@@ -212,7 +212,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      * @psalm-suppress MoreSpecificReturnType
      * @psalm-pure
      */
-    public static function sum(...$values) : \WDFQVendorFree\Brick\Math\BigNumber
+    public static function sum(...$values): BigNumber
     {
         /** @var BigNumber|null $sum */
         $sum = null;
@@ -240,18 +240,18 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @psalm-pure
      */
-    private static function add(\WDFQVendorFree\Brick\Math\BigNumber $a, \WDFQVendorFree\Brick\Math\BigNumber $b) : \WDFQVendorFree\Brick\Math\BigNumber
+    private static function add(BigNumber $a, BigNumber $b): BigNumber
     {
-        if ($a instanceof \WDFQVendorFree\Brick\Math\BigRational) {
+        if ($a instanceof BigRational) {
             return $a->plus($b);
         }
-        if ($b instanceof \WDFQVendorFree\Brick\Math\BigRational) {
+        if ($b instanceof BigRational) {
             return $b->plus($a);
         }
-        if ($a instanceof \WDFQVendorFree\Brick\Math\BigDecimal) {
+        if ($a instanceof BigDecimal) {
             return $a->plus($b);
         }
-        if ($b instanceof \WDFQVendorFree\Brick\Math\BigDecimal) {
+        if ($b instanceof BigDecimal) {
             return $b->plus($a);
         }
         /** @var BigInteger $a */
@@ -266,7 +266,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @psalm-pure
      */
-    private static function cleanUp(string $number) : string
+    private static function cleanUp(string $number): string
     {
         $firstChar = $number[0];
         if ($firstChar === '+' || $firstChar === '-') {
@@ -288,7 +288,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isEqualTo($that) : bool
+    public function isEqualTo($that): bool
     {
         return $this->compareTo($that) === 0;
     }
@@ -299,7 +299,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isLessThan($that) : bool
+    public function isLessThan($that): bool
     {
         return $this->compareTo($that) < 0;
     }
@@ -310,7 +310,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isLessThanOrEqualTo($that) : bool
+    public function isLessThanOrEqualTo($that): bool
     {
         return $this->compareTo($that) <= 0;
     }
@@ -321,7 +321,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isGreaterThan($that) : bool
+    public function isGreaterThan($that): bool
     {
         return $this->compareTo($that) > 0;
     }
@@ -332,7 +332,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isGreaterThanOrEqualTo($that) : bool
+    public function isGreaterThanOrEqualTo($that): bool
     {
         return $this->compareTo($that) >= 0;
     }
@@ -341,7 +341,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isZero() : bool
+    public function isZero(): bool
     {
         return $this->getSign() === 0;
     }
@@ -350,7 +350,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isNegative() : bool
+    public function isNegative(): bool
     {
         return $this->getSign() < 0;
     }
@@ -359,7 +359,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isNegativeOrZero() : bool
+    public function isNegativeOrZero(): bool
     {
         return $this->getSign() <= 0;
     }
@@ -368,7 +368,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isPositive() : bool
+    public function isPositive(): bool
     {
         return $this->getSign() > 0;
     }
@@ -377,7 +377,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return bool
      */
-    public function isPositiveOrZero() : bool
+    public function isPositiveOrZero(): bool
     {
         return $this->getSign() >= 0;
     }
@@ -386,7 +386,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return int -1 if the number is negative, 0 if zero, 1 if positive.
      */
-    public abstract function getSign() : int;
+    abstract public function getSign(): int;
     /**
      * Compares this number to the given one.
      *
@@ -396,7 +396,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @throws MathException If the number is not valid.
      */
-    public abstract function compareTo($that) : int;
+    abstract public function compareTo($that): int;
     /**
      * Converts this number to a BigInteger.
      *
@@ -404,7 +404,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @throws RoundingNecessaryException If this number cannot be converted to a BigInteger without rounding.
      */
-    public abstract function toBigInteger() : \WDFQVendorFree\Brick\Math\BigInteger;
+    abstract public function toBigInteger(): BigInteger;
     /**
      * Converts this number to a BigDecimal.
      *
@@ -412,13 +412,13 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @throws RoundingNecessaryException If this number cannot be converted to a BigDecimal without rounding.
      */
-    public abstract function toBigDecimal() : \WDFQVendorFree\Brick\Math\BigDecimal;
+    abstract public function toBigDecimal(): BigDecimal;
     /**
      * Converts this number to a BigRational.
      *
      * @return BigRational The converted number.
      */
-    public abstract function toBigRational() : \WDFQVendorFree\Brick\Math\BigRational;
+    abstract public function toBigRational(): BigRational;
     /**
      * Converts this number to a BigDecimal with the given scale, using rounding if necessary.
      *
@@ -430,7 +430,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      * @throws RoundingNecessaryException If this number cannot be converted to the given scale without rounding.
      *                                    This only applies when RoundingMode::UNNECESSARY is used.
      */
-    public abstract function toScale(int $scale, int $roundingMode = \WDFQVendorFree\Brick\Math\RoundingMode::UNNECESSARY) : \WDFQVendorFree\Brick\Math\BigDecimal;
+    abstract public function toScale(int $scale, int $roundingMode = RoundingMode::UNNECESSARY): BigDecimal;
     /**
      * Returns the exact value of this number as a native integer.
      *
@@ -441,7 +441,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @throws MathException If this number cannot be exactly converted to a native integer.
      */
-    public abstract function toInt() : int;
+    abstract public function toInt(): int;
     /**
      * Returns an approximation of this number as a floating-point value.
      *
@@ -453,7 +453,7 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return float The converted value.
      */
-    public abstract function toFloat() : float;
+    abstract public function toFloat(): float;
     /**
      * Returns a string representation of this number.
      *
@@ -462,11 +462,11 @@ abstract class BigNumber implements \Serializable, \JsonSerializable
      *
      * @return string
      */
-    public abstract function __toString() : string;
+    abstract public function __toString(): string;
     /**
      * {@inheritdoc}
      */
-    public function jsonSerialize() : string
+    public function jsonSerialize(): string
     {
         return $this->__toString();
     }

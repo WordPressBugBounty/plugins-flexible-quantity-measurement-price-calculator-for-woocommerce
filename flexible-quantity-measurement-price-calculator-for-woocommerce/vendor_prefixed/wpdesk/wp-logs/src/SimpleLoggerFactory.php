@@ -9,9 +9,9 @@ use WDFQVendorFree\Monolog\Logger;
 use WDFQVendorFree\Monolog\Handler\ErrorLogHandler;
 use WDFQVendorFree\Monolog\Processor\PsrLogMessageProcessor;
 use WDFQVendorFree\Monolog\Processor\UidProcessor;
-use Psr\Log\LogLevel;
+use WDFQVendorFree\Psr\Log\LogLevel;
 use WDFQVendorFree\WPDesk\Logger\WC\WooCommerceHandler;
-final class SimpleLoggerFactory implements \WDFQVendorFree\WPDesk\Logger\LoggerFactory
+final class SimpleLoggerFactory implements LoggerFactory
 {
     /**
      * @var array{
@@ -32,18 +32,18 @@ final class SimpleLoggerFactory implements \WDFQVendorFree\WPDesk\Logger\LoggerF
     public function __construct(string $channel, $options = null)
     {
         $this->channel = $channel;
-        $options = $options ?? new \WDFQVendorFree\WPDesk\Logger\Settings();
-        if ($options instanceof \WDFQVendorFree\WPDesk\Logger\Settings) {
+        $options = $options ?? new Settings();
+        if ($options instanceof Settings) {
             $options = $options->to_array();
         }
-        $this->options = \array_merge(['level' => \Psr\Log\LogLevel::DEBUG, 'action_level' => null], $options);
+        $this->options = array_merge(['level' => LogLevel::DEBUG, 'action_level' => null], $options);
     }
-    public function getLogger($name = null) : \WDFQVendorFree\Monolog\Logger
+    public function getLogger($name = null): Logger
     {
         if ($this->logger) {
             return $this->logger;
         }
-        $this->logger = new \WDFQVendorFree\Monolog\Logger($this->channel, [], [new \WDFQVendorFree\Monolog\Processor\PsrLogMessageProcessor(null, \true), new \WDFQVendorFree\Monolog\Processor\UidProcessor()], \wp_timezone());
+        $this->logger = new Logger($this->channel, [], [new PsrLogMessageProcessor(null, \true), new UidProcessor()], wp_timezone());
         if (\function_exists('wc_get_logger') && \did_action('woocommerce_init')) {
             $this->set_wc_handler();
         } else {
@@ -51,22 +51,22 @@ final class SimpleLoggerFactory implements \WDFQVendorFree\WPDesk\Logger\LoggerF
         }
         // In the worst-case scenario, when WC logs are not available (yet, or at all),
         // fallback to WP logs, but only when enabled.
-        if (empty($this->logger->getHandlers()) && \defined('WDFQVendorFree\\WP_DEBUG_LOG') && WP_DEBUG_LOG) {
-            $this->set_handler($this->logger, new \WDFQVendorFree\Monolog\Handler\ErrorLogHandler(\WDFQVendorFree\Monolog\Handler\ErrorLogHandler::OPERATING_SYSTEM, $this->options['level']));
+        if (empty($this->logger->getHandlers()) && defined('WP_DEBUG_LOG') && \WP_DEBUG_LOG) {
+            $this->set_handler($this->logger, new ErrorLogHandler(ErrorLogHandler::OPERATING_SYSTEM, $this->options['level']));
         }
         return $this->logger;
     }
     /**
      * @internal
      */
-    public function set_wc_handler() : void
+    public function set_wc_handler(): void
     {
-        $this->set_handler($this->logger, new \WDFQVendorFree\WPDesk\Logger\WC\WooCommerceHandler(\wc_get_logger(), $this->channel));
+        $this->set_handler($this->logger, new WooCommerceHandler(\wc_get_logger(), $this->channel));
     }
-    private function set_handler(\WDFQVendorFree\Monolog\Logger $logger, \WDFQVendorFree\Monolog\Handler\HandlerInterface $handler) : void
+    private function set_handler(Logger $logger, HandlerInterface $handler): void
     {
-        if (\is_string($this->options['action_level'])) {
-            $handler = new \WDFQVendorFree\Monolog\Handler\FingersCrossedHandler($handler, $this->options['action_level']);
+        if (is_string($this->options['action_level'])) {
+            $handler = new FingersCrossedHandler($handler, $this->options['action_level']);
         }
         // Purposefully replace all existing handlers.
         $logger->setHandlers([$handler]);

@@ -14,15 +14,15 @@ use function array_merge;
  * - The first ruleset that returns a different value for a regular word wins
  * - If none of the above match, the word is left as-is
  */
-class RulesetInflector implements \WDFQVendorFree\Doctrine\Inflector\WordInflector
+class RulesetInflector implements WordInflector
 {
     /** @var Ruleset[] */
     private $rulesets;
-    public function __construct(\WDFQVendorFree\Doctrine\Inflector\Rules\Ruleset $ruleset, \WDFQVendorFree\Doctrine\Inflector\Rules\Ruleset ...$rulesets)
+    public function __construct(Ruleset $ruleset, Ruleset ...$rulesets)
     {
-        $this->rulesets = \array_merge([$ruleset], $rulesets);
+        $this->rulesets = array_merge([$ruleset], $rulesets);
     }
-    public function inflect(string $word) : string
+    public function inflect(string $word): string
     {
         if ($word === '') {
             return '';

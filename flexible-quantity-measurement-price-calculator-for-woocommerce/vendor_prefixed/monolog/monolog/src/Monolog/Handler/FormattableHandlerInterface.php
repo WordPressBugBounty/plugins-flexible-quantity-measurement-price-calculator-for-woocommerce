@@ -25,11 +25,11 @@ interface FormattableHandlerInterface
      * @param  FormatterInterface $formatter
      * @return HandlerInterface   self
      */
-    public function setFormatter(\WDFQVendorFree\Monolog\Formatter\FormatterInterface $formatter) : \WDFQVendorFree\Monolog\Handler\HandlerInterface;
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface;
     /**
      * Gets the formatter.
      *
      * @return FormatterInterface
      */
-    public function getFormatter() : \WDFQVendorFree\Monolog\Formatter\FormatterInterface;
+    public function getFormatter(): FormatterInterface;
 }

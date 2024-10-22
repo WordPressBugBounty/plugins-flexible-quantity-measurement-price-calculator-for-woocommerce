@@ -28,13 +28,13 @@ class Helper
             if ('' === $needle) {
                 return \true;
             }
-            return 0 === \mb_strpos($haystack, $needle, 0, self::MB_ENCODING);
+            return 0 === mb_strpos($haystack, $needle, 0, self::MB_ENCODING);
         } else {
             $needle = self::str_to_ascii($needle);
             if ('' === $needle) {
                 return \true;
             }
-            return 0 === \strpos(self::str_to_ascii($haystack), self::str_to_ascii($needle));
+            return 0 === strpos(self::str_to_ascii($haystack), self::str_to_ascii($needle));
         }
     }
     /**
@@ -53,11 +53,11 @@ class Helper
             return \true;
         }
         if (self::multibyte_loaded()) {
-            return \mb_substr($haystack, -\mb_strlen($needle, self::MB_ENCODING), null, self::MB_ENCODING) === $needle;
+            return mb_substr($haystack, -mb_strlen($needle, self::MB_ENCODING), null, self::MB_ENCODING) === $needle;
         } else {
             $haystack = self::str_to_ascii($haystack);
             $needle = self::str_to_ascii($needle);
-            return \substr($haystack, -\strlen($needle)) === $needle;
+            return substr($haystack, -strlen($needle)) === $needle;
         }
     }
     /**
@@ -76,13 +76,13 @@ class Helper
             if ('' === $needle) {
                 return \false;
             }
-            return \false !== \mb_strpos($haystack, $needle, 0, self::MB_ENCODING);
+            return \false !== mb_strpos($haystack, $needle, 0, self::MB_ENCODING);
         } else {
             $needle = self::str_to_ascii($needle);
             if ('' === $needle) {
                 return \false;
             }
-            return \false !== \strpos(self::str_to_ascii($haystack), self::str_to_ascii($needle));
+            return \false !== strpos(self::str_to_ascii($haystack), self::str_to_ascii($needle));
         }
     }
     /**
@@ -101,19 +101,19 @@ class Helper
     {
         if (self::multibyte_loaded()) {
             // bail if string doesn't need to be truncated
-            if (\mb_strlen($string, self::MB_ENCODING) <= $length) {
+            if (mb_strlen($string, self::MB_ENCODING) <= $length) {
                 return $string;
             }
-            $length -= \mb_strlen($omission, self::MB_ENCODING);
-            return \mb_substr($string, 0, $length, self::MB_ENCODING) . $omission;
+            $length -= mb_strlen($omission, self::MB_ENCODING);
+            return mb_substr($string, 0, $length, self::MB_ENCODING) . $omission;
         } else {
             $string = self::str_to_ascii($string);
             // bail if string doesn't need to be truncated
-            if (\strlen($string) <= $length) {
+            if (strlen($string) <= $length) {
                 return $string;
             }
-            $length -= \strlen($omission);
-            return \substr($string, 0, $length) . $omission;
+            $length -= strlen($omission);
+            return substr($string, 0, $length) . $omission;
         }
     }
     /**
@@ -130,9 +130,9 @@ class Helper
     public static function str_to_ascii($string)
     {
         // strip ASCII chars 32 and under
-        $string = \filter_var($string, \FILTER_SANITIZE_STRING, \FILTER_FLAG_STRIP_LOW);
+        $string = filter_var($string, \FILTER_SANITIZE_STRING, \FILTER_FLAG_STRIP_LOW);
         // strip ASCII chars 127 and higher
-        return \filter_var($string, \FILTER_SANITIZE_STRING, \FILTER_FLAG_STRIP_HIGH);
+        return filter_var($string, \FILTER_SANITIZE_STRING, \FILTER_FLAG_STRIP_HIGH);
     }
     /**
      * Return a string with insane UTF-8 characters removed, like invisible
@@ -154,9 +154,9 @@ class Helper
      */
     public static function str_to_sane_utf8($string)
     {
-        $sane_string = \preg_replace('/[^\\p{L}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Zs}\\p{P}\\p{Sm}\\p{Sc}]/u', '', $string);
+        $sane_string = preg_replace('/[^\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Zs}\p{P}\p{Sm}\p{Sc}]/u', '', $string);
         // preg_replace with the /u modifier can return null or false on failure
-        return \is_null($sane_string) || \false === $sane_string ? $string : $sane_string;
+        return is_null($sane_string) || \false === $sane_string ? $string : $sane_string;
     }
     /**
      * Helper method to check if the multibyte extension is loaded, which
@@ -167,7 +167,7 @@ class Helper
      */
     protected static function multibyte_loaded()
     {
-        return \extension_loaded('mbstring');
+        return extension_loaded('mbstring');
     }
     /** Array functions ***************************************************/
     /**
@@ -219,7 +219,7 @@ class Helper
      */
     public static function array_to_xml($xml_writer, $element_key, $element_value = [])
     {
-        if (\is_array($element_value)) {
+        if (is_array($element_value)) {
             // handle attributes
             if ('@attributes' === $element_key) {
                 foreach ($element_value as $attribute_key => $attribute_value) {
@@ -230,7 +230,7 @@ class Helper
                 return;
             }
             // handle multi-elements (e.g. multiple <Order> elements)
-            if (\is_numeric(\key($element_value))) {
+            if (is_numeric(key($element_value))) {
                 // recursively generate child elements
                 foreach ($element_value as $child_element_key => $child_element_value) {
                     $xml_writer->startElement($element_key);
@@ -249,20 +249,14 @@ class Helper
                 // end root element
                 $xml_writer->endElement();
             }
+        } else if ('@value' === $element_key) {
+            $xml_writer->text($element_value);
+        } else if (\false !== strpos($element_value, '<') || \false !== strpos($element_value, '>')) {
+            $xml_writer->startElement($element_key);
+            $xml_writer->writeCdata($element_value);
+            $xml_writer->endElement();
         } else {
-            // handle single elements
-            if ('@value' === $element_key) {
-                $xml_writer->text($element_value);
-            } else {
-                // wrap element in CDATA tags if it contains illegal characters
-                if (\false !== \strpos($element_value, '<') || \false !== \strpos($element_value, '>')) {
-                    $xml_writer->startElement($element_key);
-                    $xml_writer->writeCdata($element_value);
-                    $xml_writer->endElement();
-                } else {
-                    $xml_writer->writeElement($element_key, $element_value);
-                }
-            }
+            $xml_writer->writeElement($element_key, $element_value);
         }
     }
     /**
@@ -279,21 +273,21 @@ class Helper
      */
     public static function list_array_items(array $items, $conjunction = null, $separator = '')
     {
-        if (!\is_string($conjunction)) {
-            $conjunction = \_x('and', 'coordinating conjunction for a list of items: a, b, and c', 'woocommerce-plugin-framework');
+        if (!is_string($conjunction)) {
+            $conjunction = _x('and', 'coordinating conjunction for a list of items: a, b, and c', 'woocommerce-plugin-framework');
         }
         // append the conjunction to the last item
-        if (\count($items) > 1) {
-            $last_item = \array_pop($items);
-            \array_push($items, \trim("{$conjunction} {$last_item}"));
+        if (count($items) > 1) {
+            $last_item = array_pop($items);
+            array_push($items, trim("{$conjunction} {$last_item}"));
             // only use a comma if needed and no separator was passed
-            if (\count($items) < 3) {
+            if (count($items) < 3) {
                 $separator = ' ';
-            } elseif (!\is_string($separator) || '' === $separator) {
+            } elseif (!is_string($separator) || '' === $separator) {
                 $separator = ', ';
             }
         }
-        return \implode($separator, $items);
+        return implode($separator, $items);
     }
     /** Number helper functions *******************************************/
     /**
@@ -308,7 +302,7 @@ class Helper
      */
     public static function number_format($number)
     {
-        return \number_format((float) $number, 2, '.', '');
+        return number_format((float) $number, 2, '.', '');
     }
     /** WooCommerce helper functions **************************************/
     /**
@@ -334,30 +328,30 @@ class Helper
         $line_items = [];
         /** @var WC_Order_Item_Product $item */
         foreach ($order->get_items() as $id => $item) {
-            $line_item = new \stdClass();
+            $line_item = new stdClass();
             $product = $item->get_product();
             $name = $item->get_name();
             $quantity = $item->get_quantity();
             $item_desc = [];
             // add SKU to description if available
             if ($sku = $product->get_sku()) {
-                $item_desc[] = \sprintf('SKU: %s', $sku);
+                $item_desc[] = sprintf('SKU: %s', $sku);
             }
-            $item_meta = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\SV_WC_Order_Compatibility::get_item_formatted_meta_data($item, '_', \true);
+            $item_meta = SV_WC_Order_Compatibility::get_item_formatted_meta_data($item, '_', \true);
             if (!empty($item_meta)) {
                 foreach ($item_meta as $meta) {
-                    $item_desc[] = \sprintf('%s: %s', $meta['label'], $meta['value']);
+                    $item_desc[] = sprintf('%s: %s', $meta['label'], $meta['value']);
                 }
             }
-            $item_desc = \implode(', ', $item_desc);
+            $item_desc = implode(', ', $item_desc);
             $line_item->id = $id;
-            $line_item->name = \htmlentities($name, \ENT_QUOTES, 'UTF-8', \false);
-            $line_item->description = \htmlentities($item_desc, \ENT_QUOTES, 'UTF-8', \false);
+            $line_item->name = htmlentities($name, \ENT_QUOTES, 'UTF-8', \false);
+            $line_item->description = htmlentities($item_desc, \ENT_QUOTES, 'UTF-8', \false);
             $line_item->quantity = $quantity;
             $line_item->item_total = isset($item['recurring_line_total']) ? $item['recurring_line_total'] : $order->get_item_total($item);
             $line_item->line_total = $order->get_line_total($item);
             $line_item->meta = $item_meta;
-            $line_item->product = \is_object($product) ? $product : null;
+            $line_item->product = is_object($product) ? $product : null;
             $line_item->item = $item;
             $line_items[] = $line_item;
         }
@@ -371,7 +365,7 @@ class Helper
      * @return bool
      * @since 4.5.0
      */
-    public static function is_order_virtual(\WC_Order $order)
+    public static function is_order_virtual(WC_Order $order)
     {
         $is_virtual = \true;
         /** @var WC_Order_Item_Product $item */
@@ -396,7 +390,7 @@ class Helper
      */
     public static function get_post($key)
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::get_posted_value()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::get_posted_value()');
         return self::get_posted_value($key);
     }
     /**
@@ -414,12 +408,12 @@ class Helper
         $value = $default;
         if (isset($_POST[$key])) {
             if (\is_array($_POST[$key])) {
-                $value = \array_map('sanitize_text_field', \array_map('wp_unslash', $_POST[$key]));
+                $value = array_map('sanitize_text_field', array_map('wp_unslash', $_POST[$key]));
                 //phpcs:ignore
             } else {
-                $val = \sanitize_text_field(\wp_unslash($_POST[$key]));
-                $value = \is_string($_POST[$key]) ? \trim($val) : $val;
-                $value = \sanitize_text_field($value);
+                $val = sanitize_text_field(wp_unslash($_POST[$key]));
+                $value = is_string($_POST[$key]) ? trim($val) : $val;
+                $value = sanitize_text_field($value);
             }
         }
         return $value;
@@ -435,7 +429,7 @@ class Helper
      */
     public static function get_request($key)
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::get_requested_value()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::get_requested_value()');
         return self::get_requested_value($key);
     }
     /**
@@ -453,11 +447,11 @@ class Helper
         $value = $default;
         if (isset($_REQUEST[$key])) {
             if (\is_array($_REQUEST[$key])) {
-                $value = \array_map('sanitize_text_field', \array_map('wp_unslash', $_REQUEST[$key]));
+                $value = array_map('sanitize_text_field', array_map('wp_unslash', $_REQUEST[$key]));
                 //phpcs:ignore
             } else {
-                $val = \sanitize_text_field(\wp_unslash($_REQUEST[$key]));
-                $value = \is_string($val) ? \trim($val) : $val;
+                $val = sanitize_text_field(wp_unslash($_REQUEST[$key]));
+                $value = is_string($val) ? trim($val) : $val;
             }
         }
         return $value;
@@ -474,8 +468,8 @@ class Helper
      */
     public static function wc_notice_count($notice_type = '')
     {
-        if (\function_exists('wc_notice_count')) {
-            return \wc_notice_count($notice_type);
+        if (function_exists('wc_notice_count')) {
+            return wc_notice_count($notice_type);
         }
         return 0;
     }
@@ -490,8 +484,8 @@ class Helper
      */
     public static function wc_add_notice($message, $notice_type = 'success')
     {
-        if (\function_exists('wc_add_notice')) {
-            \wc_add_notice($message, $notice_type);
+        if (function_exists('wc_add_notice')) {
+            wc_add_notice($message, $notice_type);
         }
     }
     /**
@@ -505,8 +499,8 @@ class Helper
      */
     public static function wc_print_notice($message, $notice_type = 'success')
     {
-        if (\function_exists('wc_print_notice')) {
-            \wc_print_notice($message, $notice_type);
+        if (function_exists('wc_print_notice')) {
+            wc_print_notice($message, $notice_type);
         }
     }
     /**
@@ -519,7 +513,7 @@ class Helper
      */
     public static function get_wc_log_file_url($handle)
     {
-        return \admin_url(\sprintf('admin.php?page=wc-status&tab=logs&log_file=%s-%s-log', $handle, \sanitize_file_name(\wp_hash($handle))));
+        return admin_url(sprintf('admin.php?page=wc-status&tab=logs&log_file=%s-%s-log', $handle, sanitize_file_name(wp_hash($handle))));
     }
     /**
      * Gets the current WordPress site name.
@@ -531,7 +525,7 @@ class Helper
      */
     public static function get_site_name()
     {
-        return \is_multisite() ? \get_blog_details()->blogname : \get_bloginfo('name');
+        return is_multisite() ? get_blog_details()->blogname : get_bloginfo('name');
     }
     /** JavaScript helper functions ***************************************/
     /**
@@ -543,22 +537,22 @@ class Helper
      */
     public static function render_select2_ajax()
     {
-        if (!\did_action('sv_wc_select2_ajax_rendered')) {
+        if (!did_action('sv_wc_select2_ajax_rendered')) {
             $javascript = '( function(){
 				if ( ! $().select2 ) return;
 			';
             // Ensure localized strings are used.
             $javascript .= "\n\n\t\t\t\tfunction getEnhancedSelectFormatString() {\n\n\t\t\t\t\tif ( 'undefined' !== typeof wc_select_params ) {\n\t\t\t\t\t\twc_enhanced_select_params = wc_select_params;\n\t\t\t\t\t}\n\n\t\t\t\t\tif ( 'undefined' === typeof wc_enhanced_select_params ) {\n\t\t\t\t\t\treturn {};\n\t\t\t\t\t}\n\n\t\t\t\t\tvar formatString = {\n\t\t\t\t\t\tformatMatches: function( matches ) {\n\t\t\t\t\t\t\tif ( 1 === matches ) {\n\t\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_matches_1;\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_matches_n.replace( '%qty%', matches );\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatNoMatches: function() {\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_no_matches;\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatAjaxError: function( jqXHR, textStatus, errorThrown ) {\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_ajax_error;\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatInputTooShort: function( input, min ) {\n\t\t\t\t\t\t\tvar number = min - input.length;\n\n\t\t\t\t\t\t\tif ( 1 === number ) {\n\t\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_input_too_short_1\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_input_too_short_n.replace( '%qty%', number );\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatInputTooLong: function( input, max ) {\n\t\t\t\t\t\t\tvar number = input.length - max;\n\n\t\t\t\t\t\t\tif ( 1 === number ) {\n\t\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_input_too_long_1\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_input_too_long_n.replace( '%qty%', number );\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatSelectionTooBig: function( limit ) {\n\t\t\t\t\t\t\tif ( 1 === limit ) {\n\t\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_selection_too_long_1;\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_selection_too_long_n.replace( '%qty%', number );\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatLoadMore: function( pageNumber ) {\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_load_more;\n\t\t\t\t\t\t},\n\t\t\t\t\t\tformatSearching: function() {\n\t\t\t\t\t\t\treturn wc_enhanced_select_params.i18n_searching;\n\t\t\t\t\t\t}\n\t\t\t\t\t};\n\n\t\t\t\t\treturn formatString;\n\t\t\t\t}\n\t\t\t";
-            $javascript .= "\n\n\t\t\t\t\$( 'select.sv-wc-enhanced-search' ).filter( ':not(.enhanced)' ).each( function() {\n\n\t\t\t\t\tvar select2_args = {\n\t\t\t\t\t\tallowClear:         \$( this ).data( 'allow_clear' ) ? true : false,\n\t\t\t\t\t\tplaceholder:        \$( this ).data( 'placeholder' ),\n\t\t\t\t\t\tminimumInputLength: \$( this ).data( 'minimum_input_length' ) ? \$( this ).data( 'minimum_input_length' ) : '3',\n\t\t\t\t\t\tescapeMarkup:       function( m ) {\n\t\t\t\t\t\t\treturn m;\n\t\t\t\t\t\t},\n\t\t\t\t\t\tajax:               {\n\t\t\t\t\t\t\turl:            '" . \esc_js(\admin_url('admin-ajax.php')) . "',\n\t\t\t\t\t\t\tdataType:       'json',\n\t\t\t\t\t\t\tcache:          true,\n\t\t\t\t\t\t\tdelay:          250,\n\t\t\t\t\t\t\tdata:           function( params ) {\n\t\t\t\t\t\t\t\treturn {\n\t\t\t\t\t\t\t\t\tterm:         params.term,\n\t\t\t\t\t\t\t\t\trequest_data: \$( this ).data( 'request_data' ) ? \$( this ).data( 'request_data' ) : {},\n\t\t\t\t\t\t\t\t\taction:       \$( this ).data( 'action' ) || 'woocommerce_json_search_products_and_variations',\n\t\t\t\t\t\t\t\t\tsecurity:     \$( this ).data( 'nonce' )\n\t\t\t\t\t\t\t\t};\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\tprocessResults: function( data, params ) {\n\t\t\t\t\t\t\t\tvar terms = [];\n\t\t\t\t\t\t\t\tif ( data ) {\n\t\t\t\t\t\t\t\t\t\$.each( data, function( id, text ) {\n\t\t\t\t\t\t\t\t\t\tterms.push( { id: id, text: text } );\n\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\treturn { results: terms };\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t};\n\n\t\t\t\t\tselect2_args = \$.extend( select2_args, getEnhancedSelectFormatString() );\n\n\t\t\t\t\t\$( this ).select2( select2_args ).addClass( 'enhanced' );\n\t\t\t\t} );\n\t\t\t";
+            $javascript .= "\n\n\t\t\t\t\$( 'select.sv-wc-enhanced-search' ).filter( ':not(.enhanced)' ).each( function() {\n\n\t\t\t\t\tvar select2_args = {\n\t\t\t\t\t\tallowClear:         \$( this ).data( 'allow_clear' ) ? true : false,\n\t\t\t\t\t\tplaceholder:        \$( this ).data( 'placeholder' ),\n\t\t\t\t\t\tminimumInputLength: \$( this ).data( 'minimum_input_length' ) ? \$( this ).data( 'minimum_input_length' ) : '3',\n\t\t\t\t\t\tescapeMarkup:       function( m ) {\n\t\t\t\t\t\t\treturn m;\n\t\t\t\t\t\t},\n\t\t\t\t\t\tajax:               {\n\t\t\t\t\t\t\turl:            '" . esc_js(admin_url('admin-ajax.php')) . "',\n\t\t\t\t\t\t\tdataType:       'json',\n\t\t\t\t\t\t\tcache:          true,\n\t\t\t\t\t\t\tdelay:          250,\n\t\t\t\t\t\t\tdata:           function( params ) {\n\t\t\t\t\t\t\t\treturn {\n\t\t\t\t\t\t\t\t\tterm:         params.term,\n\t\t\t\t\t\t\t\t\trequest_data: \$( this ).data( 'request_data' ) ? \$( this ).data( 'request_data' ) : {},\n\t\t\t\t\t\t\t\t\taction:       \$( this ).data( 'action' ) || 'woocommerce_json_search_products_and_variations',\n\t\t\t\t\t\t\t\t\tsecurity:     \$( this ).data( 'nonce' )\n\t\t\t\t\t\t\t\t};\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\tprocessResults: function( data, params ) {\n\t\t\t\t\t\t\t\tvar terms = [];\n\t\t\t\t\t\t\t\tif ( data ) {\n\t\t\t\t\t\t\t\t\t\$.each( data, function( id, text ) {\n\t\t\t\t\t\t\t\t\t\tterms.push( { id: id, text: text } );\n\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\treturn { results: terms };\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t};\n\n\t\t\t\t\tselect2_args = \$.extend( select2_args, getEnhancedSelectFormatString() );\n\n\t\t\t\t\t\$( this ).select2( select2_args ).addClass( 'enhanced' );\n\t\t\t\t} );\n\t\t\t";
             $javascript .= '} )();';
-            \wc_enqueue_js($javascript);
+            wc_enqueue_js($javascript);
             /**
              * WC Select2 Ajax Rendered Action.
              * Fired when an Ajax select2 is rendered.
              *
              * @since 3.1.0
              */
-            \do_action('sv_wc_select2_ajax_rendered');
+            do_action('sv_wc_select2_ajax_rendered');
         }
     }
     /** Framework translation functions ***********************************/
@@ -576,7 +570,7 @@ class Helper
      */
     public static function f__($text)
     {
-        return \__($text, 'woocommerce-plugin-framework');
+        return __($text, 'woocommerce-plugin-framework');
     }
     /**
      * Gettext `_e()` wrapper for framework-translated strings
@@ -591,7 +585,7 @@ class Helper
      */
     public static function f_e($text)
     {
-        echo \wp_kses_post(\__($text, 'woocommerce-plugin-framework'));
+        echo wp_kses_post(__($text, 'woocommerce-plugin-framework'));
     }
     /**
      * Gettext `_x()` wrapper for framework-translated strings
@@ -608,7 +602,7 @@ class Helper
      */
     public static function f_x($text, $context)
     {
-        return \_x($text, $context, 'woocommerce-plugin-framework');
+        return _x($text, $context, 'woocommerce-plugin-framework');
     }
     /** Misc functions ****************************************************/
     /**
@@ -653,8 +647,8 @@ class Helper
      */
     public static function convert_country_code($code)
     {
-        \wc_deprecated_function(__METHOD__, '5.4.3', \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Country_Helper::class . '::convert_alpha_country_code()');
-        return \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Country_Helper::convert_alpha_country_code($code);
+        wc_deprecated_function(__METHOD__, '5.4.3', Country_Helper::class . '::convert_alpha_country_code()');
+        return Country_Helper::convert_alpha_country_code($code);
     }
     /**
      * Displays a notice if the provided hook has not yet run.
@@ -667,8 +661,8 @@ class Helper
      */
     public static function maybe_doing_it_early($hook, $method, $version)
     {
-        if (!\did_action($hook)) {
-            \wc_doing_it_wrong($method, "This should only be called after '{$hook}'", $version);
+        if (!did_action($hook)) {
+            wc_doing_it_wrong($method, "This should only be called after '{$hook}'", $version);
         }
     }
     /**
@@ -683,7 +677,7 @@ class Helper
     public static function trigger_error($message, $type = \E_USER_NOTICE)
     {
         //phpcs:ignore
-        if (\is_callable('is_ajax') && \is_ajax()) {
+        if (is_callable('is_ajax') && is_ajax()) {
             switch ($type) {
                 case \E_USER_NOTICE:
                     $prefix = 'Notice: ';
@@ -694,9 +688,9 @@ class Helper
                 default:
                     $prefix = '';
             }
-            \error_log($prefix . $message);
+            error_log($prefix . $message);
         } else {
-            \trigger_error($message, $type);
+            trigger_error($message, $type);
             //phpcs:ignore
         }
     }
@@ -714,7 +708,7 @@ class Helper
             return \false;
         }
         foreach ($product->get_children() as $variation_id) {
-            $variation = \wc_get_product($variation_id);
+            $variation = wc_get_product($variation_id);
             if ($variation && $variation->get_manage_stock()) {
                 return \true;
             }

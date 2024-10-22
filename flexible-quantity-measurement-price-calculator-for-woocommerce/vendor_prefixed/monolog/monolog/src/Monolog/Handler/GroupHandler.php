@@ -20,7 +20,7 @@ use WDFQVendorFree\Monolog\ResettableInterface;
  *
  * @phpstan-import-type Record from \Monolog\Logger
  */
-class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \WDFQVendorFree\Monolog\Handler\ProcessableHandlerInterface, \WDFQVendorFree\Monolog\ResettableInterface
+class GroupHandler extends Handler implements ProcessableHandlerInterface, ResettableInterface
 {
     use ProcessableHandlerTrait;
     /** @var HandlerInterface[] */
@@ -34,7 +34,7 @@ class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \W
     public function __construct(array $handlers, bool $bubble = \true)
     {
         foreach ($handlers as $handler) {
-            if (!$handler instanceof \WDFQVendorFree\Monolog\Handler\HandlerInterface) {
+            if (!$handler instanceof HandlerInterface) {
                 throw new \InvalidArgumentException('The first argument of the GroupHandler must be an array of HandlerInterface instances.');
             }
         }
@@ -44,7 +44,7 @@ class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \W
     /**
      * {@inheritDoc}
      */
-    public function isHandling(array $record) : bool
+    public function isHandling(array $record): bool
     {
         foreach ($this->handlers as $handler) {
             if ($handler->isHandling($record)) {
@@ -56,7 +56,7 @@ class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \W
     /**
      * {@inheritDoc}
      */
-    public function handle(array $record) : bool
+    public function handle(array $record): bool
     {
         if ($this->processors) {
             /** @var Record $record */
@@ -70,7 +70,7 @@ class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \W
     /**
      * {@inheritDoc}
      */
-    public function handleBatch(array $records) : void
+    public function handleBatch(array $records): void
     {
         if ($this->processors) {
             $processed = [];
@@ -88,12 +88,12 @@ class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \W
     {
         $this->resetProcessors();
         foreach ($this->handlers as $handler) {
-            if ($handler instanceof \WDFQVendorFree\Monolog\ResettableInterface) {
+            if ($handler instanceof ResettableInterface) {
                 $handler->reset();
             }
         }
     }
-    public function close() : void
+    public function close(): void
     {
         parent::close();
         foreach ($this->handlers as $handler) {
@@ -103,10 +103,10 @@ class GroupHandler extends \WDFQVendorFree\Monolog\Handler\Handler implements \W
     /**
      * {@inheritDoc}
      */
-    public function setFormatter(\WDFQVendorFree\Monolog\Formatter\FormatterInterface $formatter) : \WDFQVendorFree\Monolog\Handler\HandlerInterface
+    public function setFormatter(FormatterInterface $formatter): HandlerInterface
     {
         foreach ($this->handlers as $handler) {
-            if ($handler instanceof \WDFQVendorFree\Monolog\Handler\FormattableHandlerInterface) {
+            if ($handler instanceof FormattableHandlerInterface) {
                 $handler->setFormatter($formatter);
             }
         }

@@ -17,14 +17,14 @@ use WDFQVendorFree\Monolog\Logger;
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
-class ChromePHPFormatter implements \WDFQVendorFree\Monolog\Formatter\FormatterInterface
+class ChromePHPFormatter implements FormatterInterface
 {
     /**
      * Translates Monolog log levels to Wildfire levels.
      *
      * @var array<int, 'log'|'info'|'warn'|'error'>
      */
-    private $logLevels = [\WDFQVendorFree\Monolog\Logger::DEBUG => 'log', \WDFQVendorFree\Monolog\Logger::INFO => 'info', \WDFQVendorFree\Monolog\Logger::NOTICE => 'info', \WDFQVendorFree\Monolog\Logger::WARNING => 'warn', \WDFQVendorFree\Monolog\Logger::ERROR => 'error', \WDFQVendorFree\Monolog\Logger::CRITICAL => 'error', \WDFQVendorFree\Monolog\Logger::ALERT => 'error', \WDFQVendorFree\Monolog\Logger::EMERGENCY => 'error'];
+    private $logLevels = [Logger::DEBUG => 'log', Logger::INFO => 'info', Logger::NOTICE => 'info', Logger::WARNING => 'warn', Logger::ERROR => 'error', Logger::CRITICAL => 'error', Logger::ALERT => 'error', Logger::EMERGENCY => 'error'];
     /**
      * {@inheritDoc}
      */
@@ -43,8 +43,8 @@ class ChromePHPFormatter implements \WDFQVendorFree\Monolog\Formatter\FormatterI
         if ($record['extra']) {
             $message['extra'] = $record['extra'];
         }
-        if (\count($message) === 1) {
-            $message = \reset($message);
+        if (count($message) === 1) {
+            $message = reset($message);
         }
         return [$record['channel'], $message, $backtrace, $this->logLevels[$record['level']]];
     }

@@ -43,16 +43,16 @@ class Settings
     public function __construct($product = null)
     {
         // product id
-        if (\is_numeric($product)) {
-            $product = \wc_get_product($product);
+        if (is_numeric($product)) {
+            $product = wc_get_product($product);
         }
         // have a product
-        if ($product instanceof \WC_Product) {
+        if ($product instanceof WC_Product) {
             if ($product->is_type('variation')) {
-                $product = \wc_get_product($product->get_parent_id());
+                $product = wc_get_product($product->get_parent_id());
             }
             $this->product = $product;
-            $this->settings_container = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Persistence\WooCommerceProductContainer($product->get_id());
+            $this->settings_container = new WooCommerceProductContainer($product->get_id());
         }
     }
     /**
@@ -97,7 +97,7 @@ class Settings
     {
         $settings = $this->get_settings();
         $unit = isset($settings['fq']['unit']) ? $settings['fq']['unit'] : '';
-        return \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::get_calculator_type($unit);
+        return Units::get_calculator_type($unit);
     }
     /**
      * Returns true if the calculator is a derived type (meaning more than one
@@ -109,7 +109,7 @@ class Settings
     //  FIXME: calculator type can be only: other, weight, dimension, area, volume, volume-dimension, custom so this function can only be true for volume-dimension
     public function is_calculator_type_derived()
     {
-        return \in_array($this->get_calculator_type(), ['other', 'area-dimension', 'area-linear', 'area-surface', 'volume-dimension', 'volume-area', 'wall-dimension'], \true);
+        return in_array($this->get_calculator_type(), ['other', 'area-dimension', 'area-linear', 'area-surface', 'volume-dimension', 'volume-area', 'wall-dimension'], \true);
     }
     /**
      * Gets the measurements settings for the current calculator.  If a frontend
@@ -124,7 +124,7 @@ class Settings
     {
         $settings = $this->get_settings();
         $decimals_enabled = isset($settings['fq']['decimals_enabled']) && $settings['fq']['decimals_enabled'] == 'yes';
-        return $decimals_enabled && isset($settings['fq']['decimals']) && \is_array($settings['fq']['decimals']);
+        return $decimals_enabled && isset($settings['fq']['decimals']) && is_array($settings['fq']['decimals']);
     }
     public function get_calculator_measurements()
     {
@@ -136,25 +136,25 @@ class Settings
                 $type = $value['type'];
                 $is_editable = $type === 'user';
                 if ($is_editable) {
-                    $val = \is_numeric($value[$type]['min_quantity']) ? \floatval($value[$type]['min_quantity']) : '';
+                    $val = is_numeric($value[$type]['min_quantity']) ? floatval($value[$type]['min_quantity']) : '';
                     if ($val == '') {
-                        $val = \is_numeric($value[$type]['max_quantity']) ? \floatval($value[$type]['max_quantity']) : 1;
+                        $val = is_numeric($value[$type]['max_quantity']) ? floatval($value[$type]['max_quantity']) : 1;
                     }
                 } else {
-                    $val = \is_numeric($value[$type]['size']) ? \floatval($value[$type]['size']) : 1;
+                    $val = is_numeric($value[$type]['size']) ? floatval($value[$type]['size']) : 1;
                 }
-                $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($value[$type]['unit'], $val, $name, $value[$type]['label'], $is_editable ? 'yes' : 'no', $this->get_options($name));
+                $measurement = new Measurement($value[$type]['unit'], $val, $name, $value[$type]['label'], $is_editable ? 'yes' : 'no', $this->get_options($name));
                 $measurement->set_common_unit($common_unit);
                 $measurements[] = $measurement;
             }
             // }
         } else {
-            $val = \is_numeric($settings['fq']['min_range']) ? \floatval(\is_numeric($settings['fq']['min_range'])) : '';
+            $val = is_numeric($settings['fq']['min_range']) ? floatval(is_numeric($settings['fq']['min_range'])) : '';
             if ($val == '') {
-                $val = \is_numeric($settings['fq']['max_range']) ? \floatval($settings['fq']['max_range']) : 1;
+                $val = is_numeric($settings['fq']['max_range']) ? floatval($settings['fq']['max_range']) : 1;
             }
             $label = !empty($settings['fq']['label']) ? $settings['fq']['label'] : '';
-            $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($common_unit, $val, 'length', $label, 'yes', $this->get_options('dimension'));
+            $measurement = new Measurement($common_unit, $val, 'length', $label, 'yes', $this->get_options('dimension'));
             $measurement->set_common_unit($common_unit);
             $measurements[] = $measurement;
         }
@@ -173,20 +173,20 @@ class Settings
     public function get_price()
     {
         $settings = $this->get_settings();
-        $price = !empty($settings['fq']['price']) ? \abs($settings['fq']['price']) : '';
-        $price = !empty($settings['fq']['sale_price']) ? \abs($settings['fq']['sale_price']) : $price;
+        $price = !empty($settings['fq']['price']) ? abs($settings['fq']['price']) : '';
+        $price = !empty($settings['fq']['sale_price']) ? abs($settings['fq']['sale_price']) : $price;
         return $price;
     }
     public function get_regular_price()
     {
         $settings = $this->get_settings();
-        $price = !empty($settings['fq']['price']) ? \abs($settings['fq']['price']) : '';
+        $price = !empty($settings['fq']['price']) ? abs($settings['fq']['price']) : '';
         return $price;
     }
     public function get_sale_price()
     {
         $settings = $this->get_settings();
-        $price = !empty($settings['fq']['sale_price']) ? \abs($settings['fq']['sale_price']) : '';
+        $price = !empty($settings['fq']['sale_price']) ? abs($settings['fq']['sale_price']) : '';
         return $price;
     }
     public function get_sold_individually()
@@ -263,10 +263,10 @@ class Settings
     protected function set_pricing_rules($pricing_rules)
     {
         $this->pricing_rules = [];
-        if (\is_array($pricing_rules)) {
+        if (is_array($pricing_rules)) {
             foreach ($pricing_rules as $rule) {
-                $rule = (array) \apply_filters('fq_price_calculator_settings_rule', $rule, $this->product);
-                if (isset($rule['range_start'], $rule['regular_price']) && \is_numeric($rule['range_start']) && $rule['range_start'] >= 0 && \is_numeric($rule['regular_price']) && $rule['regular_price'] >= 0) {
+                $rule = (array) apply_filters('fq_price_calculator_settings_rule', $rule, $this->product);
+                if (isset($rule['range_start'], $rule['regular_price']) && is_numeric($rule['range_start']) && $rule['range_start'] >= 0 && is_numeric($rule['regular_price']) && $rule['regular_price'] >= 0) {
                     $this->pricing_rules[] = $rule;
                 }
             }
@@ -289,10 +289,10 @@ class Settings
         if ($this->is_pricing_calculator_enabled()) {
             if ($this->is_pricing_table_enabled()) {
                 foreach ($settings['fq']['pricing_table']['items']['from'] as $key => $value) {
-                    $price = \trim(\str_replace(',', '.', $settings['fq']['pricing_table']['items']['price'][$key]));
-                    $price = \is_numeric($price) ? \abs($price) : '';
-                    $sale_price = \trim(\str_replace(',', '.', $settings['fq']['pricing_table']['items']['sale_price'][$key]));
-                    $sale_price = \is_numeric($sale_price) ? \abs($sale_price) : '';
+                    $price = trim(\str_replace(',', '.', $settings['fq']['pricing_table']['items']['price'][$key]));
+                    $price = is_numeric($price) ? abs($price) : '';
+                    $sale_price = trim(\str_replace(',', '.', $settings['fq']['pricing_table']['items']['sale_price'][$key]));
+                    $sale_price = is_numeric($sale_price) ? abs($sale_price) : '';
                     $pricing_rules[] = ['range_start' => $settings['fq']['pricing_table']['items']['from'][$key], 'range_end' => $settings['fq']['pricing_table']['items']['to'][$key], 'price' => !empty($sale_price) ? $sale_price : $price, 'regular_price' => $price, 'sale_price' => $sale_price];
                 }
             }
@@ -324,7 +324,7 @@ class Settings
      * @param  string|null $to_unit optional units to return the pricing rules ranges in, defaults to pricing units
      * @return array of pricing rules with ranges in terms of $to_unit
      */
-    public function get_pricing_rules($to_unit = null) : array
+    public function get_pricing_rules($to_unit = null): array
     {
         // default if the pricing calculator is not enabled
         $pricing_rules = [];
@@ -332,7 +332,7 @@ class Settings
             // load the pricing rules when needed
             if (null === $this->pricing_rules) {
                 $rules = $this->get_settings_pricing_rules();
-                if (\is_array($rules)) {
+                if (is_array($rules)) {
                     $this->set_pricing_rules($rules);
                 }
             }
@@ -341,14 +341,14 @@ class Settings
             // if a conversion
             if (!empty($pricing_rules) && $to_unit && $to_unit !== $this->get_pricing_unit()) {
                 foreach ($pricing_rules as &$rule) {
-                    $rule['range_start'] = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::convert($rule['range_start'], $this->get_pricing_unit(), $to_unit);
+                    $rule['range_start'] = Measurement::convert($rule['range_start'], $this->get_pricing_unit(), $to_unit);
                     if ('' !== $rule['range_end']) {
-                        $rule['range_end'] = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::convert($rule['range_end'], $this->get_pricing_unit(), $to_unit);
+                        $rule['range_end'] = Measurement::convert($rule['range_end'], $this->get_pricing_unit(), $to_unit);
                     }
                 }
             }
         }
-        return \is_array($pricing_rules) ? $pricing_rules : [];
+        return is_array($pricing_rules) ? $pricing_rules : [];
     }
     /**
      * Determines if pricing rules are enabled for this calculator.
@@ -358,7 +358,7 @@ class Settings
      *
      * @see Settings::has_pricing_rules() alias
      */
-    public function pricing_rules_enabled() : bool
+    public function pricing_rules_enabled(): bool
     {
         return $this->has_pricing_rules();
     }
@@ -370,7 +370,7 @@ class Settings
      *
      * @see Settings::pricing_rules_enabled() alias
      */
-    public function has_pricing_rules() : bool
+    public function has_pricing_rules(): bool
     {
         return !empty($this->get_pricing_rules());
     }
@@ -383,7 +383,7 @@ class Settings
      * @return float the price for the given $measurement (regular or sale)
      * @since  3.0
      */
-    public function get_shipping_class_id(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement)
+    public function get_shipping_class_id(Measurement $measurement)
     {
         // get the value in pricing units for comparison
         $measurement_value = $measurement->get_value($this->get_pricing_unit());
@@ -395,7 +395,7 @@ class Settings
         }
         return \false;
     }
-    public function get_pricing_rules_price(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement)
+    public function get_pricing_rules_price(Measurement $measurement)
     {
         // get the value in pricing units for comparison
         $measurement_value = $measurement->get_value($this->get_pricing_unit());
@@ -413,7 +413,7 @@ class Settings
      * @since  3.0
      * @return bool true if there's a pricing table sale running, false otherwise
      */
-    public function pricing_rules_is_on_sale() : bool
+    public function pricing_rules_is_on_sale(): bool
     {
         foreach ($this->get_pricing_rules() as $rule) {
             if ('' !== $rule['sale_price']) {
@@ -436,7 +436,7 @@ class Settings
                 $min = \PHP_INT_MAX;
                 // initialize to the largest possible number
             }
-            $min = \min($min, $rule['price']);
+            $min = min($min, $rule['price']);
         }
         return $min;
     }
@@ -454,7 +454,7 @@ class Settings
                 $max = -1;
                 // initialize to an impossible price
             }
-            $max = \max($max, $rule['price']);
+            $max = max($max, $rule['price']);
         }
         return $max;
     }
@@ -472,7 +472,7 @@ class Settings
                 $min = \PHP_INT_MAX;
                 // initialize to the largest possible number
             }
-            $min = \min($min, $rule['regular_price']);
+            $min = min($min, $rule['regular_price']);
         }
         return $min;
     }
@@ -490,7 +490,7 @@ class Settings
                 $max = -1;
                 // initialize to an impossible price
             }
-            $max = \max($max, $rule['regular_price']);
+            $max = max($max, $rule['regular_price']);
         }
         return $max;
     }
@@ -512,7 +512,7 @@ class Settings
                 // initialize to the largest possible number
                 $min = \PHP_INT_MAX;
             }
-            $min = \min($min, $rule['sale_price']);
+            $min = min($min, $rule['sale_price']);
         }
         return $min;
     }
@@ -534,7 +534,7 @@ class Settings
                 $max = -1;
                 // initialize to an impossible price
             }
-            $max = \max($max, $rule['sale_price']);
+            $max = max($max, $rule['sale_price']);
         }
         return $max;
     }
@@ -554,23 +554,23 @@ class Settings
     public function get_pricing_rule_price_html($rule)
     {
         $price_html = '';
-        $sep = \apply_filters('fq_price_calculator_pricing_label_separator', '/');
+        $sep = apply_filters('fq_price_calculator_pricing_label_separator', '/');
         if ($rule['price'] > 0) {
             if ('' !== $rule['sale_price'] && '' !== $rule['regular_price']) {
-                $price_html .= \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_price_html_from_to($rule['regular_price'], $rule['price'], $sep . ' ' . $this->get_pricing_label());
+                $price_html .= Product::get_price_html_from_to($rule['regular_price'], $rule['price'], $sep . ' ' . $this->get_pricing_label());
             } else {
-                $price_html .= \wc_price($rule['price']) . ' ' . $sep . ' ' . $this->get_pricing_label();
+                $price_html .= wc_price($rule['price']) . ' ' . $sep . ' ' . $this->get_pricing_label();
             }
         } elseif ('' === $rule['price']) {
             // no-op (for now)
         } elseif (0 == $rule['price']) {
             if ($rule['price'] === $rule['sale_price'] && '' !== $rule['regular_price']) {
-                $price_html .= \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::get_price_html_from_to($rule['regular_price'], \__('Free!', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $this->get_pricing_label());
+                $price_html .= Product::get_price_html_from_to($rule['regular_price'], __('Free!', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $this->get_pricing_label());
             } else {
-                $price_html = \__('Free!', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+                $price_html = __('Free!', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
             }
         }
-        return \apply_filters('fq_price_calculator_get_pricing_rule_price_html', $price_html, $rule, $this);
+        return apply_filters('fq_price_calculator_get_pricing_rule_price_html', $price_html, $rule, $this);
     }
     /**
      * Returns the calculator pricing unit, if this is a pricing calculator
@@ -662,7 +662,7 @@ class Settings
             $step = $settings['fq']['increment'] == '' ? 1 : $settings['fq']['increment'];
         }
         $args = ['min' => $min, 'max' => $max, 'step' => $step];
-        return \array_filter(\wp_parse_args($args, ['min' => 0, 'max' => '', 'step' => '']));
+        return array_filter(wp_parse_args($args, ['min' => 0, 'max' => '', 'step' => '']));
     }
     /**
      * Returns an array of option values for the given measurement.  This is
@@ -677,10 +677,10 @@ class Settings
     {
         $calculator_type = $this->get_calculator_type();
         $options = [];
-        if ($this->is_pricing_calculator_enabled() && isset($this->settings[$calculator_type][$measurement_name]['options']) && \is_array($this->settings[$calculator_type][$measurement_name]['options'])) {
+        if ($this->is_pricing_calculator_enabled() && isset($this->settings[$calculator_type][$measurement_name]['options']) && is_array($this->settings[$calculator_type][$measurement_name]['options'])) {
             foreach ($this->settings[$calculator_type][$measurement_name]['options'] as $value) {
                 if ('' !== $value) {
-                    $result = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::convert_to_float($value);
+                    $result = Measurement::convert_to_float($value);
                     $options[(string) $result] = $value;
                 }
             }
@@ -700,12 +700,12 @@ class Settings
         if ($this->is_pricing_enabled()) {
             // default to the unit
             if (isset($settings['fq']['unit']) && $settings['fq']['unit']) {
-                $all_units = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::get_all_units();
+                $all_units = Units::get_all_units();
                 $unit = isset($all_units[$settings['fq']['unit']]['label']) ? $all_units[$settings['fq']['unit']]['label'] : $settings['fq']['unit'];
                 $pricing_label = \sprintf(\esc_html__('per %s', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $unit);
             }
         }
-        return \apply_filters('fq_price_calculator_pricing_label', $pricing_label, $this);
+        return apply_filters('fq_price_calculator_pricing_label', $pricing_label, $this);
     }
     /**
      * Returns a default settings array
@@ -715,22 +715,22 @@ class Settings
     private function get_default_settings()
     {
         // get the system units so we provide a nice convenient default
-        $default_dimension_unit = \get_option('woocommerce_dimension_unit');
-        $default_area_unit = \get_option('woocommerce_area_unit');
-        $default_volume_unit = \get_option('woocommerce_volume_unit');
+        $default_dimension_unit = get_option('woocommerce_dimension_unit');
+        $default_area_unit = get_option('woocommerce_area_unit');
+        $default_volume_unit = get_option('woocommerce_volume_unit');
         // see the doc block for this method as to yuno get_option() {BR 2017-04-12}
         $default_weight_unit = $this->get_woocommerce_weight_unit();
-        $length = \esc_html__('Length', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $req_length = \esc_html__('Required Length', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $width = \esc_html__('Width', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $req_width = \esc_html__('Required Width', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $height = \esc_html__('Height', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $req_height = \esc_html__('Required Height', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $area = \esc_html__('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $req_area = \esc_html__('Required Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $req_volume = \esc_html__('Required Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $req_weight = \esc_html__('Required Weight', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-        $distance = \esc_html__('Distance around your room', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $length = esc_html__('Length', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $req_length = esc_html__('Required Length', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $width = esc_html__('Width', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $req_width = esc_html__('Required Width', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $height = esc_html__('Height', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $req_height = esc_html__('Required Height', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $area = esc_html__('Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $req_area = esc_html__('Required Area', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $req_volume = esc_html__('Required Volume', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $req_weight = esc_html__('Required Weight', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+        $distance = esc_html__('Distance around your room', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
         $settings = [
             'calculator_type' => '',
             'dimension' => ['pricing' => ['label' => '', 'unit' => $default_dimension_unit, 'enabled' => 'no', 'calculator' => ['enabled' => 'no'], 'inventory' => ['enabled' => 'no'], 'weight' => ['enabled' => 'no']], 'length' => ['label' => $req_length, 'unit' => $default_dimension_unit, 'editable' => 'yes', 'enabled' => 'yes', 'options' => []], 'width' => ['label' => $req_width, 'unit' => $default_dimension_unit, 'editable' => 'yes', 'enabled' => 'no', 'options' => []], 'height' => ['label' => $req_height, 'unit' => $default_dimension_unit, 'editable' => 'yes', 'enabled' => 'no', 'options' => []]],
@@ -764,7 +764,7 @@ class Settings
         global $wpdb;
         $row = $wpdb->get_row("SELECT option_value FROM {$wpdb->options} WHERE option_name = 'woocommerce_weight_unit' LIMIT 1");
         // Has to be get_row instead of get_var because of funkiness with 0, false, null values
-        if (\is_object($row)) {
+        if (is_object($row)) {
             $value = $row->option_value;
         } else {
             // option does not exist; we shouldn't even get here, but if so, we can safely return the WC default in this case
@@ -791,10 +791,10 @@ class Settings
      */
     private function update_settings()
     {
-        if (\is_array($this->settings)) {
+        if (is_array($this->settings)) {
             // pricing 'inventory', weight and 'calculator' sub-settings were added in version 3.0
             foreach ($this->settings as $calculator_name => $calculator_settings) {
-                if (\is_array($calculator_settings)) {
+                if (is_array($calculator_settings)) {
                     foreach ($calculator_settings as $setting_name => $values) {
                         if ('pricing' === $setting_name) {
                             if (!isset($this->settings[$calculator_name][$setting_name]['inventory'])) {
@@ -812,7 +812,7 @@ class Settings
             }
             // measurement 'options' setting (defaults to array()) was added in version 3.0
             foreach ($this->settings as $calculator_name => $calculator_settings) {
-                if (\is_array($calculator_settings)) {
+                if (is_array($calculator_settings)) {
                     foreach ($calculator_settings as $setting_name => $values) {
                         if ('pricing' !== $setting_name && !isset($this->settings[$calculator_name][$setting_name]['options'])) {
                             $this->settings[$calculator_name][$setting_name]['options'] = [];

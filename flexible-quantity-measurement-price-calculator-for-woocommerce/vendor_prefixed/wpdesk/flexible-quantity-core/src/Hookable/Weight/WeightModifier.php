@@ -9,7 +9,7 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\Weigh
 /**
  * Modifies product weight for FQ products in cart.
  */
-class WeightModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class WeightModifier implements Hookable
 {
     /**
      * @var SettingsContainer
@@ -19,7 +19,7 @@ class WeightModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hook
      * @var WeightCalculator
      */
     private $weight_calculator;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer $settings_container)
+    public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;
     }
@@ -44,18 +44,18 @@ class WeightModifier implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hook
         }
         $product = $session_item_data['data'];
         $settings = $this->settings_container->get($product);
-        $measurement = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($settings->get_pricing_unit(), (float) $values['pricing_item_meta_data']['_measurement_needed']);
+        $measurement = new Measurement($settings->get_pricing_unit(), (float) $values['pricing_item_meta_data']['_measurement_needed']);
         $calculated_weight = $this->get_weight_calculator($product)->calculate($measurement);
         $session_item_data['data']->set_weight($calculated_weight);
         return $session_item_data;
     }
-    private function get_weight_calculator(\WC_Product $product) : \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\WeightCalculator
+    private function get_weight_calculator(\WC_Product $product): WeightCalculator
     {
-        if ($this->weight_calculator instanceof \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\WeightCalculator) {
+        if ($this->weight_calculator instanceof WeightCalculator) {
             return $this->weight_calculator;
         }
         $settings = $this->settings_container->get($product);
-        $weight_calculator = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\WeightCalculator($settings->get_calculator_type(), $product->get_weight(), \get_option('woocommerce_weight_unit'));
+        $weight_calculator = new WeightCalculator($settings->get_calculator_type(), $product->get_weight(), \get_option('woocommerce_weight_unit'));
         return $weight_calculator;
     }
 }

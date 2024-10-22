@@ -19,7 +19,7 @@ final class WooCommerceProductContainer implements \WDFQVendorFree\WPDesk\Persis
     private $product;
     public function __construct(int $product_id)
     {
-        $product = \wc_get_product($product_id);
+        $product = wc_get_product($product_id);
         if (!\is_object($product)) {
             throw new \WDFQVendorFree\WPDesk\Persistence\ElementNotExistsException(\sprintf('Product %s not exists!', $product_id));
         }
@@ -41,7 +41,7 @@ final class WooCommerceProductContainer implements \WDFQVendorFree\WPDesk\Persis
         }
         return $this->product->get_meta($key);
     }
-    public function has($id) : bool
+    public function has($id): bool
     {
         $meta = $this->product->get_meta($id, \false);
         return \count($meta) !== 0;

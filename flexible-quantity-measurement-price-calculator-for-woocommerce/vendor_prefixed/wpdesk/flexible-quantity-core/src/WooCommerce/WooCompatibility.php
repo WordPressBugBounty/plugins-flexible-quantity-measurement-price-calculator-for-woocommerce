@@ -31,8 +31,8 @@ class WooCompatibility
      */
     public static function wc_get_is_paid_statuses()
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', '(array) wc_get_is_paid_statuses()');
-        return (array) \wc_get_is_paid_statuses();
+        wc_deprecated_function(__METHOD__, '5.5.0', '(array) wc_get_is_paid_statuses()');
+        return (array) wc_get_is_paid_statuses();
     }
     /**
      * Logs a doing_it_wrong message.
@@ -46,8 +46,8 @@ class WooCompatibility
      */
     public static function wc_doing_it_wrong($function, $message, $version)
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', 'wc_doing_it_wrong()');
-        \wc_doing_it_wrong($function, $message, $version);
+        wc_deprecated_function(__METHOD__, '5.5.0', 'wc_doing_it_wrong()');
+        wc_doing_it_wrong($function, $message, $version);
     }
     /**
      * Formats a date for output.
@@ -61,8 +61,8 @@ class WooCompatibility
      */
     public static function wc_format_datetime($date, $format = '')
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', 'wc_format_datetime()');
-        return \wc_format_datetime($date, $format);
+        wc_deprecated_function(__METHOD__, '5.5.0', 'wc_format_datetime()');
+        return wc_format_datetime($date, $format);
     }
     /**
      * Logs a deprecated function notice.
@@ -76,8 +76,8 @@ class WooCompatibility
      */
     public static function wc_deprecated_function($function, $version, $replacement = null)
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', 'wc_deprecated_function()');
-        \wc_deprecated_function($function, $version, $replacement);
+        wc_deprecated_function(__METHOD__, '5.5.0', 'wc_deprecated_function()');
+        wc_deprecated_function($function, $version, $replacement);
     }
     /**
      * Retrieves a list of the latest available WooCommerce versions.
@@ -91,26 +91,26 @@ class WooCompatibility
      */
     public static function get_latest_wc_versions()
     {
-        $latest_wc_versions = \get_transient('sv_wc_plugin_wc_versions');
-        if (!\is_array($latest_wc_versions)) {
+        $latest_wc_versions = get_transient('sv_wc_plugin_wc_versions');
+        if (!is_array($latest_wc_versions)) {
             /** @link https://codex.wordpress.org/WordPress.org_API */
-            $wp_org_request = \wp_remote_get('https://api.wordpress.org/plugins/info/1.0/woocommerce.json', ['timeout' => 1]);
-            if (\is_array($wp_org_request) && isset($wp_org_request['body'])) {
-                $plugin_info = \json_decode($wp_org_request['body'], \true);
-                if (\is_array($plugin_info) && !empty($plugin_info['versions']) && \is_array($plugin_info['versions'])) {
+            $wp_org_request = wp_remote_get('https://api.wordpress.org/plugins/info/1.0/woocommerce.json', ['timeout' => 1]);
+            if (is_array($wp_org_request) && isset($wp_org_request['body'])) {
+                $plugin_info = json_decode($wp_org_request['body'], \true);
+                if (is_array($plugin_info) && !empty($plugin_info['versions']) && is_array($plugin_info['versions'])) {
                     $latest_wc_versions = [];
                     // reverse array as WordPress supplies oldest version first, newest last
-                    foreach (\array_keys(\array_reverse($plugin_info['versions'])) as $wc_version) {
+                    foreach (array_keys(array_reverse($plugin_info['versions'])) as $wc_version) {
                         // skip trunk, release candidates, betas and other non-final or irregular versions
-                        if (\is_string($wc_version) && '' !== $wc_version && \is_numeric($wc_version[0]) && \false === \strpos($wc_version, '-')) {
+                        if (is_string($wc_version) && '' !== $wc_version && is_numeric($wc_version[0]) && \false === strpos($wc_version, '-')) {
                             $latest_wc_versions[] = $wc_version;
                         }
                     }
-                    \set_transient('sv_wc_plugin_wc_versions', $latest_wc_versions, WEEK_IN_SECONDS);
+                    set_transient('sv_wc_plugin_wc_versions', $latest_wc_versions, \WEEK_IN_SECONDS);
                 }
             }
         }
-        return \is_array($latest_wc_versions) ? $latest_wc_versions : [];
+        return is_array($latest_wc_versions) ? $latest_wc_versions : [];
     }
     /**
      * Gets the version of the currently installed WooCommerce.
@@ -121,7 +121,7 @@ class WooCompatibility
      */
     public static function get_wc_version()
     {
-        return \defined('WC_VERSION') && \WC_VERSION ? \WC_VERSION : null;
+        return defined('WC_VERSION') && \WC_VERSION ? \WC_VERSION : null;
     }
     /**
      * Determines if the installed WooCommerce version matches a specific version.
@@ -135,7 +135,7 @@ class WooCompatibility
     {
         $wc_version = self::get_wc_version();
         // accounts for semver cases like 3.0 being equal to 3.0.0
-        return $wc_version === $version || $wc_version && \version_compare($wc_version, $version, '=');
+        return $wc_version === $version || $wc_version && version_compare($wc_version, $version, '=');
     }
     /**
      * Determines if the installed version of WooCommerce is 3.0 or greater.
@@ -147,7 +147,7 @@ class WooCompatibility
      */
     public static function is_wc_version_gte_3_0()
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_gte()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_gte()');
         return self::is_wc_version_gte('3.0');
     }
     /**
@@ -160,7 +160,7 @@ class WooCompatibility
      */
     public static function is_wc_version_lt_3_0()
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_lt()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_lt()');
         return self::is_wc_version_lt('3.0');
     }
     /**
@@ -173,7 +173,7 @@ class WooCompatibility
      */
     public static function is_wc_version_gte_3_1()
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_gte()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_gte()');
         return self::is_wc_version_gte('3.1');
     }
     /**
@@ -186,7 +186,7 @@ class WooCompatibility
      */
     public static function is_wc_version_lt_3_1()
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_lt()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_version_lt()');
         return self::is_wc_version_lt('3.1');
     }
     /**
@@ -200,7 +200,7 @@ class WooCompatibility
     public static function is_wc_version_gte($version)
     {
         $wc_version = self::get_wc_version();
-        return $wc_version && \version_compare($wc_version, $version, '>=');
+        return $wc_version && version_compare($wc_version, $version, '>=');
     }
     /**
      * Determines if the installed version of WooCommerce is lower than a given version.
@@ -213,7 +213,7 @@ class WooCompatibility
     public static function is_wc_version_lt($version)
     {
         $wc_version = self::get_wc_version();
-        return $wc_version && \version_compare($wc_version, $version, '<');
+        return $wc_version && version_compare($wc_version, $version, '<');
     }
     /**
      * Determines if the installed version of WooCommerce is greater than a given version.
@@ -226,7 +226,7 @@ class WooCompatibility
     public static function is_wc_version_gt($version)
     {
         $wc_version = self::get_wc_version();
-        return $wc_version && \version_compare($wc_version, $version, '>');
+        return $wc_version && version_compare($wc_version, $version, '>');
     }
     /** WordPress core ******************************************************/
     /**
@@ -244,7 +244,7 @@ class WooCompatibility
     public static function normalize_wc_screen_id($slug = 'wc-settings')
     {
         // The textdomain usage is intentional here, we need to match the menu title.
-        $prefix = \sanitize_title(\__('WooCommerce', 'woocommerce'));
+        $prefix = sanitize_title(__('WooCommerce', 'woocommerce'));
         return $prefix . '_page_' . $slug;
     }
     /**
@@ -265,20 +265,20 @@ class WooCompatibility
      */
     public static function convert_hr_to_bytes($value)
     {
-        if (\function_exists('wp_convert_hr_to_bytes')) {
-            return \wp_convert_hr_to_bytes($value);
+        if (function_exists('wp_convert_hr_to_bytes')) {
+            return wp_convert_hr_to_bytes($value);
         }
-        $value = \strtolower(\trim($value));
+        $value = strtolower(trim($value));
         $bytes = (int) $value;
-        if (\false !== \strpos($value, 'g')) {
-            $bytes *= GB_IN_BYTES;
-        } elseif (\false !== \strpos($value, 'm')) {
-            $bytes *= MB_IN_BYTES;
-        } elseif (\false !== \strpos($value, 'k')) {
-            $bytes *= KB_IN_BYTES;
+        if (\false !== strpos($value, 'g')) {
+            $bytes *= \GB_IN_BYTES;
+        } elseif (\false !== strpos($value, 'm')) {
+            $bytes *= \MB_IN_BYTES;
+        } elseif (\false !== strpos($value, 'k')) {
+            $bytes *= \KB_IN_BYTES;
         }
         // deal with large (float) values which run into the maximum integer size
-        return \min($bytes, \PHP_INT_MAX);
+        return min($bytes, \PHP_INT_MAX);
     }
     /** Subscriptions *********************************************************/
     /**
@@ -291,7 +291,7 @@ class WooCompatibility
      */
     public static function is_wc_subscriptions_version_gte_2_0()
     {
-        \wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_subscriptions_version_gte()');
+        wc_deprecated_function(__METHOD__, '5.5.0', __CLASS__ . '::is_wc_subscriptions_version_gte()');
         return self::is_wc_subscriptions_version_gte('2.0');
     }
     /**
@@ -305,7 +305,7 @@ class WooCompatibility
     public static function is_wc_subscriptions_version_gte($version)
     {
         $subscriptions_version = self::get_wc_subscriptions_version();
-        return $subscriptions_version && \version_compare($subscriptions_version, $version, '>=');
+        return $subscriptions_version && version_compare($subscriptions_version, $version, '>=');
     }
     /**
      * Determines if the installed version of WooCommerce Subscriptions exceeds a given version.
@@ -318,7 +318,7 @@ class WooCompatibility
     public static function is_wc_subscriptions_version_gt($version)
     {
         $subscriptions_version = self::get_wc_subscriptions_version();
-        return $subscriptions_version && \version_compare($subscriptions_version, $version, '>');
+        return $subscriptions_version && version_compare($subscriptions_version, $version, '>');
     }
     /**
      * Determines if the installed version of WooCommerce Subscriptions is lower than a given version.
@@ -331,7 +331,7 @@ class WooCompatibility
     public static function is_wc_subscriptions_version_lt($version)
     {
         $subscriptions_version = self::get_wc_subscriptions_version();
-        return $subscriptions_version && \version_compare($subscriptions_version, $version, '<');
+        return $subscriptions_version && version_compare($subscriptions_version, $version, '<');
     }
     /**
      * Gets the version of the currently installed WooCommerce Subscriptions.
@@ -342,7 +342,7 @@ class WooCompatibility
      */
     protected static function get_wc_subscriptions_version()
     {
-        return \class_exists('WDFQVendorFree\\WC_Subscriptions') && !empty(\WDFQVendorFree\WC_Subscriptions::$version) ? \WDFQVendorFree\WC_Subscriptions::$version : null;
+        return class_exists('WDFQVendorFree\WC_Subscriptions') && !empty(\WDFQVendorFree\WC_Subscriptions::$version) ? \WDFQVendorFree\WC_Subscriptions::$version : null;
     }
     /**
      * Determines if the installed WooCommerce Subscriptions version matches a specific version.
@@ -356,6 +356,6 @@ class WooCompatibility
     {
         $subscriptions_version = self::get_wc_subscriptions_version();
         // accounts for semver cases like 2.2 being equal to 2.2.0
-        return $version === $subscriptions_version || $subscriptions_version && \version_compare($version, $subscriptions_version, '=');
+        return $version === $subscriptions_version || $subscriptions_version && version_compare($version, $subscriptions_version, '=');
     }
 }

@@ -22,7 +22,7 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units;
 
 			<div class="flex-row-item">
 				<?php 
-echo \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units::unit_select(
+echo Units::unit_select(
     //phpcs:ignore
     ['id' => 'fq_unit', 'name' => 'fq[unit]', 'value' => \esc_attr($settings->getString('unit')), 'placeholder' => '', 'class' => 'wqm-select fq_unit', 'label' => \esc_html__('Unit of measure', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'options' => $available_units, 'desc_tip' => \true, 'description' => \esc_html__('Select the products unit whose quantity you are selling.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]
 );

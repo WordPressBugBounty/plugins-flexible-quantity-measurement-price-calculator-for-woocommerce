@@ -7,7 +7,7 @@
  */
 namespace WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType;
 
-class VideoBox extends \WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType\Box
+class VideoBox extends Box
 {
     const TYPE = 'video';
 }

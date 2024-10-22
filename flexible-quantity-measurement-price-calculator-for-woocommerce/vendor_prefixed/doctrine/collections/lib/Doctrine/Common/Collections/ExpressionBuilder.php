@@ -22,7 +22,7 @@ class ExpressionBuilder
      */
     public function andX($x = null)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression(\WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression::TYPE_AND, \func_get_args());
+        return new CompositeExpression(CompositeExpression::TYPE_AND, func_get_args());
     }
     /**
      * @param mixed ...$x
@@ -31,7 +31,7 @@ class ExpressionBuilder
      */
     public function orX($x = null)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression(\WDFQVendorFree\Doctrine\Common\Collections\Expr\CompositeExpression::TYPE_OR, \func_get_args());
+        return new CompositeExpression(CompositeExpression::TYPE_OR, func_get_args());
     }
     /**
      * @param string $field
@@ -41,7 +41,7 @@ class ExpressionBuilder
      */
     public function eq($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::EQ, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::EQ, new Value($value));
     }
     /**
      * @param string $field
@@ -51,7 +51,7 @@ class ExpressionBuilder
      */
     public function gt($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::GT, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::GT, new Value($value));
     }
     /**
      * @param string $field
@@ -61,7 +61,7 @@ class ExpressionBuilder
      */
     public function lt($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::LT, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::LT, new Value($value));
     }
     /**
      * @param string $field
@@ -71,7 +71,7 @@ class ExpressionBuilder
      */
     public function gte($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::GTE, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::GTE, new Value($value));
     }
     /**
      * @param string $field
@@ -81,7 +81,7 @@ class ExpressionBuilder
      */
     public function lte($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::LTE, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::LTE, new Value($value));
     }
     /**
      * @param string $field
@@ -91,7 +91,7 @@ class ExpressionBuilder
      */
     public function neq($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::NEQ, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::NEQ, new Value($value));
     }
     /**
      * @param string $field
@@ -100,7 +100,7 @@ class ExpressionBuilder
      */
     public function isNull($field)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::EQ, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value(null));
+        return new Comparison($field, Comparison::EQ, new Value(null));
     }
     /**
      * @param string  $field
@@ -110,7 +110,7 @@ class ExpressionBuilder
      */
     public function in($field, array $values)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::IN, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($values));
+        return new Comparison($field, Comparison::IN, new Value($values));
     }
     /**
      * @param string  $field
@@ -120,7 +120,7 @@ class ExpressionBuilder
      */
     public function notIn($field, array $values)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::NIN, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($values));
+        return new Comparison($field, Comparison::NIN, new Value($values));
     }
     /**
      * @param string $field
@@ -130,7 +130,7 @@ class ExpressionBuilder
      */
     public function contains($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::CONTAINS, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::CONTAINS, new Value($value));
     }
     /**
      * @param string $field
@@ -140,7 +140,7 @@ class ExpressionBuilder
      */
     public function memberOf($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::MEMBER_OF, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::MEMBER_OF, new Value($value));
     }
     /**
      * @param string $field
@@ -150,7 +150,7 @@ class ExpressionBuilder
      */
     public function startsWith($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::STARTS_WITH, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::STARTS_WITH, new Value($value));
     }
     /**
      * @param string $field
@@ -160,6 +160,6 @@ class ExpressionBuilder
      */
     public function endsWith($field, $value)
     {
-        return new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison($field, \WDFQVendorFree\Doctrine\Common\Collections\Expr\Comparison::ENDS_WITH, new \WDFQVendorFree\Doctrine\Common\Collections\Expr\Value($value));
+        return new Comparison($field, Comparison::ENDS_WITH, new Value($value));
     }
 }

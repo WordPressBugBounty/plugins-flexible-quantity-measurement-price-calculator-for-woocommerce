@@ -14,7 +14,7 @@ class MeasurementCalculator
      * @var Settings
      */
     private $settings;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings $settings)
+    public function __construct(Settings $settings)
     {
         $this->settings = $settings;
     }
@@ -25,7 +25,7 @@ class MeasurementCalculator
      *
      * @return Measurement
      */
-    public function calculate(array $measurements) : \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement
+    public function calculate(array $measurements): Measurement
     {
         $measurement_type = $this->settings->get_calculator_type();
         $measurement_needed = 0;
@@ -40,15 +40,15 @@ class MeasurementCalculator
                 $measurement_needed = $this->calculate_default_measurement_needed($measurements);
                 break;
         }
-        $measurement_needed_unit = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::get_standard_unit($this->settings->get_pricing_unit());
-        $measurement_needed = \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement::convert($measurement_needed, $measurement_needed_unit, $this->settings->get_pricing_unit());
+        $measurement_needed_unit = Measurement::get_standard_unit($this->settings->get_pricing_unit());
+        $measurement_needed = Measurement::convert($measurement_needed, $measurement_needed_unit, $this->settings->get_pricing_unit());
         $measurement_needed = (float) \wc_format_decimal($measurement_needed, $this->get_runding_precision());
-        return new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement($this->settings->get_pricing_unit(), $measurement_needed, $measurement_type);
+        return new Measurement($this->settings->get_pricing_unit(), $measurement_needed, $measurement_type);
     }
     /**
      * @param Measurement[] $measurements
      */
-    private function calculate_default_measurement_needed(array $measurements) : float
+    private function calculate_default_measurement_needed(array $measurements): float
     {
         return \array_reduce($measurements, function ($carry, $measurement) {
             return $carry * $measurement->get_value_common();
@@ -57,7 +57,7 @@ class MeasurementCalculator
     /**
      * @param Measurement[] $measurements
      */
-    private function calulate_area_linear_measurement_needed(array $measurements) : float
+    private function calulate_area_linear_measurement_needed(array $measurements): float
     {
         return \array_reduce($measurements, function ($carry, $measurement) {
             return $carry + 2 * $measurement->get_value_common();
@@ -66,10 +66,10 @@ class MeasurementCalculator
     /**
      * @param Measurement[] $measurements
      */
-    private function calulate_area_surface_measurement_needed(array $measurements) : float
+    private function calulate_area_surface_measurement_needed(array $measurements): float
     {
-        $dimensions = \array_reduce($measurements, function ($carry, $measurement) {
-            if (\array_key_exists($measurement->get_name(), $carry)) {
+        $dimensions = array_reduce($measurements, function ($carry, $measurement) {
+            if (array_key_exists($measurement->get_name(), $carry)) {
                 $carry[$measurement->get_name()] = $measurement->get_value_common();
             }
             return $carry;
@@ -82,12 +82,12 @@ class MeasurementCalculator
     /**
      * Get rounding precision for measurement needed
      */
-    private function get_runding_precision() : int
+    private function get_runding_precision(): int
     {
         $increment = $this->settings->get_basic_increment();
         if ($increment !== '') {
             return \strlen(\substr(\strrchr($increment, '.'), 1));
         }
-        return \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Cart::DEFAULT_MEASUREMENT_NEEDED_ROUNDING_PRECISION;
+        return Cart::DEFAULT_MEASUREMENT_NEEDED_ROUNDING_PRECISION;
     }
 }

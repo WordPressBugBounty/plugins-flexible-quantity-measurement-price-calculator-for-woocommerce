@@ -12,7 +12,7 @@ class MeasurementValidator
      * @var array<ValidatorInterface>
      */
     private $validators;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Validator\ValidatorInterface ...$validators)
+    public function __construct(ValidatorInterface ...$validators)
     {
         $this->validators = $validators;
     }
@@ -21,9 +21,9 @@ class MeasurementValidator
      *
      * @return ValidationResult
      */
-    public function validate(array $measurements) : \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Validator\ValidationResult
+    public function validate(array $measurements): ValidationResult
     {
-        $result = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Validator\ValidationResult();
+        $result = new ValidationResult();
         foreach ($measurements as $measurement) {
             foreach ($this->validators as $validator) {
                 $error_msg = $validator->validate($measurement);

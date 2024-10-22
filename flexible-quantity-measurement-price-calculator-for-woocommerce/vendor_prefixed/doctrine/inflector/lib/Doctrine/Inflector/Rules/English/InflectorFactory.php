@@ -5,14 +5,14 @@ namespace WDFQVendorFree\Doctrine\Inflector\Rules\English;
 
 use WDFQVendorFree\Doctrine\Inflector\GenericLanguageInflectorFactory;
 use WDFQVendorFree\Doctrine\Inflector\Rules\Ruleset;
-final class InflectorFactory extends \WDFQVendorFree\Doctrine\Inflector\GenericLanguageInflectorFactory
+final class InflectorFactory extends GenericLanguageInflectorFactory
 {
-    protected function getSingularRuleset() : \WDFQVendorFree\Doctrine\Inflector\Rules\Ruleset
+    protected function getSingularRuleset(): Ruleset
     {
-        return \WDFQVendorFree\Doctrine\Inflector\Rules\English\Rules::getSingularRuleset();
+        return Rules::getSingularRuleset();
     }
-    protected function getPluralRuleset() : \WDFQVendorFree\Doctrine\Inflector\Rules\Ruleset
+    protected function getPluralRuleset(): Ruleset
     {
-        return \WDFQVendorFree\Doctrine\Inflector\Rules\English\Rules::getPluralRuleset();
+        return Rules::getPluralRuleset();
     }
 }

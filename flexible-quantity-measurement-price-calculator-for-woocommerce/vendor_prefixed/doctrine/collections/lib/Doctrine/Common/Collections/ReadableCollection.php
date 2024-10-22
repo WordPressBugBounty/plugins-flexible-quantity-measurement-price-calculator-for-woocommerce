@@ -10,7 +10,7 @@ use IteratorAggregate;
  * @template-covariant T
  * @template-extends IteratorAggregate<TKey, T>
  */
-interface ReadableCollection extends \Countable, \IteratorAggregate
+interface ReadableCollection extends Countable, IteratorAggregate
 {
     /**
      * Checks whether an element is contained in the collection.
@@ -131,7 +131,7 @@ interface ReadableCollection extends \Countable, \IteratorAggregate
      *
      * @return bool TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    public function exists(\Closure $p);
+    public function exists(Closure $p);
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
@@ -142,7 +142,7 @@ interface ReadableCollection extends \Countable, \IteratorAggregate
      * @return ReadableCollection<mixed> A collection with the results of the filter operation.
      * @psalm-return ReadableCollection<TKey, T>
      */
-    public function filter(\Closure $p);
+    public function filter(Closure $p);
     /**
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
@@ -154,7 +154,7 @@ interface ReadableCollection extends \Countable, \IteratorAggregate
      *
      * @psalm-template U
      */
-    public function map(\Closure $func);
+    public function map(Closure $func);
     /**
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
@@ -167,7 +167,7 @@ interface ReadableCollection extends \Countable, \IteratorAggregate
      *                      contains the collection of elements where the predicate returned FALSE.
      * @psalm-return array{0: ReadableCollection<TKey, T>, 1: ReadableCollection<TKey, T>}
      */
-    public function partition(\Closure $p);
+    public function partition(Closure $p);
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
      *
@@ -176,7 +176,7 @@ interface ReadableCollection extends \Countable, \IteratorAggregate
      *
      * @return bool TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    public function forAll(\Closure $p);
+    public function forAll(Closure $p);
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
      * that means not only the value but also the type must match.

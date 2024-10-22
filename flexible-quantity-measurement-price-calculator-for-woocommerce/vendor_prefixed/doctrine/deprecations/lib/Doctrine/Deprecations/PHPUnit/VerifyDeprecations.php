@@ -11,33 +11,33 @@ trait VerifyDeprecations
     private $doctrineDeprecationsExpectations = [];
     /** @var array<string,int> */
     private $doctrineNoDeprecationsExpectations = [];
-    public function expectDeprecationWithIdentifier(string $identifier) : void
+    public function expectDeprecationWithIdentifier(string $identifier): void
     {
-        $this->doctrineDeprecationsExpectations[$identifier] = \WDFQVendorFree\Doctrine\Deprecations\Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
+        $this->doctrineDeprecationsExpectations[$identifier] = Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
     }
-    public function expectNoDeprecationWithIdentifier(string $identifier) : void
+    public function expectNoDeprecationWithIdentifier(string $identifier): void
     {
-        $this->doctrineNoDeprecationsExpectations[$identifier] = \WDFQVendorFree\Doctrine\Deprecations\Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
+        $this->doctrineNoDeprecationsExpectations[$identifier] = Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
     }
     /**
      * @before
      */
-    public function enableDeprecationTracking() : void
+    public function enableDeprecationTracking(): void
     {
-        \WDFQVendorFree\Doctrine\Deprecations\Deprecation::enableTrackingDeprecations();
+        Deprecation::enableTrackingDeprecations();
     }
     /**
      * @after
      */
-    public function verifyDeprecationsAreTriggered() : void
+    public function verifyDeprecationsAreTriggered(): void
     {
         foreach ($this->doctrineDeprecationsExpectations as $identifier => $expectation) {
-            $actualCount = \WDFQVendorFree\Doctrine\Deprecations\Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
-            $this->assertTrue($actualCount > $expectation, \sprintf("Expected deprecation with identifier '%s' was not triggered by code executed in test.", $identifier));
+            $actualCount = Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
+            $this->assertTrue($actualCount > $expectation, sprintf("Expected deprecation with identifier '%s' was not triggered by code executed in test.", $identifier));
         }
         foreach ($this->doctrineNoDeprecationsExpectations as $identifier => $expectation) {
-            $actualCount = \WDFQVendorFree\Doctrine\Deprecations\Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
-            $this->assertTrue($actualCount === $expectation, \sprintf("Expected deprecation with identifier '%s' was triggered by code executed in test, but expected not to.", $identifier));
+            $actualCount = Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
+            $this->assertTrue($actualCount === $expectation, sprintf("Expected deprecation with identifier '%s' was triggered by code executed in test, but expected not to.", $identifier));
         }
     }
 }

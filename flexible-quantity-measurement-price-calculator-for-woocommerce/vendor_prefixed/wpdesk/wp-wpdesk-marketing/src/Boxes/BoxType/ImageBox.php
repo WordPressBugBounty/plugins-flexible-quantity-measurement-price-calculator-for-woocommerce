@@ -7,7 +7,7 @@
  */
 namespace WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType;
 
-class ImageBox extends \WDFQVendorFree\WPDesk\Library\Marketing\Boxes\BoxType\Box
+class ImageBox extends Box
 {
     const TYPE = 'image';
 }

@@ -2,7 +2,7 @@
 
 namespace WDFQVendorFree\Doctrine\Common\Collections\Expr;
 
-class Value implements \WDFQVendorFree\Doctrine\Common\Collections\Expr\Expression
+class Value implements Expression
 {
     /** @var mixed */
     private $value;
@@ -19,7 +19,7 @@ class Value implements \WDFQVendorFree\Doctrine\Common\Collections\Expr\Expressi
     /**
      * {@inheritDoc}
      */
-    public function visit(\WDFQVendorFree\Doctrine\Common\Collections\Expr\ExpressionVisitor $visitor)
+    public function visit(ExpressionVisitor $visitor)
     {
         return $visitor->walkValue($this);
     }

@@ -2,7 +2,7 @@
 
 namespace WDFQVendorFree\WPDesk\PluginBuilder\Plugin;
 
-interface HookablePluginDependant extends \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+interface HookablePluginDependant extends Hookable
 {
     /**
      * Set Plugin.
@@ -11,7 +11,7 @@ interface HookablePluginDependant extends \WDFQVendorFree\WPDesk\PluginBuilder\P
      *
      * @return null
      */
-    public function set_plugin(\WDFQVendorFree\WPDesk\PluginBuilder\Plugin\AbstractPlugin $plugin);
+    public function set_plugin(AbstractPlugin $plugin);
     /**
      * Get plugin.
      *

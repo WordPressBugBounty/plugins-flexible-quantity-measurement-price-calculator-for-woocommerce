@@ -12,5 +12,5 @@ interface ValidatorInterface
      *
      * @return string
      */
-    public function validate(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement $measurement) : string;
+    public function validate(Measurement $measurement): string;
 }

@@ -164,7 +164,7 @@ class Measurement
          *
          * @since 3.0.1
          */
-        return \apply_filters('fq_price_calculator_unit_label', $this->unit, $this);
+        return apply_filters('fq_price_calculator_unit_label', $this->unit, $this);
     }
     /**
      * Get the measurement name, one of 'length', 'width', 'height', 'area', 'volume', 'weight'
@@ -226,7 +226,7 @@ class Measurement
          *
          * @since 3.4.0
          */
-        return \apply_filters('fq_price_calculator_label', $this->label, $this);
+        return apply_filters('fq_price_calculator_label', $this->label, $this);
     }
     /**
      * Returns an array of options for the measurement for the frontend.
@@ -244,7 +244,7 @@ class Measurement
          *
          * @since 3.10.1
          */
-        return \apply_filters('fq_price_calculator_measurement_options', $this->options, $this);
+        return apply_filters('fq_price_calculator_measurement_options', $this->options, $this);
     }
     /**
      * Helper function to convert the measurement value to the given unit, or the
@@ -262,7 +262,7 @@ class Measurement
         if ($unit === $to_unit) {
             return $value;
         }
-        if (\is_string($value)) {
+        if (is_string($value)) {
             $value = (float) $value;
         }
         // all units to their corresponding standard unit
@@ -273,9 +273,9 @@ class Measurement
         if (isset($normalize_table[$unit])) {
             $factor = $normalize_table[$unit]['factor'];
             if (isset($normalize_table[$unit]['inverse']) && $normalize_table[$unit]['inverse']) {
-                $value = \WDFQVendorFree\Brick\Math\BigDecimal::of($value)->dividedBy($factor, self::CONVERSION_ROUNDING_PRECISION, \WDFQVendorFree\Brick\Math\RoundingMode::HALF_EVEN)->toFloat();
+                $value = BigDecimal::of($value)->dividedBy($factor, self::CONVERSION_ROUNDING_PRECISION, RoundingMode::HALF_EVEN)->toFloat();
             } else {
-                $value = \WDFQVendorFree\Brick\Math\BigDecimal::of($value)->multipliedBy($factor)->toFloat();
+                $value = BigDecimal::of($value)->multipliedBy($factor)->toFloat();
             }
             $unit = $normalize_table[$unit]['unit'];
         }
@@ -283,9 +283,9 @@ class Measurement
         if (isset($conversion_table[$unit][$to_unit])) {
             $factor = $conversion_table[$unit][$to_unit]['factor'];
             if (isset($conversion_table[$unit][$to_unit]['inverse']) && $conversion_table[$unit][$to_unit]['inverse']) {
-                $value = \WDFQVendorFree\Brick\Math\BigDecimal::of($value)->dividedBy($factor, self::CONVERSION_ROUNDING_PRECISION, \WDFQVendorFree\Brick\Math\RoundingMode::HALF_EVEN)->toFloat();
+                $value = BigDecimal::of($value)->dividedBy($factor, self::CONVERSION_ROUNDING_PRECISION, RoundingMode::HALF_EVEN)->toFloat();
             } else {
-                $value = \WDFQVendorFree\Brick\Math\BigDecimal::of($value)->multipliedBy($factor)->toFloat();
+                $value = BigDecimal::of($value)->multipliedBy($factor)->toFloat();
             }
         }
         return $value;
@@ -302,18 +302,18 @@ class Measurement
     public static function convert_to_float($value)
     {
         $fraction = null;
-        $decimal_sep = \trim(\wc_get_price_decimal_separator());
+        $decimal_sep = trim(wc_get_price_decimal_separator());
         // we got a measurement fraction, like "2 1/2" (two and half inches, for example)
-        if (\preg_match('#(\\d+)\\s+(\\d+)\\/(\\d+)#', $value, $matches)) {
+        if (preg_match('#(\d+)\s+(\d+)\/(\d+)#', $value, $matches)) {
             $fraction = (float) $matches[3] !== 0 ? $matches[1] + $matches[2] / $matches[3] : $matches[1];
             // we got a simple fraction, like "3/4" (three fourths of a gallon, for example)
-        } elseif (\preg_match('#(\\d+)\\/(\\d+)#', $value, $matches)) {
+        } elseif (preg_match('#(\d+)\/(\d+)#', $value, $matches)) {
             $fraction = (float) $matches[2] !== 0 ? $matches[1] / $matches[2] : 0;
         }
         if (null !== $fraction) {
             // account for comma or alternative separators, for the correct value to return
             if ('.' !== $decimal_sep) {
-                $fraction = \str_replace('.', $decimal_sep, (string) $fraction);
+                $fraction = str_replace('.', $decimal_sep, (string) $fraction);
             }
             $value = (string) $fraction;
         }
@@ -348,7 +348,7 @@ class Measurement
     public static function get_normalize_table()
     {
         if (null === self::$normalize_table) {
-            self::$normalize_table = \apply_filters('fq_price_calculator_normalize_table', ['in' => ['factor' => 12, 'unit' => 'ft', 'inverse' => \true], 'ft' => ['factor' => 1, 'unit' => 'ft'], 'yd' => ['factor' => 3, 'unit' => 'ft'], 'mi' => ['factor' => 5280, 'unit' => 'ft'], 'mm' => ['factor' => 0.001, 'unit' => 'm'], 'cm' => ['factor' => 0.01, 'unit' => 'm'], 'm' => ['factor' => 1, 'unit' => 'm'], 'km' => ['factor' => 1000, 'unit' => 'm'], 'sq. in.' => ['factor' => 144, 'unit' => 'sq. ft.', 'inverse' => \true], 'sq. ft.' => ['factor' => 1, 'unit' => 'sq. ft.'], 'sq. yd.' => ['factor' => 9, 'unit' => 'sq. ft.'], 'acs' => ['factor' => 43560, 'unit' => 'sq. ft.'], 'sq. mi.' => ['factor' => 27878400, 'unit' => 'sq. ft.'], 'sq mm' => ['factor' => 1.0E-6, 'unit' => 'sq m'], 'sq cm' => ['factor' => 0.0001, 'unit' => 'sq m'], 'sq m' => ['factor' => 1, 'unit' => 'sq m'], 'ha' => ['factor' => 10000, 'unit' => 'sq m'], 'sq km' => ['factor' => 1000000, 'unit' => 'sq m'], 'fl. oz.' => ['factor' => 1, 'unit' => 'fl. oz.'], 'cup' => ['factor' => 8, 'unit' => 'fl. oz.'], 'pt' => ['factor' => 16, 'unit' => 'fl. oz.'], 'qt' => ['factor' => 32, 'unit' => 'fl. oz.'], 'gal' => ['factor' => 128, 'unit' => 'fl. oz.'], 'cu. in.' => ['factor' => 1728, 'unit' => 'cu. ft.', 'inverse' => \true], 'cu. ft.' => ['factor' => 1, 'unit' => 'cu. ft.'], 'cu. yd.' => ['factor' => 27, 'unit' => 'cu. ft.'], 'ml' => ['factor' => 1.0E-6, 'unit' => 'cu m'], 'cu cm' => ['factor' => 1.0E-6, 'unit' => 'cu m'], 'l' => ['factor' => 0.001, 'unit' => 'cu m'], 'cu m' => ['factor' => 1, 'unit' => 'cu m'], 'oz' => ['factor' => 16, 'unit' => 'lbs', 'inverse' => \true], 'lbs' => ['factor' => 1, 'unit' => 'lbs'], 'tn' => ['factor' => 2000, 'unit' => 'lbs'], 'g' => ['factor' => 0.001, 'unit' => 'kg'], 'kg' => ['factor' => 1, 'unit' => 'kg'], 't' => ['factor' => 1000, 'unit' => 'kg'], 'item' => ['factor' => 1, 'unit' => \__('item', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]]);
+            self::$normalize_table = apply_filters('fq_price_calculator_normalize_table', ['in' => ['factor' => 12, 'unit' => 'ft', 'inverse' => \true], 'ft' => ['factor' => 1, 'unit' => 'ft'], 'yd' => ['factor' => 3, 'unit' => 'ft'], 'mi' => ['factor' => 5280, 'unit' => 'ft'], 'mm' => ['factor' => 0.001, 'unit' => 'm'], 'cm' => ['factor' => 0.01, 'unit' => 'm'], 'm' => ['factor' => 1, 'unit' => 'm'], 'km' => ['factor' => 1000, 'unit' => 'm'], 'sq. in.' => ['factor' => 144, 'unit' => 'sq. ft.', 'inverse' => \true], 'sq. ft.' => ['factor' => 1, 'unit' => 'sq. ft.'], 'sq. yd.' => ['factor' => 9, 'unit' => 'sq. ft.'], 'acs' => ['factor' => 43560, 'unit' => 'sq. ft.'], 'sq. mi.' => ['factor' => 27878400, 'unit' => 'sq. ft.'], 'sq mm' => ['factor' => 1.0E-6, 'unit' => 'sq m'], 'sq cm' => ['factor' => 0.0001, 'unit' => 'sq m'], 'sq m' => ['factor' => 1, 'unit' => 'sq m'], 'ha' => ['factor' => 10000, 'unit' => 'sq m'], 'sq km' => ['factor' => 1000000, 'unit' => 'sq m'], 'fl. oz.' => ['factor' => 1, 'unit' => 'fl. oz.'], 'cup' => ['factor' => 8, 'unit' => 'fl. oz.'], 'pt' => ['factor' => 16, 'unit' => 'fl. oz.'], 'qt' => ['factor' => 32, 'unit' => 'fl. oz.'], 'gal' => ['factor' => 128, 'unit' => 'fl. oz.'], 'cu. in.' => ['factor' => 1728, 'unit' => 'cu. ft.', 'inverse' => \true], 'cu. ft.' => ['factor' => 1, 'unit' => 'cu. ft.'], 'cu. yd.' => ['factor' => 27, 'unit' => 'cu. ft.'], 'ml' => ['factor' => 1.0E-6, 'unit' => 'cu m'], 'cu cm' => ['factor' => 1.0E-6, 'unit' => 'cu m'], 'l' => ['factor' => 0.001, 'unit' => 'cu m'], 'cu m' => ['factor' => 1, 'unit' => 'cu m'], 'oz' => ['factor' => 16, 'unit' => 'lbs', 'inverse' => \true], 'lbs' => ['factor' => 1, 'unit' => 'lbs'], 'tn' => ['factor' => 2000, 'unit' => 'lbs'], 'g' => ['factor' => 0.001, 'unit' => 'kg'], 'kg' => ['factor' => 1, 'unit' => 'kg'], 't' => ['factor' => 1000, 'unit' => 'kg'], 'item' => ['factor' => 1, 'unit' => __('item', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]]);
         }
         return self::$normalize_table;
     }
@@ -373,7 +373,7 @@ class Measurement
     public static function get_conversion_table()
     {
         if (null === self::$conversion_table) {
-            self::$conversion_table = \apply_filters('fq_price_calculator_conversion_table', ['ft' => ['in' => ['factor' => 12], 'ft' => ['factor' => 1], 'yd' => ['factor' => 3, 'inverse' => \true], 'mi' => ['factor' => 5280, 'inverse' => \true], 'mm' => ['factor' => 304.8], 'cm' => ['factor' => 30.48], 'm' => ['factor' => 0.3048], 'km' => ['factor' => 0.0003048]], 'l' => ['ml' => ['factor' => 1000], 'l' => ['factor' => 1]], 'm' => ['mm' => ['factor' => 1000], 'cm' => ['factor' => 100], 'm' => ['factor' => 1], 'km' => ['factor' => 0.001], 'in' => ['factor' => 39.3701], 'ft' => ['factor' => 3.28084], 'yd' => ['factor' => 1.09361], 'mi' => ['factor' => 0.000621371]], 'sq. ft.' => ['sq. in.' => ['factor' => 144], 'sq. ft.' => ['factor' => 1], 'sq. yd.' => ['factor' => 9, 'inverse' => \true], 'acs' => ['factor' => 43560, 'inverse' => \true], 'sq. mi.' => ['factor' => 27878400, 'inverse' => \true], 'sq mm' => ['factor' => 92903.03999999999], 'sq cm' => ['factor' => 929.0304], 'sq m' => ['factor' => 0.092903], 'sq km' => ['factor' => 9.290299999999999E-8]], 'sq m' => ['sq mm' => ['factor' => 1000000], 'sq cm' => ['factor' => 10000], 'sq m' => ['factor' => 1], 'ha' => ['factor' => 0.0001], 'sq km' => ['factor' => 1.0E-6], 'sq. in.' => ['factor' => 1550], 'sq. ft.' => ['factor' => 10.7639], 'sq. yd.' => ['factor' => 1.19599], 'acs' => ['factor' => 0.000247105], 'sq. mi.' => ['factor' => 3.86102E-7]], 'fl. oz.' => ['fl. oz.' => ['factor' => 1], 'cup' => ['factor' => 8, 'inverse' => \true], 'pt' => ['factor' => 16, 'inverse' => \true], 'qt' => ['factor' => 32, 'inverse' => \true], 'gal' => ['factor' => 128, 'inverse' => \true], 'cu. in.' => ['factor' => 231 / 128], 'cu. ft.' => ['factor' => 0.00104438], 'cu. yd.' => ['factor' => 3.86807163E-5], 'ml' => ['factor' => 29.5735], 'cu cm' => ['factor' => 29.5735], 'l' => ['factor' => 0.0295735], 'cu m' => ['factor' => 2.95735E-5]], 'cu. ft.' => ['fl. oz.' => ['factor' => 957.506], 'cup' => ['factor' => 119.688], 'pt' => ['factor' => 59.8442], 'qt' => ['factor' => 29.9221], 'gal' => ['factor' => 7.48052], 'cu. in.' => ['factor' => 1728], 'cu. ft.' => ['factor' => 1], 'cu. yd.' => ['factor' => 27, 'inverse' => \true], 'ml' => ['factor' => 28316.8466], 'cu cm' => ['factor' => 28316.8466], 'l' => ['factor' => 28.3168466], 'cu m' => ['factor' => 0.0283168466]], 'cu m' => ['ml' => ['factor' => 1000000], 'cu cm' => ['factor' => 1000000], 'l' => ['factor' => 1000], 'cu m' => ['factor' => 1], 'fl. oz.' => ['factor' => 33814], 'cup' => ['factor' => 4226.75], 'pt' => ['factor' => 2113.38], 'qt' => ['factor' => 1056.69], 'gal' => ['factor' => 264.172], 'cu. in.' => ['factor' => 61023.7], 'cu. ft.' => ['factor' => 35.3147], 'cu. yd.' => ['factor' => 1.30795062]], 'lbs' => ['oz' => ['factor' => 16], 'lbs' => ['factor' => 1], 'tn' => ['factor' => 2000, 'inverse' => \true], 'g' => ['factor' => 453.592], 'kg' => ['factor' => 0.453592], 't' => ['factor' => 0.000453592]], 'kg' => ['g' => ['factor' => 1000], 'kg' => ['factor' => 1], 't' => ['factor' => 0.001], 'oz' => ['factor' => 35.274], 'lbs' => ['factor' => 2.20462], 'tn' => ['factor' => 0.00110231]], 'item' => ['item' => ['factor' => 1]]]);
+            self::$conversion_table = apply_filters('fq_price_calculator_conversion_table', ['ft' => ['in' => ['factor' => 12], 'ft' => ['factor' => 1], 'yd' => ['factor' => 3, 'inverse' => \true], 'mi' => ['factor' => 5280, 'inverse' => \true], 'mm' => ['factor' => 304.8], 'cm' => ['factor' => 30.48], 'm' => ['factor' => 0.3048], 'km' => ['factor' => 0.0003048]], 'l' => ['ml' => ['factor' => 1000], 'l' => ['factor' => 1]], 'm' => ['mm' => ['factor' => 1000], 'cm' => ['factor' => 100], 'm' => ['factor' => 1], 'km' => ['factor' => 0.001], 'in' => ['factor' => 39.3701], 'ft' => ['factor' => 3.28084], 'yd' => ['factor' => 1.09361], 'mi' => ['factor' => 0.000621371]], 'sq. ft.' => ['sq. in.' => ['factor' => 144], 'sq. ft.' => ['factor' => 1], 'sq. yd.' => ['factor' => 9, 'inverse' => \true], 'acs' => ['factor' => 43560, 'inverse' => \true], 'sq. mi.' => ['factor' => 27878400, 'inverse' => \true], 'sq mm' => ['factor' => 92903.03999999999], 'sq cm' => ['factor' => 929.0304], 'sq m' => ['factor' => 0.092903], 'sq km' => ['factor' => 9.290299999999999E-8]], 'sq m' => ['sq mm' => ['factor' => 1000000], 'sq cm' => ['factor' => 10000], 'sq m' => ['factor' => 1], 'ha' => ['factor' => 0.0001], 'sq km' => ['factor' => 1.0E-6], 'sq. in.' => ['factor' => 1550], 'sq. ft.' => ['factor' => 10.7639], 'sq. yd.' => ['factor' => 1.19599], 'acs' => ['factor' => 0.000247105], 'sq. mi.' => ['factor' => 3.86102E-7]], 'fl. oz.' => ['fl. oz.' => ['factor' => 1], 'cup' => ['factor' => 8, 'inverse' => \true], 'pt' => ['factor' => 16, 'inverse' => \true], 'qt' => ['factor' => 32, 'inverse' => \true], 'gal' => ['factor' => 128, 'inverse' => \true], 'cu. in.' => ['factor' => 231 / 128], 'cu. ft.' => ['factor' => 0.00104438], 'cu. yd.' => ['factor' => 3.86807163E-5], 'ml' => ['factor' => 29.5735], 'cu cm' => ['factor' => 29.5735], 'l' => ['factor' => 0.0295735], 'cu m' => ['factor' => 2.95735E-5]], 'cu. ft.' => ['fl. oz.' => ['factor' => 957.506], 'cup' => ['factor' => 119.688], 'pt' => ['factor' => 59.8442], 'qt' => ['factor' => 29.9221], 'gal' => ['factor' => 7.48052], 'cu. in.' => ['factor' => 1728], 'cu. ft.' => ['factor' => 1], 'cu. yd.' => ['factor' => 27, 'inverse' => \true], 'ml' => ['factor' => 28316.8466], 'cu cm' => ['factor' => 28316.8466], 'l' => ['factor' => 28.3168466], 'cu m' => ['factor' => 0.0283168466]], 'cu m' => ['ml' => ['factor' => 1000000], 'cu cm' => ['factor' => 1000000], 'l' => ['factor' => 1000], 'cu m' => ['factor' => 1], 'fl. oz.' => ['factor' => 33814], 'cup' => ['factor' => 4226.75], 'pt' => ['factor' => 2113.38], 'qt' => ['factor' => 1056.69], 'gal' => ['factor' => 264.172], 'cu. in.' => ['factor' => 61023.7], 'cu. ft.' => ['factor' => 35.3147], 'cu. yd.' => ['factor' => 1.30795062]], 'lbs' => ['oz' => ['factor' => 16], 'lbs' => ['factor' => 1], 'tn' => ['factor' => 2000, 'inverse' => \true], 'g' => ['factor' => 453.592], 'kg' => ['factor' => 0.453592], 't' => ['factor' => 0.000453592]], 'kg' => ['g' => ['factor' => 1000], 'kg' => ['factor' => 1], 't' => ['factor' => 0.001], 'oz' => ['factor' => 35.274], 'lbs' => ['factor' => 2.20462], 'tn' => ['factor' => 0.00110231]], 'item' => ['item' => ['factor' => 1]]]);
         }
         return self::$conversion_table;
     }
@@ -474,7 +474,7 @@ class Measurement
             case 'acs':
                 return 'acs';
             default:
-                return \apply_filters('fq_price_calculator_to_area_unit', null, $unit);
+                return apply_filters('fq_price_calculator_to_area_unit', null, $unit);
         }
     }
     /**
@@ -523,7 +523,7 @@ class Measurement
             case 'fl. oz.':
                 return 'fl. oz.';
             default:
-                return \apply_filters('fq_price_calculator_to_volume_unit', null, $unit);
+                return apply_filters('fq_price_calculator_to_volume_unit', null, $unit);
         }
     }
     /**

@@ -60,54 +60,54 @@ class PluginConfig
         $this->is_locked = $is_locked;
         $this->marketing_slug = $marketing_slug;
     }
-    public function get_hookable_elements() : array
+    public function get_hookable_elements(): array
     {
         $renderer = $this->init_renderer();
         $assets_url = $this->plugin_url . $this->core_path . '/assets';
-        $template_finder = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\TemplateFinder($this->is_locked);
-        $settings_container = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer($template_finder);
-        $price_modifier = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Prices\PriceModifier($settings_container);
-        $product_page_calculator = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\ProductPage($settings_container, $renderer);
-        $product_page = new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\ProductPage($this->plugin_url . $this->core_path, $settings_container);
-        $translate = new \WDFQVendorFree\WPDesk\Translation\Translate(\get_locale());
+        $template_finder = new TemplateFinder($this->is_locked);
+        $settings_container = new SettingsContainer($template_finder);
+        $price_modifier = new Hookable\Prices\PriceModifier($settings_container);
+        $product_page_calculator = new Hookable\Page\ProductPage($settings_container, $renderer);
+        $product_page = new ProductPage($this->plugin_url . $this->core_path, $settings_container);
+        $translate = new Translate(\get_locale());
         $translate->add_resource_file($this->plugin_path . $this->core_path . '/links.json');
         $hooks = [
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Inventory($settings_container),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\ProductLoop($settings_container),
+            new Inventory($settings_container),
+            new ProductLoop($settings_container),
             // $product_page,
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Cart($settings_container),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Shortcodes(),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Compatibility($product_page, $settings_container),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\PostType\FQTemplateType(),
+            new Cart($settings_container),
+            new Shortcodes(),
+            new Compatibility($product_page, $settings_container),
+            new Hookable\PostType\FQTemplateType(),
             // Backend pages.
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\TemplatePageDisplayer($renderer, $translate, $this->is_locked),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\TemplatePageSaver(),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\TemplatePageScripts($assets_url, $this->script_version),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\Ajax\DimensionsAjax($renderer),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\Ajax\SelectionAjax($this->is_locked),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\TemplateListingPage($renderer),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\ProductPage($renderer, $template_finder, $settings_container),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\CustomUnitsPage($renderer, $translate, $assets_url, $this->script_version, $this->is_locked),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Settings\SupportPage($renderer, $translate, $assets_url, $this->script_version, $this->marketing_slug, $this->is_locked),
+            new Hookable\Settings\TemplatePageDisplayer($renderer, $translate, $this->is_locked),
+            new Hookable\Settings\TemplatePageSaver(),
+            new Hookable\Settings\TemplatePageScripts($assets_url, $this->script_version),
+            new Hookable\Settings\Ajax\DimensionsAjax($renderer),
+            new Hookable\Settings\Ajax\SelectionAjax($this->is_locked),
+            new Hookable\Settings\TemplateListingPage($renderer),
+            new Hookable\Settings\ProductPage($renderer, $template_finder, $settings_container),
+            new Hookable\Settings\CustomUnitsPage($renderer, $translate, $assets_url, $this->script_version, $this->is_locked),
+            new Hookable\Settings\SupportPage($renderer, $translate, $assets_url, $this->script_version, $this->marketing_slug, $this->is_locked),
             // Frontend.
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\Ajax\CalculatorPriceAjax($settings_container, $price_modifier),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\Ajax\CalculatorFormAjax($product_page_calculator),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Page\ProductPageScripts($settings_container, $assets_url, $this->script_version),
+            new Hookable\Page\Ajax\CalculatorPriceAjax($settings_container, $price_modifier),
+            new Hookable\Page\Ajax\CalculatorFormAjax($product_page_calculator),
+            new Hookable\Page\ProductPageScripts($settings_container, $assets_url, $this->script_version),
             $product_page_calculator,
             $price_modifier,
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Prices\PriceHtml($settings_container),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Weight\WeightModifier($settings_container),
-            new \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Product\ProductModifier($settings_container),
+            new Hookable\Prices\PriceHtml($settings_container),
+            new Hookable\Weight\WeightModifier($settings_container),
+            new Hookable\Product\ProductModifier($settings_container),
         ];
         return $hooks;
     }
     /**
      * Init renderer.
      */
-    private function init_renderer() : \WDFQVendorFree\WPDesk\View\Renderer\Renderer
+    private function init_renderer(): Renderer
     {
-        $resolver = new \WDFQVendorFree\WPDesk\View\Resolver\ChainResolver();
-        $resolver->appendResolver(new \WDFQVendorFree\WPDesk\View\Resolver\DirResolver($this->plugin_path . $this->core_path . '/templates/'));
-        return new \WDFQVendorFree\WPDesk\View\Renderer\SimplePhpRenderer($resolver);
+        $resolver = new ChainResolver();
+        $resolver->appendResolver(new DirResolver($this->plugin_path . $this->core_path . '/templates/'));
+        return new SimplePhpRenderer($resolver);
     }
 }

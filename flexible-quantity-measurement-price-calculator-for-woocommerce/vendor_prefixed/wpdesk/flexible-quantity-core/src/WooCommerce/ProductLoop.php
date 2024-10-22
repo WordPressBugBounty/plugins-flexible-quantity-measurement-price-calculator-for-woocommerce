@@ -5,10 +5,10 @@ namespace WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce;
 use WC_Product;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
-class ProductLoop implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable
+class ProductLoop implements Hookable
 {
     private $settings_container;
-    public function __construct(\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer $settings_container)
+    public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;
     }
@@ -19,7 +19,7 @@ class ProductLoop implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      */
     public function hooks()
     {
-        \add_filter('woocommerce_loop_add_to_cart_link', [$this, 'loop_add_to_cart_link'], 10, 2);
+        add_filter('woocommerce_loop_add_to_cart_link', [$this, 'loop_add_to_cart_link'], 10, 2);
     }
     /** Frontend methods ******************************************************/
     /**
@@ -33,11 +33,11 @@ class ProductLoop implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
      * @return string the Add to Cart tag
      * @since 3.3
      */
-    public function loop_add_to_cart_link(string $tag, \WC_Product $product) : string
+    public function loop_add_to_cart_link(string $tag, WC_Product $product): string
     {
         $settings = $this->settings_container->get($product);
         // Otherwise, for simple type products, the page javascript would take over and try to do an ajax add-to-cart, when really we need the customer to visit the product page to supply whatever input fields they require.
-        if (\WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Product::pricing_calculator_enabled($product, $settings) && $product->is_in_stock()) {
+        if (Product::pricing_calculator_enabled($product, $settings) && $product->is_in_stock()) {
             /**
              * Filters the product loop URL if product is in stock and pricing calculator is enabled.
              *
@@ -46,8 +46,8 @@ class ProductLoop implements \WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookabl
              * @param string $product_url product URL
              * @param WC_Product $product current product
              */
-            $product_url = (string) \apply_filters('fq_price_calculator_product_loop_url', \get_permalink($product->get_id()), $product);
-            $tag = \sprintf('<a href="%s" rel="nofollow" data-product_id="%s" data-product_sku="%s" class="button add_to_cart_button product_type_%s">%s</a>', \esc_url($product_url), \esc_attr($product->get_id()), \esc_attr($product->get_sku()), 'variable', \__('Select options', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
+            $product_url = (string) apply_filters('fq_price_calculator_product_loop_url', get_permalink($product->get_id()), $product);
+            $tag = sprintf('<a href="%s" rel="nofollow" data-product_id="%s" data-product_sku="%s" class="button add_to_cart_button product_type_%s">%s</a>', esc_url($product_url), esc_attr($product->get_id()), esc_attr($product->get_sku()), 'variable', __('Select options', 'flexible-quantity-measurement-price-calculator-for-woocommerce'));
         }
         return $tag;
     }

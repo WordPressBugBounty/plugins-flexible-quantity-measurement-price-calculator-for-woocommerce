@@ -10,7 +10,7 @@ use WDFQVendorFree\Doctrine\Common\Collections\ArrayCollection;
  * @template T
  * @extends ArrayCollection<TKey, T>
  */
-class SettingsBag extends \WDFQVendorFree\Doctrine\Common\Collections\ArrayCollection
+class SettingsBag extends ArrayCollection
 {
     /**
      * Returns the nested array as collection.
@@ -19,9 +19,9 @@ class SettingsBag extends \WDFQVendorFree\Doctrine\Common\Collections\ArrayColle
      *
      * @return SettingsBag<TKey, T>
      */
-    public function bag(string $key) : \WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Collections\SettingsBag
+    public function bag(string $key): SettingsBag
     {
-        if (!\is_array($this->get($key))) {
+        if (!is_array($this->get($key))) {
             return new static();
         }
         return new static($this->get($key));
@@ -33,7 +33,7 @@ class SettingsBag extends \WDFQVendorFree\Doctrine\Common\Collections\ArrayColle
      *
      * @return string
      */
-    public function getString(string $key, string $default = '') : string
+    public function getString(string $key, string $default = ''): string
     {
         $value = $this->get($key);
         if (!\is_scalar($value) && !$value instanceof \Stringable) {
@@ -48,7 +48,7 @@ class SettingsBag extends \WDFQVendorFree\Doctrine\Common\Collections\ArrayColle
      *
      * @return float
      */
-    public function getFloat(string $key, float $default = 0) : float
+    public function getFloat(string $key, float $default = 0): float
     {
         $value = $this->get($key);
         if (!\is_numeric($value)) {

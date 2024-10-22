@@ -9,6 +9,6 @@ class StorageFactory
      */
     public function create_storage()
     {
-        return new \WDFQVendorFree\WPDesk\PluginBuilder\Storage\WordpressFilterStorage();
+        return new WordpressFilterStorage();
     }
 }

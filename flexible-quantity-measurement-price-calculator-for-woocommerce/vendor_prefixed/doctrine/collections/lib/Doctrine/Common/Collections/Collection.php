@@ -26,7 +26,7 @@ use Closure;
  * @template-extends ReadableCollection<TKey, T>
  * @template-extends ArrayAccess<TKey, T>
  */
-interface Collection extends \WDFQVendorFree\Doctrine\Common\Collections\ReadableCollection, \ArrayAccess
+interface Collection extends ReadableCollection, ArrayAccess
 {
     /**
      * Adds an element at the end of the collection.
@@ -79,7 +79,7 @@ interface Collection extends \WDFQVendorFree\Doctrine\Common\Collections\Readabl
      * @return Collection<mixed> A collection with the results of the filter operation.
      * @psalm-return Collection<TKey, T>
      */
-    public function filter(\Closure $p);
+    public function filter(Closure $p);
     /**
      * {@inheritdoc}
      *
@@ -88,5 +88,5 @@ interface Collection extends \WDFQVendorFree\Doctrine\Common\Collections\Readabl
      *                      contains the collection of elements where the predicate returned FALSE.
      * @psalm-return array{0: Collection<TKey, T>, 1: Collection<TKey, T>}
      */
-    public function partition(\Closure $p);
+    public function partition(Closure $p);
 }

@@ -8,5 +8,5 @@ namespace WDFQVendorFree\Doctrine\Common\Collections\Expr;
 interface Expression
 {
     /** @return mixed */
-    public function visit(\WDFQVendorFree\Doctrine\Common\Collections\Expr\ExpressionVisitor $visitor);
+    public function visit(ExpressionVisitor $visitor);
 }

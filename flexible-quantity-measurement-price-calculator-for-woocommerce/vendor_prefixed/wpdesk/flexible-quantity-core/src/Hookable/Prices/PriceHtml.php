@@ -10,7 +10,7 @@ class PriceHtml implements Hookable
     /**
      * @var SettingsContainer
      */
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;

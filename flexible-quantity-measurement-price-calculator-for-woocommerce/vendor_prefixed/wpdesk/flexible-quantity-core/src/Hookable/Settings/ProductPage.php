@@ -23,7 +23,7 @@ class ProductPage implements Hookable
     /**
      * @var SettingsContainer
      */
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public const ASSIGN_PRODUCT_VAR_NAME = 'assign_product';
     public const CREATE_FROM_PRODUCT_VAR_NAME = 'create_from_product';
     public function __construct(Renderer $renderer, TemplateFinder $template_finder, SettingsContainer $settings_container)

@@ -7,9 +7,9 @@
 
 namespace WPDesk\FlexibleQuantityFree;
 
-use Psr\Log\NullLogger;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerAwareInterface;
+use WDFQVendorFree\Psr\Log\NullLogger;
+use WDFQVendorFree\Psr\Log\LoggerAwareTrait;
+use WDFQVendorFree\Psr\Log\LoggerAwareInterface;
 use WDFQVendorFree\WPDesk_Plugin_Info;
 use WDFQVendorFree\WPDesk\View\Renderer\Renderer;
 use WDFQVendorFree\WPDesk\Dashboard\DashboardWidget;

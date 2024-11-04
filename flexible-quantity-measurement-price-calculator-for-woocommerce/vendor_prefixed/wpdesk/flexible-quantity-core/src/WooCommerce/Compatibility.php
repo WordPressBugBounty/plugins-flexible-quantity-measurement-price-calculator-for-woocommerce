@@ -15,7 +15,7 @@ class Compatibility implements Hookable
      * @var ProductPage
      */
     private $product_page;
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public function __construct(ProductPage $product_page, SettingsContainer $settings_container)
     {
         $this->product_page = $product_page;

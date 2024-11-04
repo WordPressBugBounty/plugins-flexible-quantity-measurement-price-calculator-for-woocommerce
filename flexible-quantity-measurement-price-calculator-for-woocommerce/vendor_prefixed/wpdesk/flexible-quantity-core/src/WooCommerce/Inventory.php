@@ -8,12 +8,11 @@ use WC_Product_Variable;
 use WC_Order_Item_Product;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
-use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\MeasurementCalculator;
 class Inventory implements Hookable
 {
     /** @var bool used to keep track of whether a pricing calculator product stock has been updated when added to cart */
     private $pricing_stock_altered = \false;
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;
@@ -119,40 +118,6 @@ class Inventory implements Hookable
             $cart_item['quantity'] = $quantity * $measurement_needed->get_value($settings->get_pricing_unit());
         }
         return $cart_item;
-    }
-    /**
-     * Set the quantity being added to the cart in WooCommerce 3.0+ when inventory is enabled.
-     * This needs to run in addition to set_measurement_stock_amount() because if quantity drops below 1, WooCommerce
-     *  will throw an exception due to stock amount not being enough, and the incoming requested quantity being "1".
-     * This filters quantity before the check so the requested quantity represents the measurement input.
-     *
-     * @param float $quantity   the quantity being added to the cart
-     * @param int   $product_id the product ID being added to the cart
-     *
-     * @return float the updated quantity
-     * @since 3.12.0
-     */
-    public function set_measurement_add_to_cart_stock_amount($quantity, int $product_id)
-    {
-        $product = wc_get_product($product_id);
-        if ($product instanceof WC_Product && Product::pricing_calculator_inventory_enabled($product)) {
-            $settings = $this->settings_container->get($product);
-            $measurement_needed_unit = $settings->get_pricing_unit();
-            $measurement_needed_value = null;
-            if (isset($_REQUEST['_measurement_needed_unit'])) {
-                $measurement_needed_unit = sanitize_text_field(wp_unslash($_REQUEST['_measurement_needed_unit']));
-            }
-            if (isset($_REQUEST['_measurement_needed'])) {
-                $measurement_needed_value = sanitize_text_field(wp_unslash($_REQUEST['_measurement_needed']));
-            }
-            // Get the needed unit, but default for backwards compatibility.
-            $measurement_needed = new Measurement($measurement_needed_unit, $measurement_needed_value);
-            // quantity * measurement needed in pricing units
-            $quantity = isset($_REQUEST['quantity']) && \is_numeric($_REQUEST['quantity']) ? sanitize_text_field(wp_unslash($_REQUEST['quantity'])) : 1;
-            $quantity = (float) $quantity;
-            $quantity = $quantity * $measurement_needed->get_value($settings->get_pricing_unit());
-        }
-        return $quantity;
     }
     /**
      * Gets the checkout item quantity html, modifying for pricing calculator

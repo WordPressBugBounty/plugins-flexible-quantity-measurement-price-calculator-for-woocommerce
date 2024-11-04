@@ -13,7 +13,7 @@ class ProductPage implements Hookable
     /**
      * @var SettingsContainer
      */
-    private $settings_container;
+    private SettingsContainer $settings_container;
     /**
      * @var Renderer
      */

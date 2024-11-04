@@ -18,7 +18,7 @@ class PriceModifier implements Hookable
     /**
      * @var SettingsContainer
      */
-    private $settings_container;
+    private SettingsContainer $settings_container;
     /**
      * @var bool
      */
@@ -37,11 +37,13 @@ class PriceModifier implements Hookable
         \add_filter('woocommerce_product_variation_get_price', [$this, 'get_price'], 10, 2);
         \add_filter('woocommerce_product_variation_get_regular_price', [$this, 'get_regular_price'], 10, 2);
         \add_filter('woocommerce_product_variation_get_sale_price', [$this, 'get_sale_price'], 10, 2);
-        // products in cart do not have prices set, we have to set it on the fly.
+        // products in cart do not have our prices set, we have to set it on the fly.
         // firstly, when product is added to cart.
         \add_filter('woocommerce_add_cart_item', [$this, 'add_cart_item'], 1, 1);
-        // and then, when product is grabbed from session.
+        // then, when product is grabbed from session.
         \add_filter('woocommerce_get_cart_item_from_session', [$this, 'get_cart_item_from_session'], 10, 2);
+        // and finally, when quantity is updated whitin cart.
+        \add_action('woocommerce_after_cart_item_quantity_update', [$this, 'after_cart_item_quantity_update'], 10, 4);
         // displayed prices.
         \add_filter('woocommerce_variation_prices_price', [$this, 'get_price'], 10, 2);
         \add_filter('woocommerce_variation_prices_regular_price', [$this, 'get_regular_price'], 10, 2);
@@ -81,6 +83,19 @@ class PriceModifier implements Hookable
         $session_item_data['data']->update_meta_data('quantity', $values['quantity']);
         $session_item_data['data']->update_meta_data('measurement_needed', $values['pricing_item_meta_data']['_measurement_needed']);
         return $session_item_data;
+    }
+    /**
+     * Sets quantity for a product item in cart, when quantity is updated.
+     * This is needed to set correct total price (pricing table) in cart.
+     *
+     * @param string $cart_item_key
+     * @param int    $quantity
+     * @param int    $old_quantity
+     * @param array  $cart
+     */
+    public function after_cart_item_quantity_update($cart_item_key, $quantity, $old_quantity, $cart)
+    {
+        $cart->cart_contents[$cart_item_key]['data']->update_meta_data('quantity', $quantity);
     }
     /**
      * Sets woocommerce prices for cart items, when product is added to cart.

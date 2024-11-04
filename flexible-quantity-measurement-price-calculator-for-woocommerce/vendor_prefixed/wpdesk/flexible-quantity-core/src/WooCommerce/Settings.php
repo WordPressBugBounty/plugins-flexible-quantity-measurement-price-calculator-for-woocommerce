@@ -3,8 +3,8 @@
 namespace WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce;
 
 use WC_Product;
-use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Persistence\WooCommerceProductContainer;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units;
+use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Persistence\WooCommerceProductContainer;
 /**
  * Admin Settings API used by the price calculator plugin
  *
@@ -14,11 +14,11 @@ class Settings
 {
     /**
      * Default area measurement unit
-    */
+     */
     const DEFAULT_AREA = 'sq cm';
     /**
      * Default volume measurement unit
-    */
+     */
     const DEFAULT_VOLUME = 'ml';
     const SETTINGS_META_KEY = 'flexible_quantity_settings';
     /**
@@ -33,6 +33,9 @@ class Settings
      * @var array raw pricing rules array (if any)
      */
     protected $pricing_rules;
+    /**
+     * @var WooCommerceProductContainer
+     */
     private $settings_container;
     /**
      * Construct and initialize the price calculator settings
@@ -106,7 +109,7 @@ class Settings
      * @since  3.0
      * @return bool true if the calculator type is derived
      */
-    //  FIXME: calculator type can be only: other, weight, dimension, area, volume, volume-dimension, custom so this function can only be true for volume-dimension
+    // FIXME: calculator type can be only: other, weight, dimension, area, volume, volume-dimension, custom so this function can only be true for volume-dimension
     public function is_calculator_type_derived()
     {
         return in_array($this->get_calculator_type(), ['other', 'area-dimension', 'area-linear', 'area-surface', 'volume-dimension', 'volume-area', 'wall-dimension'], \true);

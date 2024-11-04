@@ -7,7 +7,7 @@ use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
 class ProductLoop implements Hookable
 {
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;

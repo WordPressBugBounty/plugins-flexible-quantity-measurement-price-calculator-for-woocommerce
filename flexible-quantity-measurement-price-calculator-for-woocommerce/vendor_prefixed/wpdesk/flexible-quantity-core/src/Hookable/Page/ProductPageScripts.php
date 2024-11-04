@@ -9,7 +9,7 @@ class ProductPageScripts implements Hookable
     /**
      * @var SettingsContainer
      */
-    private $settings_container;
+    private SettingsContainer $settings_container;
     /**
      * @var string
      */

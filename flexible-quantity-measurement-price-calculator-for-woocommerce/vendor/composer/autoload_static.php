@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5
+class ComposerStaticInit0883f5cbbf98984e3d97dfc880124d1a
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -283,6 +283,7 @@ class ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Admin\\ProductPanel' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Admin/ProductPanel.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Admin\\Variable' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Admin/Variable.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Collections\\SettingsBag' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Collection/SettingsBag.php',
+        'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Cart\\QuantityModifier' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Cart/QuantityModifier.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Page\\Ajax\\CalculatorFormAjax' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Page/Ajax/CalculatorFormAjax.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Page\\Ajax\\CalculatorPriceAjax' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Page/Ajax/CalculatorPriceAjax.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Page\\ProductPage' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Page/ProductPage.php',
@@ -300,6 +301,7 @@ class ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Settings\\TemplatePageDisplayer' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageDisplayer.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Settings\\TemplatePageSaver' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageSaver.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Settings\\TemplatePageScripts' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageScripts.php',
+        'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Stock\\StockModifier' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Stock/StockModifier.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Weight\\WeightModifier' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Weight/WeightModifier.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\PluginConfig' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/PluginConfig.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Services\\Calculator\\MeasurementCalculator' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Services/Calculator/MeasurementCalculator.php',
@@ -489,9 +491,9 @@ class ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit31e1696e23cee9d426cb51dd9bd13cb5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0883f5cbbf98984e3d97dfc880124d1a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0883f5cbbf98984e3d97dfc880124d1a::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0883f5cbbf98984e3d97dfc880124d1a::$classMap;
 
         }, null, ClassLoader::class);
     }

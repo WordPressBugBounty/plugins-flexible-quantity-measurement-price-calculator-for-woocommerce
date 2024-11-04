@@ -13,7 +13,7 @@ class ProductPage implements Hookable
     /** @var float $default_step the default step based on the calculator precision */
     private $default_step;
     private $plugin_url;
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public function __construct($plugin_url, SettingsContainer $settings_container)
     {
         $this->plugin_url = $plugin_url;
@@ -606,7 +606,7 @@ class ProductPage implements Hookable
         $settings = $this->settings_container->get($product);
         // is the calculator enabled for this product?
         // if ( ! $product instanceof WC_Product || ! Product::calculator_enabled( $product, $settings ) ) {
-        // 	return;
+        // return;
         // }
         // ensure the calculator doesn't display twice on variable products (the `woocommerce_single_variation` action adds the calculator for variable product types)
         if (doing_action('woocommerce_before_add_to_cart_button') && $product->is_type(['variable', 'variable-subscription'])) {

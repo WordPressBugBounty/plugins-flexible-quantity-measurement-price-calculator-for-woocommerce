@@ -15,7 +15,7 @@ class Cart implements Hookable
     /** @var array associative array of measurements needed Array( 'value' => (float) $value, 'unit' => $unit, 'common_unit' => $common_unit ) */
     private $measurements_needed = [];
     public const DEFAULT_MEASUREMENT_NEEDED_ROUNDING_PRECISION = 4;
-    private $settings_container;
+    private SettingsContainer $settings_container;
     public function __construct(SettingsContainer $settings_container)
     {
         $this->settings_container = $settings_container;
@@ -31,7 +31,6 @@ class Cart implements Hookable
         add_filter('woocommerce_add_cart_item_data', [$this, 'get_cart_item_data'], 10, 3);
         // validation for pricing calculator which requires a measurement to be provided
         add_filter('woocommerce_add_to_cart_validation', [$this, 'add_to_cart_validation'], 10, 6);
-        add_filter('woocommerce_add_to_cart_sold_individually_quantity', [$this, 'add_to_cart_sold_individually_quantity'], 10, 3);
         // persist the cart item data, and set the item price (when needed) first, before any other plugins
         add_filter('woocommerce_get_cart_item_from_session', [$this, 'get_cart_item_from_session'], 1, 2);
         // add compatibility with WooCommerce Dynamic Pricing
@@ -220,26 +219,6 @@ class Cart implements Hookable
             }
         }
         return $cart_item_data;
-    }
-    /**
-     * Adjust the quantity for a pricing product
-     * sold individually
-     *
-     * @since 3.5.0
-     * @param int $sold_individually_quantity
-     * @param int|float $quantity original quantity of item to add to cart
-     * @param int $product_id the product identifier
-     * @return int quantity
-     */
-    public function add_to_cart_sold_individually_quantity($sold_individually_quantity, $quantity, $product_id)
-    {
-        // we want the product, not the variation
-        $product = wc_get_product($product_id);
-        // is this a product with a pricing calculator?
-        if (Product::pricing_calculator_enabled($product)) {
-            return $quantity;
-        }
-        return $sold_individually_quantity;
     }
     /**
      * Calculates the total measurement needed.

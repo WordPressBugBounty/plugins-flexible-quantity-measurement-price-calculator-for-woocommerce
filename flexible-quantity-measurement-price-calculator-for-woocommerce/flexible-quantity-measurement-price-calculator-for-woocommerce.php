@@ -3,15 +3,13 @@
  * Plugin Name: Flexible Quantity - Measurement Price Calculator for WooCommerce
  * Plugin URI: https://wpde.sk/flexible-quantity-measurement-price-calculator-for-woocommerce
  * Description: Measurement Price Calculator for WooCommerce. Add a new unit of measure for every product you want. Calculate the product price based on units.
- * Version: 2.1.6
+ * Version: 2.1.7
  * Author: WP Desk
  * Author URI: https://www.wpdesk.net/
  * Text Domain: flexible-quantity-measurement-price-calculator-for-woocommerce
  * Domain Path: /lang/
  * Requires at least: 6.4
  * Tested up to: 6.7
- * WC requires at least: 9.1
- * WC tested up to: 9.4
  * WC requires at least: 9.1
  * WC tested up to: 9.4
  * Requires PHP: 7.4
@@ -42,7 +40,7 @@ $dummy_author_link        = __( 'https://www.wpdesk.net/', 'flexible-quantity-me
 $dummy_author             = __( 'WP Desk', 'flexible-quantity-measurement-price-calculator-for-woocommerce' );
 
 /* THIS VARIABLE CAN BE CHANGED AUTOMATICALLY */
-$plugin_version = '2.1.6';
+$plugin_version = '2.1.7';
 
 $plugin_name        = 'Flexible Quantity - Measurement Price Calculator for WooCommerce';
 $plugin_class_name  = 'WPDesk\FlexibleQuantityFree\Plugin';

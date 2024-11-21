@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 2.1.8
+Stable tag: 2.1.9
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -330,6 +330,11 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.1.9 - 2024-11-21 =
+* Fixed shopping cart subtotal calculations
+* Fixed DivisionByZeroError when increment is 0
+* Fixed translations in wp 6.7
 
 = 2.1.8 - 2024-11-15 =
 * Fix translations missing on non-english websites.

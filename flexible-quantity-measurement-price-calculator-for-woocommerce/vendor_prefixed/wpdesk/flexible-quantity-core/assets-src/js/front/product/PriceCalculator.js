@@ -53,7 +53,6 @@ export default class PriceCalculator {
             url: fq_price_calculator_params.ajax_url,
             data: {
                 action: 'price_calculation',
-                action: 'price_calculation',
                 product_id:
                     variationId || fq_price_calculator_params.product_id,
                 form_data: formData,

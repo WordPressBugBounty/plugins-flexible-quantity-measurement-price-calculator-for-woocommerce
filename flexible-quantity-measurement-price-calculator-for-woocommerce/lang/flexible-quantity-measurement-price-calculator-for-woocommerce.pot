@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Flexible Quantity - Measurement Price Calculator for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.1.9\n"
+"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.1.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-11-21T15:14:16+00:00\n"
+"POT-Creation-Date: 2024-11-27T15:20:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: flexible-quantity-measurement-price-calculator-for-woocommerce\n"
@@ -1314,28 +1314,32 @@ msgstr ""
 msgid "Overage Cost (%s%%)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:196
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:195
 msgid "Only %1$s %2$s left in stock"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:196
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:195
 msgid "In stock"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:199
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:198
 msgid "%1$s %2$s in stock"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:204
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:203
 msgid "(backorders allowed)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:425
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:424
 msgid "Backordered measure"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:432
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:431
 msgid "Backordered quantity or measure"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:540
+msgid "You cannot purchase this product because the stock level is below the minimum threshold."
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Measurement.php:351

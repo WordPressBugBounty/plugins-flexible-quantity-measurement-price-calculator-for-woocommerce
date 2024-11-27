@@ -927,7 +927,7 @@ class Cart implements Hookable
             return \false;
         }
         $mesurement_needed = round($mesurement_needed * 100);
-        $increment = (int) ($increment * 100);
+        $increment = round($increment * 100);
         return $mesurement_needed % $increment === 0;
     }
 }

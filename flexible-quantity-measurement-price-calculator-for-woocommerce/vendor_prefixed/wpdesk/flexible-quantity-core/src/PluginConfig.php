@@ -98,8 +98,6 @@ class PluginConfig
             new Hookable\Prices\PriceHtml($settings_container),
             new Hookable\Weight\WeightModifier($settings_container),
             new Hookable\Product\ProductModifier($settings_container),
-            new Hookable\Stock\StockModifier($settings_container),
-            new Hookable\Cart\QuantityModifier($settings_container),
         ];
         return $hooks;
     }

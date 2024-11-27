@@ -10,8 +10,6 @@ use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
 class Inventory implements Hookable
 {
-    /** @var bool used to keep track of whether a pricing calculator product stock has been updated when added to cart */
-    private $pricing_stock_altered = \false;
     private SettingsContainer $settings_container;
     public function __construct(SettingsContainer $settings_container)
     {
@@ -27,6 +25,7 @@ class Inventory implements Hookable
         // set the measurement stock amount when adding to the cart in WC <= 2.6
         add_filter('woocommerce_stock_amount', [$this, 'get_measurement_stock_amount'], 5, 1);
         add_filter('woocommerce_get_availability', [$this, 'get_availability_measurement'], 10, 2);
+        add_filter('woocommerce_cart_product_not_enough_stock_message', [$this, 'not_enough_stock_message'], 10, 2);
         add_filter('woocommerce_cart_item_quantity', [$this, 'get_cart_item_quantity'], 10, 2);
         add_filter('woocommerce_widget_cart_item_quantity', [$this, 'get_widget_cart_item_quantity'], 10, 3);
         // note: no filter required for the order items table, as its unit quantity by then
@@ -521,5 +520,23 @@ class Inventory implements Hookable
             $step = !empty($settings['fq']['increment']) ? $settings['fq']['increment'] : $step;
         }
         return $step;
+    }
+    /**
+     * Returns the not enough stock message.
+     *
+     * @param string $message
+     * @param WC_Product $product
+     * @return string
+     */
+    public function not_enough_stock_message($message, $product)
+    {
+        if (!$product instanceof WC_Product) {
+            return $message;
+        }
+        $settings = $this->settings_container->get($product);
+        if (!$settings->is_calculator_enabled()) {
+            return $message;
+        }
+        return __('You cannot purchase this product because the stock level is below the minimum threshold.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
     }
 }

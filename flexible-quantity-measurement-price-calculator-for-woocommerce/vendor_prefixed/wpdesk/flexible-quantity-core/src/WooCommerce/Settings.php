@@ -186,6 +186,12 @@ class Settings
         $price = !empty($settings['fq']['price']) ? abs($settings['fq']['price']) : '';
         return $price;
     }
+    public function is_default_price_enabled(): bool
+    {
+        $settings = $this->get_settings();
+        $default_price_enabled = !empty($settings['fq']['default_price_enabled']) ? $settings['fq']['default_price_enabled'] : 'no';
+        return $default_price_enabled === 'yes';
+    }
     public function get_sale_price()
     {
         $settings = $this->get_settings();
@@ -564,8 +570,6 @@ class Settings
             } else {
                 $price_html .= wc_price($rule['price']) . ' ' . $sep . ' ' . $this->get_pricing_label();
             }
-        } elseif ('' === $rule['price']) {
-            // no-op (for now)
         } elseif (0 == $rule['price']) {
             if ($rule['price'] === $rule['sale_price'] && '' !== $rule['regular_price']) {
                 $price_html .= Product::get_price_html_from_to($rule['regular_price'], __('Free!', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $this->get_pricing_label());

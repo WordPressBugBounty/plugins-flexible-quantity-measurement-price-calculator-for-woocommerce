@@ -245,7 +245,7 @@ class Inventory implements Hookable
             $total_stock = max(0, $product->get_stock_quantity());
             foreach ($children as $child_id) {
                 $child = wc_get_product($child_id);
-                if ($child && 'yes' === $child->get_meta('_manage_stock')) {
+                if ($child && \true === $child->get_manage_stock()) {
                     $stock = $child->get_meta('_stock');
                     $total_stock += max(0, wc_stock_amount($stock));
                 }
@@ -354,10 +354,12 @@ class Inventory implements Hookable
                     // quantity * measurement needed in pricing units
                     WC()->cart->cart_contents[$cart_item_key]['quantity'] = WC()->cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] * $measurement_needed->get_value($settings->get_pricing_unit());
                 } elseif (!empty($_POST['update_cart']) || !empty($_POST['proceed'])) {
+                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
                     // update cart/proceed to checkout
                     if (isset($_POST['cart']) && isset($_POST['cart'][$cart_item_key]['qty'])) {
+                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
                         $qty = wc_clean(wp_unslash($_POST['cart'][$cart_item_key]['qty']));
-                        //phpcs:ignore
+                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
                         WC()->cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] = preg_replace('/[^0-9\.]/', '', $qty);
                     }
                 }
@@ -489,7 +491,12 @@ class Inventory implements Hookable
      */
     public function admin_manage_order_stock($quantity, $item_id)
     {
+        if (!isset($_POST['order_id'])) {
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            return $quantity;
+        }
         $order_id = absint(\sanitize_text_field(wp_unslash($_POST['order_id'])));
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $order = wc_get_order($order_id);
         $order_items = $order->get_items();
         $product = wc_get_product($order_items[$item_id]['product_id']);
@@ -508,12 +515,16 @@ class Inventory implements Hookable
      * This is needed when Calculate Inventory is enabled, because in case of a decimal
      * increment step, order can not be updated in the admin area.
      *
-     * @param string|int
+     * @param string|int $step
      * @param WC_Product $product
+     *
      * @return string|int
      */
     public function woocommerce_quantity_input_step_admin($step, $product)
     {
+        if (!$product instanceof WC_Product) {
+            return $step;
+        }
         $settings = $this->settings_container->get($product);
         if ($settings->is_pricing_inventory_enabled()) {
             $settings = $settings->get_settings();

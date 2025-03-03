@@ -5,6 +5,7 @@ module.exports = {
 	entry: {
 		admin: "./assets-src/js/admin/admin.js",
 		front: "./assets-src/js/front/front.js",
+		product: "./assets-src/js/admin/product.js",
 	},
 	output: {
 		path: path.resolve(__dirname, "assets/js"),

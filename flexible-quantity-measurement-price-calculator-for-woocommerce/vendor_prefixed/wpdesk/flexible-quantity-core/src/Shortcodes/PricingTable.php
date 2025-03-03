@@ -35,7 +35,10 @@ class PricingTable
     public static function output($atts)
     {
         global $product, $wpdb;
-        extract(shortcode_atts(['product_id' => '', 'product_sku' => ''], $atts));
+        extract(
+            // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
+            shortcode_atts(['product_id' => '', 'product_sku' => ''], $atts)
+        );
         // product by sku?
         if ($product_sku) {
             $product_id = $wpdb->get_var($wpdb->prepare("SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_sku' AND meta_value=%s LIMIT 1", $product_sku));

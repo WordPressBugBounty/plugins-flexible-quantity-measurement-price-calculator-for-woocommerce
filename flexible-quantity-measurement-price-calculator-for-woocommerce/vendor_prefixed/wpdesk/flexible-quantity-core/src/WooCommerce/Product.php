@@ -22,6 +22,7 @@ class Product
         }
         // see whether a calculator is configured for this product
         $settings === null && $settings = new Settings($product);
+        // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments
         return $settings->is_calculator_enabled();
     }
     /**
@@ -36,6 +37,7 @@ class Product
         if ($product instanceof WC_Product && self::calculator_enabled($product, $settings)) {
             // see whether a calculator is configured for this product
             $settings === null && $settings = new Settings($product);
+            // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments
             return $settings->is_pricing_calculator_enabled();
         }
         return \false;
@@ -490,6 +492,7 @@ class Product
     {
         $price_html = '';
         $price = $min_price = $settings->get_pricing_rules_minimum_price();
+        // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments
         $min_regular_price = $settings->get_pricing_rules_minimum_regular_price();
         $max_price = $settings->get_pricing_rules_maximum_price();
         $max_regular_price = $settings->get_pricing_rules_maximum_regular_price();
@@ -513,8 +516,6 @@ class Product
                 }
                 $price_html .= ' ' . $pricing_label . $product->get_price_suffix();
             }
-        } elseif ('' === $price) {
-            // no-op (for now)
         } elseif (0 == $price) {
             // Free price
             if ($min_regular_price !== $price && $settings->pricing_rules_is_on_sale()) {

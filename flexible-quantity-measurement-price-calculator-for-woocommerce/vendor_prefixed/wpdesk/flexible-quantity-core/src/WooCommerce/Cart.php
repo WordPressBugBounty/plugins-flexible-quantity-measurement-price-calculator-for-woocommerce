@@ -181,10 +181,13 @@ class Cart implements Hookable
             $_product = $variation_id ? wc_get_product($variation_id) : $product;
             // get the measurement needed, from the $_POST object for a normal add to cart action, or from the $cart_item_data for a programmatic add-to-cart
             $measurement_needed_value = $measurement_needed_value_unit = null;
+            // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
             if (isset($_POST['_measurement_needed'], $_POST['_measurement_needed_unit']) && !empty($this->measurements_needed)) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
                 // TODO: Rename $_product to $variation, to make it easier to understand what is what.
                 $measurement_needed_value = $this->calculate_measurement_needed($product, $variation_id ? $_product : null);
                 $measurement_needed_value_unit = wc_clean(wp_unslash($_POST['_measurement_needed_unit']));
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
             } elseif (isset($cart_item_data['pricing_item_meta_data']['_measurement_needed_internal'])) {
                 $measurement_needed_value = $cart_item_data['pricing_item_meta_data']['_measurement_needed_internal'];
                 $measurement_needed_value_unit = $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit_internal'];
@@ -209,7 +212,9 @@ class Cart implements Hookable
             // These are recorded so they can be displayed within the cart/checkout/admin
             foreach ($settings->get_calculator_measurements() as $measurement) {
                 if (isset($_POST[$measurement->get_name() . '_needed'])) {
+                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
                     $measurement_needed = wc_clean(wp_unslash($_POST[$measurement->get_name() . '_needed']));
+                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
                     // if a user entered a float value without a 0 before the decimal dot, add the zero to ensure consistency
                     if (Helper::str_starts_with($measurement_needed, '.')) {
                         $measurement_needed = 0 . $measurement_needed;
@@ -277,6 +282,7 @@ class Cart implements Hookable
             }
             // get common unit
             if ($product_measurement = Product::get_product_measurement($product, $settings)) {
+                // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
                 /** @type Measurement $measurement */
                 list($measurement) = $settings->get_calculator_measurements();
                 $product_measurement->set_common_unit($measurement->get_unit_common());
@@ -304,7 +310,7 @@ class Cart implements Hookable
      * $mesurement_needed could not be precise (ex. sq. in to sq. ft. is 1/144 ~ 0,00694 is rounded becouse of big numbers
      * then when w go back from this 0.00694 x 144 we don't get 1 but 0.999..)
      *
-     * the precision of rounding can not be constant for every settings,
+     * The precision of rounding can not be constant for every settings,
      * resonable approach is to use the precision of the increment
      *
      * also becouse we can have different increments, we should depend on that with rounding
@@ -454,27 +460,13 @@ class Cart implements Hookable
     {
         $settings = $this->settings_container->get($item->get_product());
         if ($settings->is_pricing_inventory_enabled() && $measurement_data = $item->get_meta('_fq_measurement_data')) {
+            // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
             if (!empty($measurement_data['_measurement_needed']) && !empty($measurement_data['_quantity'])) {
                 $quantity = $measurement_data['_measurement_needed'] * $measurement_data['_quantity'];
             }
         }
         return $quantity;
     }
-    // private function get_shipping_method_id( $cart_item ){
-    // $product  = isset( $cart_item['variation_id'] ) && $cart_item['variation_id'] ? wc_get_product( $cart_item['product_id'] ) : $cart_item['data'];
-    // $settings = new Settings( $product );
-    // $shipping_rules = $settings->get_settings_shipping_rules();
-    // $shipping_id = $product->get_shipping_class_id();
-    // if( !empty( $shipping_rules ) ){
-    // foreach( $shipping_rules as $shipping_rule ){
-    // $rule['range_start'] = Measurement::convert($rule['range_start'], $this->get_pricing_unit(), $to_unit);
-    // if ('' !== $rule['range_end'] ) {
-    // $rule['range_end'] = Measurement::convert($rule['range_end'], $this->get_pricing_unit(), $to_unit);
-    // }
-    // }
-    // }
-    // return $shipping_id;
-    // }
     public function set_product_shipping_methods($cart_item)
     {
         $product = $cart_item['data'];
@@ -826,6 +818,7 @@ class Cart implements Hookable
         }
         // render the total measurement if this is a derived calculator (ie "Area (sq. ft.): 10" if the calculator is Area (LxW))
         if (isset($cart_item_data['_measurement_needed']) && $settings->is_calculator_type_derived() && $product_measurement = Product::get_product_measurement($product, $settings)) {
+            // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
             $product_measurement->set_unit($cart_item_data['_measurement_needed_unit']);
             $product_measurement->set_value($cart_item_data['_measurement_needed']);
             $total_amount_text = apply_filters('fq_price_calculator_total_amount_text', $product_measurement->get_unit_label() ? sprintf(__('Total %1$s (%2$s)', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $product_measurement->get_label(), __($product_measurement->get_unit_label(), 'flexible-quantity-measurement-price-calculator-for-woocommerce')) : sprintf(__('Total %s', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $product_measurement->get_label()), $item);
@@ -926,8 +919,8 @@ class Cart implements Hookable
         if ($increment > $mesurement_needed) {
             return \false;
         }
-        $mesurement_needed = round($mesurement_needed * 100);
-        $increment = round($increment * 100);
+        $mesurement_needed = round($mesurement_needed * 10000);
+        $increment = round($increment * 10000);
         return $mesurement_needed % $increment === 0;
     }
 }

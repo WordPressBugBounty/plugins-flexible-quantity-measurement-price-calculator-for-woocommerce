@@ -25,7 +25,7 @@ class PriceHtml implements Hookable
      * on the catalog/product pages
      *
      * @param string                         $price_html the formatted sale price
-     * @param WC_Product|WC_Product_Variable $product    the product
+     * @param \WC_Product|\WC_Product_Variable $product    the product
      *
      * @return string the formatted sale price, per unit
      * @since 3.0
@@ -36,8 +36,12 @@ class PriceHtml implements Hookable
         $_product = $product;
         $settings = $this->settings_container->get($product);
         if ($settings->is_calculator_enabled()) {
+            //Display default price with unit for variable product
+            if ($product->is_type('variable') && $settings->is_default_price_enabled()) {
+                return $price_html . ' ' . $settings->get_pricing_label();
+            }
             $basic_regular_price = $product->get_price();
-            $price_html = \is_numeric($basic_regular_price) ? wc_price($basic_regular_price) : $price_html;
+            $price_html = \is_numeric($basic_regular_price) ? wc_price((float) $basic_regular_price) : $price_html;
             // if this is a quantity calculator, the displayed price per unit will have to be calculated from
             // the product price and pricing measurement.  alternatively, for a pricing calculator product,
             // the price set in the admin *is* the price per unit, so we just need to format it by adding the units
@@ -45,6 +49,7 @@ class PriceHtml implements Hookable
                 $measurement = null;
                 // for variable products we must go synchronize price levels to our per unit price
                 if ($product->is_type('variable')) {
+                    /** @var \WC_Product_Variable $product */
                     // synchronize to the price per unit pricing
                     Product::variable_product_sync($product, $settings);
                     // get price suffix
@@ -60,12 +65,13 @@ class PriceHtml implements Hookable
                     $price_html .= ' ' . $pricing_label;
                     // add price suffix
                     $price_html .= $price_suffix;
-                    /** this filter is documented in /src/class-wc-price-calculator-product.php */
+                    /** This filter is documented in /src/class-wc-price-calculator-product.php */
                     $price_html = (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
                     // restore the original values
                     Product::variable_product_unsync($product);
                     // other product types
                 } elseif ($measurement = Product::get_product_measurement($product, $settings)) {
+                    // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
                     $measurement->set_unit($settings->get_pricing_unit());
                     if ($measurement && '' !== $price_html && $measurement->get_value()) {
                         // save the original price and remove the filter that we're currently within, to avoid an infinite loop
@@ -95,7 +101,7 @@ class PriceHtml implements Hookable
                         $price_html .= ' ' . $pricing_label;
                         // add price suffix
                         $price_html .= $price_suffix;
-                        /** this filter is documented in /src/class-wc-price-calculator-product.php */
+                        /** This filter is documented in /src/class-wc-price-calculator-product.php */
                         $price_html = (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
                     }
                 }
@@ -113,7 +119,7 @@ class PriceHtml implements Hookable
                 if ($_product->is_on_sale()) {
                     $price_html = Product::get_price_html_from_to($_product->get_regular_price(), $_product->get_sale_price(), $pricing_label);
                 } else {
-                    /** this filter is documented in /src/class-wc-price-calculator-product.php */
+                    /** This filter is documented in /src/class-wc-price-calculator-product.php */
                     $price_html = (string) \apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \false, \false);
                 }
             }

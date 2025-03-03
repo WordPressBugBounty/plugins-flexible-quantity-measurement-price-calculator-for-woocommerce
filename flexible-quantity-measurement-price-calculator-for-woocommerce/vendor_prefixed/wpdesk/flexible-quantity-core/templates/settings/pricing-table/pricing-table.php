@@ -10,6 +10,7 @@ namespace WDFQVendorFree;
  * @var SettingsBag $settings
  * @var Translate $translate
  * @var Renderer $renderer
+ * @var string $measurement_step
  */
 ?>
 <div class="measurement-header">
@@ -36,6 +37,9 @@ if ($is_locked) {
 	<?php 
 \woocommerce_wp_checkbox(['id' => 'fq_pricing_table_enable', 'name' => 'fq[pricing_table][enable]', 'value' => $is_locked ? 'no' : $settings->getString('enable'), 'class' => 'checkbox fq_pricing_table_enable show_table_pricing', 'label' => \false, 'description' => \wp_kses_post(\__('Enable Pricing Table', 'flexible-quantity-measurement-price-calculator-for-woocommerce')), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
 ?>
+	<p class="form-field-desc js-price-table-info"><?php 
+\esc_html_e('The price table cannot be enabled while the "Select to use product prices" option is enabled.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></p>
 	<p class="form-field-desc <?php 
 echo $is_locked ? 'semi-transparent' : '';
 ?>">
@@ -93,7 +97,7 @@ echo \wc_help_tip(\__('New sale price per unit.', 'flexible-quantity-measurement
 $items = $settings->bag('items');
 $rows = $items->bag('from')->isEmpty() ? 1 : $items->bag('from')->count();
 for ($i = 0; $i < $rows; $i++) {
-    $renderer->output_render('settings/pricing-table/pricing-table-row', ['from' => $items->bag('from')->getString($i), 'to' => $items->bag('to')->getString($i), 'price' => $items->bag('price')->getString($i), 'sale_price' => $items->bag('sale_price')->getString($i)]);
+    $renderer->output_render('settings/pricing-table/pricing-table-row', ['from' => $items->bag('from')->getString($i), 'to' => $items->bag('to')->getString($i), 'price' => $items->bag('price')->getString($i), 'sale_price' => $items->bag('sale_price')->getString($i), 'measurement_step' => $measurement_step]);
 }
 ?>
 

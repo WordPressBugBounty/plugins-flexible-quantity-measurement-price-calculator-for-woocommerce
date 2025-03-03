@@ -38,6 +38,7 @@ class ProductPage implements Hookable
             return;
         }
         echo $this->render();
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
     public function render_variable(): void
     {
@@ -114,7 +115,9 @@ class ProductPage implements Hookable
     private function get_measurement_value(string $measurement_name, array $input_attributes, string $default_value): string
     {
         if (isset($_POST[$measurement_name])) {
-            return \wc_clean($_POST[$measurement_name]);
+            // phpcs:ignore WordPress.Security.NonceVerification
+            return \wc_clean(\wp_unslash($_POST[$measurement_name]));
+            // phpcs:ignore WordPress.Security.NonceVerification
         }
         if (isset($input_attributes['step']) && is_numeric($input_attributes['step'])) {
             $default_value = $input_attributes['step'];

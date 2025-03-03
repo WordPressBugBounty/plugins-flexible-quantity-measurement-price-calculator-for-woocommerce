@@ -89,9 +89,9 @@ class PriceModifier implements Hookable
      * This is needed to set correct total price (pricing table) in cart.
      *
      * @param string $cart_item_key
-     * @param int    $quantity
-     * @param int    $old_quantity
-     * @param array  $cart
+     * @param int $quantity
+     * @param int $old_quantity
+     * @param array $cart
      */
     public function after_cart_item_quantity_update($cart_item_key, $quantity, $old_quantity, $cart)
     {
@@ -119,7 +119,7 @@ class PriceModifier implements Hookable
     public function get_price($price, $product)
     {
         $settings = $this->settings_container->get($product);
-        if (!$settings->is_calculator_enabled()) {
+        if (!$settings->is_calculator_enabled() || $settings->is_default_price_enabled()) {
             return $price;
         }
         $has_price_calculated = $product->get_meta('has_price_calculated', \true);
@@ -162,7 +162,7 @@ class PriceModifier implements Hookable
     public function get_regular_price($price, $product)
     {
         $settings = $this->settings_container->get($product);
-        if ($settings->is_calculator_enabled()) {
+        if ($settings->is_calculator_enabled() && !$settings->is_default_price_enabled()) {
             $price = $settings->get_regular_price();
         }
         return $price;
@@ -170,7 +170,7 @@ class PriceModifier implements Hookable
     public function get_sale_price($price, $product)
     {
         $settings = $this->settings_container->get($product);
-        if ($settings->is_calculator_enabled()) {
+        if ($settings->is_calculator_enabled() && !$settings->is_default_price_enabled()) {
             $price = $settings->get_sale_price();
         }
         return $price;

@@ -46,7 +46,9 @@ class ProductOptionsProvider extends OptionsProviderBase implements OptionsProvi
         $post_types = $this->is_locked ? "('product')" : "('product', 'product_variation')";
         $exclude_sql = $this->prepare_exclude_sql();
         $search_sql = $this->prepare_search_sql();
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         return $wpdb->prepare("\n            SELECT SQL_CALC_FOUND_ROWS p.ID as id, p.post_title as text\n            FROM {$wpdb->posts} p\n            LEFT JOIN {$wpdb->posts} p2 ON p.post_parent = p2.ID\n            WHERE p.post_type IN {$post_types}\n\t\t\tAND p.post_status IN ('publish', 'draft', 'private', 'future', 'pending')\n            {$search_sql}\n\t\t\t{$exclude_sql}\n            ORDER BY\n                CASE\n                    WHEN p2.post_title IS NULL THEN p.post_title\n                    ELSE p2.post_title\n                END ASC,\n                p.post_parent ASC,\n                p.post_title ASC\n            LIMIT %d OFFSET %d\n        ", self::ITEMS_PER_PAGE, $this->get_offset());
+        // phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
     private function prepare_exclude_sql(): string
     {

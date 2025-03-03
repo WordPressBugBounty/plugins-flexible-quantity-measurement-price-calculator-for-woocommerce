@@ -28,15 +28,15 @@ class SelectionAjax implements Hookable
     }
     public function get_options(): void
     {
-        if (!isset($_REQUEST['nonce']) || !\wp_verify_nonce($_REQUEST['nonce'], self::NONCE_CONTEXT)) {
+        if (!isset($_REQUEST['nonce']) || !\wp_verify_nonce(\sanitize_key(\wp_unslash($_REQUEST['nonce'])), self::NONCE_CONTEXT)) {
             \wp_send_json_error('Invalid nonce');
         }
         if (!isset($_REQUEST['category'])) {
             \wp_send_json_error('Required field "category" is not set');
         }
-        $category = \sanitize_text_field($_REQUEST['category']);
+        $category = \sanitize_text_field(\wp_unslash($_REQUEST['category']));
         $page = isset($_REQUEST['page']) ? (int) $_REQUEST['page'] : 1;
-        $search = isset($_REQUEST['search']) ? \sanitize_text_field($_REQUEST['search']) : '';
+        $search = isset($_REQUEST['search']) ? \sanitize_text_field(\wp_unslash($_REQUEST['search'])) : '';
         $option_provider = $this->get_option_provider($category);
         $option_provider->set_search($search);
         $option_provider->set_page($page);
@@ -44,13 +44,13 @@ class SelectionAjax implements Hookable
     }
     public function get_selected_options()
     {
-        if (!isset($_POST['nonce']) || !\wp_verify_nonce($_POST['nonce'], self::NONCE_CONTEXT)) {
+        if (!isset($_POST['nonce']) || !\wp_verify_nonce(\sanitize_key(\wp_unslash($_POST['nonce'])), self::NONCE_CONTEXT)) {
             \wp_send_json_error('Invalid nonce');
         }
         if (!isset($_POST['category'], $_POST['template_id'])) {
             \wp_send_json_error('Required fields "category" or "template_id" are not set');
         }
-        $category = \sanitize_text_field($_POST['category']);
+        $category = \sanitize_text_field(\wp_unslash($_POST['category']));
         $template_id = \absint($_POST['template_id']);
         $preselected_product_id = isset($_POST['pre_select_product_id']) ? \absint($_POST['pre_select_product_id']) : 0;
         $option_provider = $this->get_option_provider($category);

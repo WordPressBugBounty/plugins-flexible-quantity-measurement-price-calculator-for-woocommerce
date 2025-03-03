@@ -4,6 +4,14 @@ namespace WDFQVendorFree;
 
 /**
  * Template for template section in settings page.
+ *
+ * @var SettingsBag $settings
+ * @var Translate $translate
+ * @var Renderer $renderer
+ * @var bool $is_locked
+ * @var array $available_units
+ * @var string $current_currency
+ * @var string $measurement_step
  */
 ?>
 <section id="measurement_product_data" class="template panel woocommerce_options_panel">
@@ -32,7 +40,7 @@ namespace WDFQVendorFree;
 	<div id="calculator-settings" class="product-panel-item fq-hidden-panels fcm-dimensions-decimals-panel">
 
 		<?php 
-$renderer->output_render('settings/basic-settings/basic-settings', ['settings' => $settings->bag('fq'), 'available_units' => $available_units, 'current_currency' => $current_currency]);
+$renderer->output_render('settings/basic-settings/basic-settings', ['settings' => $settings->bag('fq'), 'available_units' => $available_units, 'current_currency' => $current_currency, 'is_locked' => $is_locked, 'translate' => $translate, 'measurement_step' => $measurement_step]);
 ?>
 
 	</div>
@@ -40,7 +48,7 @@ $renderer->output_render('settings/basic-settings/basic-settings', ['settings' =
 	<div class="product-panel-item fcm-dimensions-decimals-panel fq-hidden-panels dimensions">
 
 		<?php 
-$renderer->output_render('settings/dimensions/dimensions', ['settings' => $settings->bag('fq'), 'is_locked' => $is_locked, 'translate' => $translate]);
+$renderer->output_render('settings/dimensions/dimensions', ['settings' => $settings->bag('fq'), 'is_locked' => $is_locked, 'translate' => $translate, 'measurement_step' => $measurement_step]);
 ?>
 
 	</div>
@@ -48,7 +56,7 @@ $renderer->output_render('settings/dimensions/dimensions', ['settings' => $setti
 	<div class="product-panel-item fcm-pricing-panel fq-hidden-panels">
 
 		<?php 
-$renderer->output_render('settings/pricing-table/pricing-table', ['settings' => $settings->bag('fq')->bag('pricing_table'), 'is_locked' => $is_locked, 'translate' => $translate, 'renderer' => $renderer, 'current_currency' => $current_currency]);
+$renderer->output_render('settings/pricing-table/pricing-table', ['settings' => $settings->bag('fq')->bag('pricing_table'), 'is_locked' => $is_locked, 'translate' => $translate, 'renderer' => $renderer, 'current_currency' => $current_currency, 'measurement_step' => $measurement_step]);
 ?>
 
 	</div>
@@ -56,7 +64,7 @@ $renderer->output_render('settings/pricing-table/pricing-table', ['settings' => 
 	<div class="product-panel-item fcm-shipping-panel fq-hidden-panels">
 
 		<?php 
-$renderer->output_render('settings/shipping-table/shipping-table', ['settings' => $settings->bag('fq')->bag('shipping_table'), 'is_locked' => $is_locked, 'translate' => $translate, 'renderer' => $renderer]);
+$renderer->output_render('settings/shipping-table/shipping-table', ['settings' => $settings->bag('fq')->bag('shipping_table'), 'is_locked' => $is_locked, 'translate' => $translate, 'renderer' => $renderer, 'measurement_step' => $measurement_step]);
 ?>
 
 	</div>

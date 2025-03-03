@@ -127,6 +127,7 @@ class Compatibility implements Hookable
                     Product::variable_product_unsync($product);
                     // all other product types
                 } elseif ($measurement = Product::get_product_measurement($product, $settings)) {
+                    // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
                     $measurement->set_unit($settings->get_pricing_unit());
                     $measurement_value = $measurement ? $measurement->get_value() : null;
                     if ($measurement && $measurement_value) {

@@ -7,27 +7,21 @@ use WDFQVendorFree\WPDesk\View\Renderer\Renderer;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsBagFactory;
+use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Config;
 use WDFQVendorFree\WPDesk\Persistence\Adapter\WordPress\WordpressPostMetaContainer;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\PostType\FQTemplateType;
 class TemplatePageDisplayer implements Hookable
 {
-    /**
-     * @var Renderer
-     */
-    private $renderer;
-    /**
-     * @var Translate
-     */
-    private $translate;
-    /**
-     * @var bool
-     */
-    private $is_locked;
-    public function __construct(Renderer $renderer, Translate $translate, bool $is_locked)
+    private Renderer $renderer;
+    private Translate $translate;
+    private Config $config;
+    private bool $is_locked;
+    public function __construct(Renderer $renderer, Translate $translate, bool $is_locked, Config $config)
     {
         $this->renderer = $renderer;
         $this->translate = $translate;
         $this->is_locked = $is_locked;
+        $this->config = $config;
     }
     public function hooks(): void
     {
@@ -75,7 +69,7 @@ class TemplatePageDisplayer implements Hookable
             $template_id = $this->get_create_template_from_product_query_var();
         }
         $settings_bag = (new SettingsBagFactory(new WordpressPostMetaContainer($template_id)))->create();
-        $this->renderer->output_render('settings/template-section', ['settings' => $settings_bag, 'translate' => $this->translate, 'renderer' => $this->renderer, 'is_locked' => $this->is_locked, 'available_units' => Units::get_all(), 'current_currency' => \get_woocommerce_currency_symbol()]);
+        $this->renderer->output_render('settings/template-section', ['settings' => $settings_bag, 'translate' => $this->translate, 'renderer' => $this->renderer, 'is_locked' => $this->is_locked, 'available_units' => Units::get_all(), 'current_currency' => \get_woocommerce_currency_symbol(), 'measurement_step' => $this->config->get_measurement_step_value()]);
     }
     private function get_create_template_from_product_query_var(): int
     {

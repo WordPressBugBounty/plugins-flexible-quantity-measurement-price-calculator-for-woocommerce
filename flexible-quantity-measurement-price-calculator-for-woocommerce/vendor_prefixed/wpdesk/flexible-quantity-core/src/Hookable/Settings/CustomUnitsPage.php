@@ -62,14 +62,17 @@ class CustomUnitsPage implements Hookable
     public function is_save_form_data_request()
     {
         return isset($_POST[self::FORM_UNIT]);
+        // phpcs:ignore WordPress.Security.NonceVerification
     }
     private function save_form_data_if_needed()
     {
         if ($this->is_save_form_data_request() && $this->validate_form_data()) {
             $save_data = [];
-            foreach ($_POST[self::FORM_UNIT][self::FORM_UNIT_NAME] as $unit) {
-                $unit_name = \sanitize_text_field(trim($unit));
-                if (!empty($unit_name)) {
+            $units = \wc_clean(\wp_unslash($_POST[self::FORM_UNIT][self::FORM_UNIT_NAME]) ?? []);
+            // phpcs:ignore WordPress.Security.NonceVerification, WordPress.Security.ValidatedSanitizedInput
+            foreach ($units as $unit) {
+                $unit_name = trim((string) $unit);
+                if ($unit_name !== '') {
                     $save_data[][self::FORM_UNIT_NAME] = $unit_name;
                 }
             }
@@ -81,7 +84,7 @@ class CustomUnitsPage implements Hookable
         if ($this->is_locked) {
             return \false;
         }
-        if (!wp_verify_nonce(isset($_POST[self::NONCE_NAME]) ? $_POST[self::NONCE_NAME] : '', self::NONCE_ACTION)) {
+        if (!wp_verify_nonce(isset($_POST[self::NONCE_NAME]) ? \sanitize_text_field(\wp_unslash($_POST[self::NONCE_NAME])) : '', self::NONCE_ACTION)) {
             wp_die('Error, security code is not valid');
         }
         if (!current_user_can('manage_options')) {

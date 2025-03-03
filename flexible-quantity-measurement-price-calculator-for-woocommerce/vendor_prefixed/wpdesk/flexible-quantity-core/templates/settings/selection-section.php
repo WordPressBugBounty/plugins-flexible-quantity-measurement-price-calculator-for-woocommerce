@@ -9,7 +9,7 @@ namespace WDFQVendorFree;
 <section class="selection">
 	<header>
 		<?php 
-\esc_html_e('Select the product(s), product categories or tags for which you are creating a template. ', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+\esc_html_e('Select the product(s), product categories or tags for which you are creating a template.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
 ?>
 		<div class="bold">
 			<?php 

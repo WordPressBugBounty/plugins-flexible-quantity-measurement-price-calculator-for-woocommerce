@@ -17,7 +17,6 @@ class CategoryOptionsProvider extends TermOptionsProvider implements OptionsProv
     {
         $selection = \get_post_meta($template_id, $this->get_template_meta_key(), \false);
         if (empty($selection)) {
-            // @phpstan-ignore-line
             return [];
         }
         return $this->get_selected_terms_by_taxonomy(self::TAXONOMY, $selection);

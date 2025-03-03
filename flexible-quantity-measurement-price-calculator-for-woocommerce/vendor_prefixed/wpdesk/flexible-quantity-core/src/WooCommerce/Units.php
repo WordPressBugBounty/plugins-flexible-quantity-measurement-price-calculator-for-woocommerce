@@ -10,21 +10,21 @@ class Units
         $args = wp_parse_args($field_args, ['show_label' => \true, 'show_warpper' => \true, 'label' => '', 'id' => 'select', 'name' => '', 'class' => '', 'value' => '', 'options' => [], 'desc_tip' => \false, 'description' => '']);
         $output = '';
         if ($args['show_warpper']) {
-            $output .= '<p class="form-field ' . $args['id'] . '">';
+            $output .= '<p class="form-field ' . esc_attr($args['id']) . '">';
         }
         if ($args['show_label']) {
-            $output .= '<label for="' . $args['id'] . '">' . $args['label'] . '</label>';
+            $output .= '<label for="' . esc_attr($args['id']) . '">' . esc_html($args['label']) . '</label>';
         }
         if (\true === $args['desc_tip']) {
-            $output .= \wc_help_tip($args['description']);
+            $output .= \wc_help_tip(esc_html($args['description']));
         }
-        $output .= '<select id="' . $args['id'] . '" name="' . $args['name'] . '" class="' . $args['class'] . '">';
+        $output .= '<select id="' . esc_attr($args['id']) . '" name="' . esc_attr($args['name']) . '" class="' . esc_attr($args['class']) . '">';
         foreach ($args['options'] as $option_key => $option_value) {
             if (is_array($option_value)) {
-                $output .= ' <optgroup data-group-id="' . $option_key . '" label="' . $option_value['label'] . '">';
+                $output .= ' <optgroup data-group-id="' . esc_attr($option_key) . '" label="' . esc_attr($option_value['label']) . '">';
                 foreach ($option_value['units'] as $option_key2 => $option_value2) {
                     $selected = $option_key2 === $args['value'] ? 'selected' : '';
-                    $output .= ' <option value="' . $option_key2 . '" ' . $selected . '>' . $option_value2['label'] . '</option>';
+                    $output .= ' <option value="' . esc_attr($option_key2) . '" ' . esc_attr($selected) . '>' . esc_html($option_value2['label']) . '</option>';
                 }
                 $output .= ' </optgroup>';
             }

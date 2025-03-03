@@ -12,7 +12,8 @@
 		"url.pro.custom_units": "https://www.wpdesk.pl/sklep/kalkulator-jednostek-dla-woocommerce/?utm_source=wp-admin-plugins&utm_medium=link&utm_campaign=flexible-quantity&utm_content=custom-units",
 		"url.support.free": "https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce/",
 		"url.support.pro": "https://wpde.sk/flexible-quantity-support-pl",
-		"url.feature-request": "https://wpde.sk/flexible-quantity-feature-pl"
+		"url.feature-request": "https://wpde.sk/flexible-quantity-feature-pl",
+		"url.pro.template.basic_settings": "https://wpde.sk/fq-checkbox-link-pl"
 	},
 	"en": {
 		"url.docs.template.selection": "https://wpde.sk/flexible-quantity-core-selection",
@@ -27,6 +28,7 @@
 		"url.pro.custom_units": "https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/?utm_source=wp-admin-plugins&utm_medium=link&utm_campaign=flexible-quantity&utm_content=custom-units",
 		"url.support.free": "https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce/",
 		"url.support.pro": "https://wpde.sk/flexible-quantity-support",
-		"url.feature-request": "https://wpde.sk/flexible-quantity-feature"
+		"url.feature-request": "https://wpde.sk/flexible-quantity-feature",
+		"url.pro.template.basic_settings": "https://wpde.sk/fq-checkbox-link"
 	}
 }

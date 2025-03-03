@@ -24,7 +24,7 @@ class CalculatorFormAjax implements Hookable
     public function calculator_form()
     {
         global $product;
-        if (!isset($_POST['nonce']) || !\wp_verify_nonce($_POST['nonce'], ProductPageScripts::NONCE_CONTEXT)) {
+        if (!isset($_POST['nonce']) || !\wp_verify_nonce(\sanitize_key(\wp_unslash($_POST['nonce'])), ProductPageScripts::NONCE_CONTEXT)) {
             \wp_send_json_error('Invalid nonce');
         }
         $variation_id = \sanitize_key($_POST['variation_id'] ?? 0);

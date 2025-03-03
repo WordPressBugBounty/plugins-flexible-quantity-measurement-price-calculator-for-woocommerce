@@ -1,0 +1,1 @@
+jQuery((e=>{const o=e(".js-disabled-price-info"),r=e("#_regular_price"),l=e("#_sale_price");console.log("script loaded"),o.length&&(console.log("should trigger"),r.prop("readonly",!0),l.prop("readonly",!0))}));

@@ -26,9 +26,9 @@ class TemplatePageSaver implements Hookable
         if ($post->post_type !== FQTemplateType::POST_TYPE) {
             return;
         }
-        $selection_category = \sanitize_text_field($_POST['fq_selection_category']);
-        $selections = \array_filter($_POST['fq_selections'] ?? [], 'is_numeric');
-        $raw_settings = ['fq' => wc_clean($_POST['fq'])];
+        $selection_category = \sanitize_text_field(\wp_unslash($_POST['fq_selection_category']));
+        $selections = \array_filter(\wc_clean(\wp_unslash($_POST['fq_selections'] ?? [])), 'is_numeric');
+        $raw_settings = ['fq' => \wc_clean(\wp_unslash($_POST['fq']))];
         $container = new TemplatePersistentContainer($post_id);
         $container->set(Settings::SETTINGS_META_KEY, $raw_settings);
         $container->set(Settings::SETTINGS_META_KEY . '_hash', md5(\wp_json_encode($raw_settings)));

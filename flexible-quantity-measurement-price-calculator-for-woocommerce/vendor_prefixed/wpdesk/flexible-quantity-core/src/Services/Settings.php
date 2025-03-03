@@ -32,6 +32,11 @@ class Settings extends OldSettings
     {
         return \true;
     }
+    public function is_default_price_enabled(): bool
+    {
+        $is_enabled = $this->settings_bag->bag('fq')->getString('default_price_enabled');
+        return $is_enabled === 'yes';
+    }
     public function get_price()
     {
         return $this->get_sale_price() !== '' ? $this->get_sale_price() : $this->get_regular_price();

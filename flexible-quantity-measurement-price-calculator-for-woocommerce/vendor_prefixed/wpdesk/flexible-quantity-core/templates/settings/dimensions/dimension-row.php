@@ -9,6 +9,7 @@ namespace WDFQVendorFree;
  * @var string $type_field_label
  * @var SettingsBag $settings
  * @var array $units
+ * @var string $measurement_step
  */
 ?>
 <div class="fq-field-type fq-field-<?php 
@@ -38,7 +39,7 @@ echo \esc_attr($dimension_slug);
 
 		<div class="flex-row-item">
 		<?php 
-\woocommerce_wp_text_input(['id' => 'fq_dec_fixed_' . $dimension_slug . '_size', 'name' => 'fq[decimals][' . $dimension_slug . '][fixed][size]', 'value' => $settings->bag('fixed')->getString('size'), 'class' => 'fq_dec_fixed_' . $dimension_slug . '_size', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Value', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => '0.01', 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Select the products size.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
+\woocommerce_wp_text_input(['id' => 'fq_dec_fixed_' . $dimension_slug . '_size', 'name' => 'fq[decimals][' . $dimension_slug . '][fixed][size]', 'value' => $settings->bag('fixed')->getString('size'), 'class' => 'fq_dec_fixed_' . $dimension_slug . '_size', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Value', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => $measurement_step, 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Select the products size.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
 ?>
 		</div>
 	</div>
@@ -62,19 +63,19 @@ echo \esc_attr($dimension_slug);
 
 		<div class="flex-row-item">
 		<?php 
-\woocommerce_wp_text_input(['id' => 'fq_dec_user_' . $dimension_slug . '_increment', 'name' => 'fq[decimals][' . $dimension_slug . '][user][increment]', 'value' => $settings->bag('user')->getString('increment'), 'class' => 'fq_dec_user_' . $dimension_slug . '_increment', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Increment', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => '0.01', 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Fill in the increment value for the unit dimension.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
+\woocommerce_wp_text_input(['id' => 'fq_dec_user_' . $dimension_slug . '_increment', 'name' => 'fq[decimals][' . $dimension_slug . '][user][increment]', 'value' => $settings->bag('user')->getString('increment'), 'class' => 'fq_dec_user_' . $dimension_slug . '_increment', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Increment', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => $measurement_step, 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Fill in the increment value for the unit dimension.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
 ?>
 		</div>
 
 		<div class="flex-row-item">
 		<?php 
-\woocommerce_wp_text_input(['id' => 'fq_dec_user_' . $dimension_slug . '_min_quantity', 'name' => 'fq[decimals][' . $dimension_slug . '][user][min_quantity]', 'value' => $settings->bag('user')->getString('min_quantity'), 'class' => 'fq_dec_user_' . $dimension_slug . '_min_quantity', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Minimum value', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => '0.01', 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Set the minimum value for the unit dimension.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
+\woocommerce_wp_text_input(['id' => 'fq_dec_user_' . $dimension_slug . '_min_quantity', 'name' => 'fq[decimals][' . $dimension_slug . '][user][min_quantity]', 'value' => $settings->bag('user')->getString('min_quantity'), 'class' => 'fq_dec_user_' . $dimension_slug . '_min_quantity', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Minimum value', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => $measurement_step, 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Set the minimum value for the unit dimension.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
 ?>
 		</div>
 
 		<div class="flex-row-item">
 		<?php 
-\woocommerce_wp_text_input(['id' => 'fq_dec_user_' . $dimension_slug . '_max_quantity', 'name' => 'fq[decimals][' . $dimension_slug . '][user][max_quantity]', 'value' => $settings->bag('user')->getString('max_quantity'), 'class' => 'fq_dec_user_' . $dimension_slug . '_max_quantity', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Maximum value', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => '0.01', 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Set the maximum value for the unit dimension.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
+\woocommerce_wp_text_input(['id' => 'fq_dec_user_' . $dimension_slug . '_max_quantity', 'name' => 'fq[decimals][' . $dimension_slug . '][user][max_quantity]', 'value' => $settings->bag('user')->getString('max_quantity'), 'class' => 'fq_dec_user_' . $dimension_slug . '_max_quantity', 'wrapper_class' => 'myclass', 'label' => \esc_html__('Maximum value', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => $measurement_step, 'min' => '0'], 'desc_tip' => \true, 'description' => \esc_html__('Set the maximum value for the unit dimension.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
 ?>
 		</div>
 	</div>

@@ -245,6 +245,7 @@ class WooCompatibility
     {
         // The textdomain usage is intentional here, we need to match the menu title.
         $prefix = sanitize_title(__('WooCommerce', 'woocommerce'));
+        // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
         return $prefix . '_page_' . $slug;
     }
     /**

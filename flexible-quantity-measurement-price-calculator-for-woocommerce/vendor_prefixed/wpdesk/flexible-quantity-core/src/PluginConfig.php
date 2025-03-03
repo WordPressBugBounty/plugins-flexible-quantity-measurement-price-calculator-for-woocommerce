@@ -15,6 +15,7 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Cart;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Inventory;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Shortcodes;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\TemplateFinder;
+use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Config;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\ProductLoop;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\ProductPage;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Compatibility;
@@ -66,6 +67,7 @@ class PluginConfig
         $assets_url = $this->plugin_url . $this->core_path . '/assets';
         $template_finder = new TemplateFinder($this->is_locked);
         $settings_container = new SettingsContainer($template_finder);
+        $config = new Config();
         $price_modifier = new Hookable\Prices\PriceModifier($settings_container);
         $product_page_calculator = new Hookable\Page\ProductPage($settings_container, $renderer);
         $product_page = new ProductPage($this->plugin_url . $this->core_path, $settings_container);
@@ -80,13 +82,14 @@ class PluginConfig
             new Compatibility($product_page, $settings_container),
             new Hookable\PostType\FQTemplateType(),
             // Backend pages.
-            new Hookable\Settings\TemplatePageDisplayer($renderer, $translate, $this->is_locked),
+            new Hookable\Settings\TemplatePageDisplayer($renderer, $translate, $this->is_locked, $config),
             new Hookable\Settings\TemplatePageSaver(),
             new Hookable\Settings\TemplatePageScripts($assets_url, $this->script_version),
-            new Hookable\Settings\Ajax\DimensionsAjax($renderer),
+            new Hookable\Settings\ProductPageScripts($assets_url, $this->script_version),
+            new Hookable\Settings\Ajax\DimensionsAjax($renderer, $config),
             new Hookable\Settings\Ajax\SelectionAjax($this->is_locked),
             new Hookable\Settings\TemplateListingPage($renderer),
-            new Hookable\Settings\ProductPage($renderer, $template_finder, $settings_container),
+            new Hookable\Settings\ProductPage($renderer, $template_finder, $settings_container, $translate, $this->is_locked),
             new Hookable\Settings\CustomUnitsPage($renderer, $translate, $assets_url, $this->script_version, $this->is_locked),
             new Hookable\Settings\SupportPage($renderer, $translate, $assets_url, $this->script_version, $this->marketing_slug, $this->is_locked),
             // Frontend.

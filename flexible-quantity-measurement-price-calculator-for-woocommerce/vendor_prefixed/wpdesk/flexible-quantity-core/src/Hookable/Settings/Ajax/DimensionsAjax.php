@@ -7,17 +7,17 @@ use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Units;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsBagFactory;
 use WDFQVendorFree\WPDesk\Persistence\Adapter\WordPress\WordpressPostMetaContainer;
+use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Config;
 class DimensionsAjax implements Hookable
 {
-    /**
-     * @var Renderer
-     */
-    private $renderer;
+    private Renderer $renderer;
+    private Config $config;
     public const ACTION = 'get_dimensions';
     public const NONCE_CONTEXT = 'fq_admin_nonce';
-    public function __construct(Renderer $renderer)
+    public function __construct(Renderer $renderer, Config $config)
     {
         $this->renderer = $renderer;
+        $this->config = $config;
     }
     public function hooks()
     {
@@ -25,14 +25,14 @@ class DimensionsAjax implements Hookable
     }
     public function get_dimensions()
     {
-        if (!isset($_POST['nonce']) || !\wp_verify_nonce($_POST['nonce'], self::NONCE_CONTEXT)) {
+        if (!isset($_POST['nonce']) || !\wp_verify_nonce(\sanitize_key(\wp_unslash($_POST['nonce'])), self::NONCE_CONTEXT)) {
             \wp_send_json_error('Invalid nonce');
         }
         if (!isset($_POST['template_id'])) {
             \wp_send_json_error('Required field "template_id" is not set');
         }
         $template_id = \sanitize_key($_POST['template_id']);
-        $unit = \wc_clean($_POST['unit'] ?? '');
+        $unit = \wc_clean(\wp_unslash($_POST['unit'] ?? ''));
         $settings = (new SettingsBagFactory(new WordpressPostMetaContainer($template_id)))->create();
         $unit = empty($unit) ? $settings->bag('fq')->getString('unit') : $unit;
         $calculator_type = Units::get_calculator_type($unit);
@@ -40,7 +40,7 @@ class DimensionsAjax implements Hookable
         $content = '';
         $dimension_definition = $this->get_dimensions_definition_by_calculator_type($calculator_type);
         foreach ($dimension_definition as $dimension_slug => $dimension) {
-            $content .= $this->renderer->render('settings/dimensions/dimension-row', ['dimension_slug' => $dimension_slug, 'type_field_label' => $dimension['label'], 'settings' => $settings->bag('fq')->bag('decimals')->bag($dimension_slug), 'units' => $units]);
+            $content .= $this->renderer->render('settings/dimensions/dimension-row', ['dimension_slug' => $dimension_slug, 'type_field_label' => $dimension['label'], 'settings' => $settings->bag('fq')->bag('decimals')->bag($dimension_slug), 'units' => $units, 'measurement_step' => $this->config->get_measurement_step_value()]);
         }
         \wp_send_json_success(['content' => $content]);
     }

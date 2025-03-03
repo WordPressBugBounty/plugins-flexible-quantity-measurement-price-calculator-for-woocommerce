@@ -181,12 +181,13 @@ class ProductPage implements Hookable
                     $price_html .= ' ' . $pricing_label;
                     // add price suffix
                     $price_html .= $price_suffix;
-                    /** this filter is documented in /src/class-wc-price-calculator-product.php */
+                    /** This filter is documented in /src/class-wc-price-calculator-product.php */
                     $price_html = (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
                     // restore the original values
                     Product::variable_product_unsync($product);
                     // other product types
                 } elseif ($measurement = Product::get_product_measurement($product, $settings)) {
+                    // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
                     $measurement->set_unit($settings->get_pricing_unit());
                     if ($measurement && '' !== $price_html && $measurement->get_value()) {
                         // save the original price and remove the filter that we're currently within, to avoid an infinite loop
@@ -216,7 +217,7 @@ class ProductPage implements Hookable
                         $price_html .= ' ' . $pricing_label;
                         // add price suffix
                         $price_html .= $price_suffix;
-                        /** this filter is documented in /src/class-wc-price-calculator-product.php */
+                        /** This filter is documented in /src/class-wc-price-calculator-product.php */
                         $price_html = (string) apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \true, \false);
                     }
                 }
@@ -234,7 +235,7 @@ class ProductPage implements Hookable
                 if ($_product->is_on_sale()) {
                     $price_html = Product::get_price_html_from_to($_product->get_regular_price(), $_product->get_sale_price(), $pricing_label);
                 } else {
-                    /** this filter is documented in /src/class-wc-price-calculator-product.php */
+                    /** This filter is documented in /src/class-wc-price-calculator-product.php */
                     $price_html = (string) \apply_filters('fq_price_calculator_get_price_html', $price_html, $product, $pricing_label, \false, \false);
                 }
             }
@@ -511,6 +512,7 @@ class ProductPage implements Hookable
         global $post, $post_id;
         if ($post && is_product()) {
             $post_id = $post->ID;
+            // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
         } else {
             /**
              * Filters the product post ID used for the measurement calculator scripts if the current page is not a single product page.
@@ -521,6 +523,7 @@ class ProductPage implements Hookable
              * @since 3.13.5
              */
             $post_id = (int) apply_filters('fq_price_calculator_frontend_scripts_override_post_id', (int) $post_id);
+            // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
         }
         $product = $post_id > 0 ? wc_get_product($post_id) : null;
         if (null === $product) {

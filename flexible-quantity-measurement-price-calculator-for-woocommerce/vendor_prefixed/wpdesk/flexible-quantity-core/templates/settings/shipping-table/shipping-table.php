@@ -9,6 +9,7 @@ namespace WDFQVendorFree;
  * @var SettingsBag $settings
  * @var Translate $translate
  * @var Renderer $renderer
+ * @var string $measurement_step
  */
 ?>
 <div class="measurement-header">
@@ -83,7 +84,7 @@ echo \wc_help_tip(\__('New shipping class.', 'flexible-quantity-measurement-pric
 $items = $settings->bag('items');
 $rows = $items->bag('from')->isEmpty() ? 1 : $items->bag('from')->count();
 for ($i = 0; $i < $rows; $i++) {
-    $renderer->output_render('settings/shipping-table/shipping-table-row', ['from' => $items->bag('from')->getString($i), 'to' => $items->bag('to')->getString($i), 'shipping_class' => $items->bag('shipping_class')->getString($i)]);
+    $renderer->output_render('settings/shipping-table/shipping-table-row', ['from' => $items->bag('from')->getString($i), 'to' => $items->bag('to')->getString($i), 'shipping_class' => $items->bag('shipping_class')->getString($i), 'measurement_step' => $measurement_step]);
 }
 ?>
 

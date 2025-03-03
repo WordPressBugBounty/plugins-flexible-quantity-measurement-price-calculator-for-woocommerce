@@ -35,11 +35,11 @@ class CalculatorPriceAjax implements Hookable
     }
     public function price_calculation()
     {
-        if (!isset($_POST['nonce']) || !\wp_verify_nonce($_POST['nonce'], ProductPageScripts::NONCE_CONTEXT)) {
+        if (!isset($_POST['nonce']) || !\wp_verify_nonce(\sanitize_key(\wp_unslash($_POST['nonce'])), ProductPageScripts::NONCE_CONTEXT)) {
             \wp_send_json_error('Invalid nonce');
         }
         $product_id = \sanitize_key($_POST['product_id'] ?? 0);
-        $form_data = \wc_clean($_POST['form_data'] ?? []);
+        $form_data = \wc_clean(\wp_unslash($_POST['form_data'] ?? []));
         // form_data is passed in as a query string, parse it to an array.
         parse_str($form_data, $form_data);
         $product = \wc_get_product($product_id);

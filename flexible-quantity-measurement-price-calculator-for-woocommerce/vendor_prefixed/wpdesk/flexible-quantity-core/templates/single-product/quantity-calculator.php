@@ -2,7 +2,7 @@
 
 namespace WDFQVendorFree;
 
-\defined('ABSPATH') or exit;
+\defined('ABSPATH') || exit;
 /**
  * Product page measurement quantity calculator.
  *

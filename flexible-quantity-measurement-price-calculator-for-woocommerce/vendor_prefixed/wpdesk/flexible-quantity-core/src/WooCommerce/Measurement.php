@@ -279,6 +279,9 @@ class Measurement
             }
             $unit = $normalize_table[$unit]['unit'];
         }
+        if ($unit === $to_unit) {
+            return $value;
+        }
         // convert from the standard unit to $to_unit
         if (isset($conversion_table[$unit][$to_unit])) {
             $factor = $conversion_table[$unit][$to_unit]['factor'];

@@ -1,0 +1,17 @@
+# This file lists some commits that should be ignored by git blame.
+# These commits are considered "useless" and should not be attributed
+# to the current history.
+
+# In order to see the effects of this file, you must configure Git
+# to use the .git-blame-ignore-revs file for blame operations.
+# This can be done by running the following command:
+#
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# This configuration can be added to your global Git configuration
+# (~/.gitconfig), or to the local Git configuration for the repository
+# (.git/config).
+
+# auto coding styles fixes - PHPCBF
+144f1cbf81018e7811033d4a43cbef6762e95b7c
+92a8916a05aa6e11feac9a137d0b447e58ab5002

@@ -1,0 +1,105 @@
+# Changelog
+
+## [2.4.12] - 2021-12-22
+### Fixed
+- Fixed image input JS
+
+## [2.4.11] - 2021-12-03
+### Added
+- Added date input field
+
+## [2.4.10] - 2021-10-01
+### Changed
+- Render form data without using echo
+
+## [2.4.9] - 2021-09-28
+### Fixed
+- Prevent form fields from being deleted by escaping functions
+
+## [2.4.8] - 2021-09-27
+### Fixed
+- Add escaping functions to all templates
+
+## [2.4.7] - 2021-09-20
+### Fixed
+- Add missing escaping functions in templates
+
+## [2.4.6] - 2021-08-23
+### Fixed
+- Get attribute now returns attribute instead of bool value
+
+## [2.4.5] - 2021-06-02
+### Fixed
+- Added text multiple field
+- Added image input field
+
+## [2.4.4] - 2021-04-26
+### Fixed
+- Added description_tip to Renderer
+
+## [2.4.2] - 2021-03-10
+### Fixed
+- When no value is provided use default in validation
+
+## [2.4.1] - 2021-02-01
+### Fixed
+- Invalid namespaces
+
+## [2.4.0] - 2021-01-20
+### Added
+- Support for persistence ^3
+
+## [2.3.2] - 2020-11-30
+### Fixed
+- Fixed bug with the double name & type attribute
+
+## [2.3.1] - 2020-10-20
+### Fixed
+- JsonNormalizedRenderer now renders only fields that can be converted to json
+
+## [2.3] - 2020-10-15
+### Added
+- Added Timepicker field
+- Added JsonSerializer
+
+## [2.2.2] - 2020-09-23
+### Changed
+- Fixed namespace for number field
+
+## [2.2.1] - 2020-08-18
+### Changed
+- Fixed bug with the "select multiple" field
+
+## [2.2.0] - 2020-07-30
+### Added
+- Date picker field
+
+## [2.1.0] - 2020-07-17
+### Added
+- Action/method attribute for form
+
+## [2.0.4] - 2020-06-24
+### Added
+- new button form field
+- new input type number form field
+### Changed
+- fixed nonce template
+
+## [2.0.3] - 2020-06-22
+### Added
+- css class in JSON renderer
+
+## 2.0.2 - 2020-06-17
+### Changed
+- Skip saving empty keys in the PersistentContainer
+
+## 2.0.1 - 2020-06-05
+### Changed
+- Stable version of persistent library is used
+
+## 2.0.0 - 2020-05-26
+### Changed
+- Whole library has been rewritten
+
+## 1.0 - 2019-12-16 =
+* First release

@@ -1,0 +1,713 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Flexible PDF Coupons Pro for WooCommerce 1.11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-01T11:59:53+00:00\n"
+"PO-Revision-Date: 2024-08-01 14:02+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Domain: flexible-coupons-pro\n"
+"X-Poedit-Basepath: ../src\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"\"\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: src\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: vendor_prefixed\n"
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:538
+msgid "<strong>%s</strong>  is required field."
+msgstr "Pole <strong>%s</strong>  jest wymagane."
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:548
+msgid "<strong>%1$s</strong>  is to short. Minimum length: %2$d."
+msgstr "Pole <strong>%1$s</strong>  jest za krótkie. Minimalna długość: %2$d."
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:558
+msgid "<strong>%1$s</strong>  is to long. Maximum length: %2$d."
+msgstr "Pole <strong>%1$s</strong>  jest za długie. Maksymalna długość: %2$d."
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:568
+msgid "<strong>%s</strong>  has invalid email."
+msgstr "Pole <strong>%s</strong>  zawiera błędny e-mail."
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:578
+msgid "<strong>%s</strong> has an invalid date."
+msgstr "<strong>%s</strong> ma nieprawidłową datę."
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:588
+msgid "<strong>%s</strong> has a date from the past."
+msgstr "<strong>%s</strong> ma datę z przeszłości."
+
+#: src/Coupons/Coupon/GenerateCoupon.php:356
+msgid "Cannot generate coupon. Unknown order ID or item ID"
+msgstr ""
+"Nie można wygenerować kuponu. Nieznany ID zamówienia lub pozycji zamówienia"
+
+#: src/Coupons/Coupon/GenerateCoupon.php:371
+msgid "Cannot generate coupon"
+msgstr "Nie można wygenerować kuponu"
+
+#: src/Coupons/Helpers/EmailStrings.php:11
+msgid "[{site_title}] You have received a coupon"
+msgstr "[{site_title}] Otrzymałeś kupon"
+
+#: src/Coupons/Helpers/EmailStrings.php:16
+msgid "Hi {recipient_name},"
+msgstr "Cześć {recipient_name},"
+
+#: src/Coupons/Helpers/EmailStrings.php:17
+msgid ""
+"Thanks to {buyer_name} you get a gift voucher for use in the {site_url} "
+"({site_title}) store."
+msgstr ""
+"Dzięki {buyer_name} otrzymujesz kupon podarunkowy do wykorzystania w sklepie "
+"{site_url} ({site_title})."
+
+#: src/Coupons/Helpers/EmailStrings.php:18
+msgid "Download PDF with the coupon from: {coupon_url}"
+msgstr "Pobierz PDF z kuponem z: {coupon_url}"
+
+#: src/Coupons/Helpers/EmailStrings.php:19
+msgid "Coupon information"
+msgstr "Informacje o kuponie"
+
+#: src/Coupons/Helpers/EmailStrings.php:20
+msgid "Coupon code: {coupon_code}"
+msgstr "Kod kuponu: {coupon_code}"
+
+#: src/Coupons/Helpers/EmailStrings.php:21
+msgid "Coupon value: {coupon_value}"
+msgstr "Wartość kuponu: {coupon_value}"
+
+#: src/Coupons/Helpers/EmailStrings.php:22
+msgid "Expiry date: {coupon_expiry}"
+msgstr "Data ważności: {coupon_expiry}"
+
+#: src/Coupons/Helpers/EmailStrings.php:23
+msgid "A message from the buyer:"
+msgstr "Wiadomość od kupującego:"
+
+#: src/Coupons/Helpers/EmailStrings.php:24
+msgid "{recipient_message}"
+msgstr "{recipient_message}"
+
+#: src/Coupons/Helpers/EmailStrings.php:25
+msgid "Thanks for reading!"
+msgstr "Dzięki za przeczytanie!"
+
+#: src/Coupons/Integration/SampleTemplates.php:85
+msgid "Sample template"
+msgstr "Przykładowy szablon"
+
+#: src/Coupons/Order/MakeOrder.php:57
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:14
+msgid "Download PDF coupon"
+msgstr "Pobierz kupon PDF"
+
+#: src/Coupons/Order/OrderMetaBox.php:91
+#: src/Coupons/Product/ProductEditPage.php:92
+#: src/Coupons/Product/ProductEditPage.php:141
+msgid "PDF Coupon"
+msgstr "Kupon PDF"
+
+#: src/Coupons/PDF/Download.php:60
+msgid "This coupon not exits or expired!"
+msgstr "Kupon nie istnieje lub wygasł!"
+
+#: src/Coupons/PDF/Download.php:78
+#: src/Coupons/Settings/Tabs/CouponSettings.php:148
+msgid "Coupon"
+msgstr "Kupon"
+
+#: src/Coupons/PDF/PDF.php:159
+msgid "Unknown template"
+msgstr "Nieznany szablon"
+
+#: src/Coupons/PDF/PDF.php:165
+msgid "Coupon doesn't exists."
+msgstr "Kupon nie istnieje."
+
+#: src/Coupons/Product/ProductEditPage.php:142
+msgid "Convert this product to PDF Coupon"
+msgstr "Zaznaczenie spowoduje modyfikację produktu na kupon PDF"
+
+#: src/Coupons/Settings/SettingsForm.php:58
+#: src/Coupons/Settings/SettingsForm.php:59
+#: src/Coupons/Views/dashboard/settings-menu-page-html.php:7
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: src/Coupons/Settings/SettingsForm.php:104
+msgid "Your settings have been saved."
+msgstr "Twoje ustawienia zostały zapisane."
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/CouponSettings.php:44
+#: src/Coupons/Settings/Tabs/EmailSettings.php:41
+#: src/Coupons/Settings/Tabs/MainSettings.php:49
+msgid "Read more in the %1$splugin documentation →%2$s"
+msgstr "Przeczytaj więcej w %1$sdokumentacji wtyczki →%2$s"
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/CouponSettings.php:59
+#: src/Coupons/Settings/Tabs/EmailSettings.php:60
+#: src/Coupons/Settings/Tabs/MainSettings.php:73
+#: src/Coupons/Views/dashboard/html-product-general-settings.php:54
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:94
+#: src/Coupons/Views/dashboard/variation/html-variation-select.php:17
+msgid "%1$sUpgrade to PRO →%2$s and enable options below"
+msgstr "%1$sUlepsz do PRO →%2$s i odblokuj poniższe opcje"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:72
+#: src/Coupons/Views/dashboard/fields/coupon-code-prefix.php:39
+msgid "Coupon code prefix"
+msgstr "Prefiks kodu kuponu"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:73
+msgid ""
+"Define the prefix which will be used as a beginning of your coupon code. "
+"Leave empty if you don’t want to use the prefix. Use <code>{order_id}</code> "
+"shortcode if you want to use the order number."
+msgstr ""
+"Zdefiniuj prefiks od którego będzie zaczynał się kod generowanych kuponów. "
+"Pozostaw puste jeśli nie chcesz korzystać z prefiksu. Możesz użyć szortkodu "
+"<code>{order_id}</code> aby wykorzystać numer zamówienia."
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:81
+#: src/Coupons/Views/dashboard/fields/coupon-code-suffix.php:38
+msgid "Coupon code suffix"
+msgstr "Sufiks kodu kuponu"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:82
+msgid ""
+"Define the suffix which will be used as a end of your coupon code. Leave "
+"empty if you don’t want to use the suffix. Use <code>{order_id}</code> "
+"shortcode if you want to use the order number."
+msgstr ""
+"Zdefiniuj sufiks, który będzie używany jako zakończenie kodu kuponu. "
+"Pozostaw puste jeśli nie chcesz korzystać z sufiksu. Możesz użyć szortkodu "
+"<code>{order_id}</code> aby wykorzystać numer zamówienia."
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:90
+#: src/Coupons/Views/dashboard/fields/coupon-code-length.php:44
+msgid "Number of random characters"
+msgstr "Liczba losowych znaków"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:91
+#: src/Coupons/Views/dashboard/fields/coupon-code-length.php:47
+msgid ""
+"The number of random characters in the coupon code. Random characters will "
+"be used for generating unique coupon codes. Choose the number between 5 and "
+"30."
+msgstr ""
+"Liczba losowych znaków w kodzie kuponu. Losowe znaki zostaną użyte do "
+"generowania unikalnych kodów kuponów. Wybierz liczbę z zakresu od 5 do 30."
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:102
+msgid "Coupon value"
+msgstr "Wartość kuponu"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:103
+#: src/Coupons/Settings/Tabs/CouponSettings.php:112
+#: src/Coupons/Settings/Tabs/CouponSettings.php:121
+msgid "Enable"
+msgstr "Włącz"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:104
+msgid "Always use the regular price of the product for the coupon value."
+msgstr "Zawsze użyj ceny regularnej produktu dla wartości kuponu."
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:111
+msgid "Show field tips"
+msgstr "Wskazówki dotyczące pól"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:113
+msgid "Show tooltips for fields."
+msgstr "Pokaż podpowiedzi dla pól."
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:120
+msgid "Show textarea counter"
+msgstr "Pokaż licznik pola tekstowego"
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:122
+msgid "Show character counter below textarea."
+msgstr "Pokaż licznik znaków poniżej pola tekstowego."
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:130
+#: src/Coupons/Settings/Tabs/EmailSettings.php:133
+#: src/Coupons/Settings/Tabs/MainSettings.php:114
+msgid "Save Changes"
+msgstr "Zapisz zmiany"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:52
+msgid "Email settings"
+msgstr "Ustawienia E-mail"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:53
+msgid "For more specific email delay settings, visit the product edit page."
+msgstr ""
+"Szczegółowe ustawienia opóźnienia wiadomości e-mail znajdziesz w edycji "
+"każdego produktu."
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:73
+msgid "Attachments in the e-mail"
+msgstr "Załączniki w e-mailu"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:74
+msgid "Attach PDF file to coupon email"
+msgstr "Dołącz plik PDF do e-maila z kuponem"
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/EmailSettings.php:80
+#: src/Coupons/Views/dashboard/html-product-general-settings.php:195
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:260
+msgid ""
+"Buy %1$sFlexible PDF Coupons PRO - Advanced Sending →%2$s and enable options "
+"below"
+msgstr ""
+"Kup %1$sElastyczne Kupony PDF PRO - Zaawansowana Wysyłka →%2$s i włącz "
+"poniższe opcje"
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/EmailSettings.php:95
+msgid "%1$sGet Flexible Coupons PRO with add-ons in one Bundle →%2$s"
+msgstr "%1$sKup pakiet Kupony PDF z wszystkimi dodatkami →%2$s"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:107
+msgid "Additional recipients"
+msgstr "Dodaj dodatkowych odbiorców"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:108
+msgid "E-mail address"
+msgstr "Adres e-mail"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:109
+msgid "Add additional recipients"
+msgstr "Dodaj dodatkowych odbiorców"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:115
+msgid "Email subject"
+msgstr "Temat e-maila"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:118
+#: src/Coupons/Settings/Tabs/EmailSettings.php:125
+msgid ""
+"You can use the following placeholders: {recipient_name}, "
+"{recipient_message}, {recipient_email}, {buyer_name}, {coupon_url}, "
+"{coupon_code}, {coupon_value}, {coupon_expiry}, {site_title}, {site_url}, "
+"{admin_email}, {current_date}, {site_description}"
+msgstr ""
+"Możesz użyć następujących symboli zastępczych: {recipient_name}, "
+"{recipient_message}, {recipient_email}, {buyer_name}, {coupon_url}, "
+"{coupon_code}, {coupon_value}, {coupon_expiry}, {site_title}, {site_url}, "
+"{admin_email}, {current_date}, {site_description}."
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:123
+msgid "E-mail body"
+msgstr "Treść e-maila"
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:151
+msgid "Emails"
+msgstr "E-maile"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:60
+msgid "Automatically generate coupons"
+msgstr "Automatyczne generowanie kuponów przy statusie zamówienia"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:64
+msgid ""
+"If you want the coupon to be generated automatically, select order status. "
+"Coupon will be generated and sent automatically when order status is changed "
+"to selected status."
+msgstr ""
+"Jeśli chcesz aby kupon był automatycznie generowany i wysyłany do klienta, "
+"wybierz status zamówienia. Gdy status zamówienia zostanie zmieniony na "
+"wybrany, kupon zostanie wygenerowany i wysłany w wiadomości e-mail."
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:86
+msgid "Expiry date format"
+msgstr "Format daty wygaśnięcia"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:87
+msgid ""
+"Define coupon expiry date format according to %1$sWordPress date "
+"formatting%2$s."
+msgstr ""
+"Zdefiniuj format daty zgodny z zasadami %1$sformatowania daty w "
+"WordPressie%2$s."
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:95
+msgid "Coupon fields position on the product page"
+msgstr "Pozycja pól kuponu na stronie produktu"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:98
+msgid "Below Add to cart button"
+msgstr "Pod przyciskiem Dodaj do koszyka"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:99
+msgid "Above Add to cart button"
+msgstr "Nad przyciskiem Dodaj do koszyka"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:102
+msgid "Select where the coupon fields will be displayed on the product page."
+msgstr "Wybierz w której sekcji strony produktu będą wyświetlane pola kuponu."
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:107
+msgid "Allow URL Fopen"
+msgstr "Allow URL Fopen"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:125
+msgid "Do not generate"
+msgstr "Nie generuj"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:137
+msgid "Enabled"
+msgstr "Włączono"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:137
+#: src/Coupons/Views/dashboard/fields/delay-type.php:27
+msgid "Disabled"
+msgstr "Wyłączono"
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:154
+msgid "Main settings"
+msgstr "Ustawienia główne"
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-enable.php:33
+msgid "Define own coupon code"
+msgstr "Zdefiniuj własny kod kuponu"
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-enable.php:35
+msgid ""
+"Enable this option to overwrite plugin settings and configure your own "
+"coupon code settings for this product."
+msgstr ""
+"Włącz tę opcję aby pominąć ustawienia wtyczki i skonfigurować własne "
+"ustawienia kodu kuponu dla tego produktu."
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-prefix.php:41
+msgid ""
+"Define the prefix which will be used as a beginning of your coupon code. "
+"Leave empty if you don’t want to use the prefix. Use {order_id} shortcode if "
+"you want to use the order number."
+msgstr ""
+"Zdefiniuj prefiks od którego będzie zaczynał się kod generowanych kuponów. "
+"Pozostaw puste jeśli nie chcesz korzystać z prefiksu. Możesz użyć szortkodu "
+"{order_id} aby wykorzystać numer zamówienia."
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-suffix.php:40
+msgid ""
+"Define the suffix which will be used as a end of your coupon code. Leave "
+"empty if you don’t want to use the suffix. Use {order_id} shortcode if you "
+"want to use the order number."
+msgstr ""
+"Zdefiniuj sufiks, który będzie używany jako zakończenie kodu kuponu. "
+"Pozostaw puste jeśli nie chcesz korzystać z sufiksu. Możesz użyć szortkodu "
+"{order_id} aby wykorzystać numer zamówienia."
+
+#: src/Coupons/Views/dashboard/fields/delay-fixed-date.php:38
+msgid "Date"
+msgstr "Data"
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:37
+msgid "Interval"
+msgstr "Przedział czasowy"
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:40
+msgid "Hours"
+msgstr "Godziny"
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:41
+msgid "Days"
+msgstr "Dni"
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:42
+msgid "Weeks"
+msgstr "Tygodnie"
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:43
+msgid "Months"
+msgstr "Miesiące"
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:28
+msgid "Simple Delay"
+msgstr "Proste opóźnienie"
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:29
+msgid "Send email on Fixed date"
+msgstr "Wyślij e-mail w ustalonym terminie"
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:30
+msgid "Send email on Customer defined date"
+msgstr "Wyślij e-mail w terminie określonym przez klienta"
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:45
+msgid "Email Delay Type"
+msgstr "Typ opóźnienia e-maila"
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:50
+msgid ""
+"Select the type of email delay. If you do not want to delay it, you can "
+"deactivate this feature by selecting Disabled."
+msgstr ""
+"Wybierz typ opóźnienia wiadomości e-mail. Jeśli nie chcesz opóźniać "
+"wiadomości, możesz wyłączyć tę funkcję, wybierając opcję Wyłączone."
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:52
+msgid "Read about each type of delay in the documentation →"
+msgstr "Przeczytaj o każdym typie opóźnienia w dokumentacji →"
+
+#: src/Coupons/Views/dashboard/fields/delay-value.php:37
+msgid "Delay"
+msgstr "Opóźnienie"
+
+#: src/Coupons/Views/dashboard/fields/disable-pdf-coupon.php:32
+msgid "Disable the PDF coupon for this variation"
+msgstr "Wyłącz kupon PDF dla tego wariantu"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date-own.php:32
+msgid "Own expiration time"
+msgstr "Własny termin wygaśnięcia"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date-own.php:35
+msgid "Define own time from purchase to expiration of a generated coupon."
+msgstr "Ustaw własny termin wygaśnięcia wygenerowanego kuponu."
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:28
+msgid "never"
+msgstr "nigdy"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:29
+msgid "7 days"
+msgstr "7 dni"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:30
+msgid "14 days"
+msgstr "14 dni"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:31
+msgid "30 days"
+msgstr "30 dni"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:32
+msgid "60 days"
+msgstr "60 dni"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:33
+msgid "90 days"
+msgstr "90 dni"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:34
+msgid "365 days"
+msgstr "365 dni"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:35
+msgid "Set your own date"
+msgstr "Ustaw własny termin"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:43
+msgid "Expiration time"
+msgstr "Czas do wygaśnięcia"
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:46
+msgid "Time from purchase to expiration of a generated coupon"
+msgstr "Czas od wygenerowania kuponu po zakupie do jego do wygaśnięcia"
+
+#: src/Coupons/Views/dashboard/fields/free-shipping.php:33
+msgid "Allow free shipping"
+msgstr "Włącz darmową wysyłkę"
+
+#: src/Coupons/Views/dashboard/fields/free-shipping.php:35
+msgid ""
+"Check if you want the coupon to provide free shipping. The coupon "
+"requirement for free shipping must be included in the shipping method."
+msgstr ""
+"Zaznacz jeśli chcesz aby kupon zapewnił darmową wysyłkę. Wymóg kuponu dla "
+"darmowej wysyłki musi być włączony przy metodzie wysyłki."
+
+#: src/Coupons/Views/dashboard/fields/include-categories.php:29
+msgid "Product categories"
+msgstr "Kategorie produktów"
+
+#: src/Coupons/Views/dashboard/fields/include-categories.php:35
+msgid "Any category"
+msgstr "Każda kategoria"
+
+#: src/Coupons/Views/dashboard/fields/include-categories.php:44
+msgid ""
+"Categories for which the coupon will be used. Do not select any to apply to "
+"all categories."
+msgstr ""
+"Kategorie dla których kupon będzie zastosowany. Nie wybieraj żadnej aby "
+"zastosować dla wszystkich kategorii."
+
+#: src/Coupons/Views/dashboard/fields/include-products.php:28
+msgid "Products"
+msgstr "Produkty"
+
+#: src/Coupons/Views/dashboard/fields/include-products.php:34
+msgid "Search for a product&hellip;"
+msgstr "Szukaj produktu&hellip;"
+
+#: src/Coupons/Views/dashboard/fields/include-products.php:48
+msgid ""
+"Products for which the coupon will be used. Do not select any to apply to "
+"all products."
+msgstr ""
+"Produkty dla których kupon będzie zastosowany. Nie wybieraj żadnego aby "
+"zastosować dla wszystkich produktów."
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-enable.php:40
+msgid "Split coupons by product quantity"
+msgstr "Podziel kupony według ilości produktów"
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-enable.php:42
+msgid "Enable this option to split coupons as different products in cart."
+msgstr "Włącz tę opcję, aby rozdzielić kupony jako różne produkty w koszyku."
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-forms-limit.php:40
+msgid "Limit recipient forms per product"
+msgstr "Limit formularzy odbiorcy na produkt"
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-forms-limit.php:42
+msgid "Enter the maximum number of recipient forms on the product page."
+msgstr "Wprowadź maksymalną liczbę formularzy odbiorców na stronie produktu."
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-send-to-first-email.php:40
+msgid "Send coupons to first recipient"
+msgstr "Wyślij kupony do pierwszego odbiorcy"
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-send-to-first-email.php:42
+msgid ""
+"Enable this option to send all bought coupons to email of first recipient. "
+"This option disables email field for other recipients."
+msgstr ""
+"Włącz tę opcję, aby wysłać wszystkie zakupione kupony na adres e-mail "
+"pierwszego odbiorcy. Ta opcja wyłącza pole e-mail dla innych odbiorców."
+
+#: src/Coupons/Views/dashboard/fields/product-fields.php:40
+msgid "Show or hide this field in product page."
+msgstr "Pokaż lub ukryj pole na stronie produktu."
+
+#: src/Coupons/Views/dashboard/fields/product-fields.php:52
+msgid "Required"
+msgstr "Wymagane"
+
+#: src/Coupons/Views/dashboard/fields/product-fields.php:54
+msgid "If checked field will be set as required."
+msgstr "Jeśli pole jest zaznaczone, zostanie ustawione jako wymagane."
+
+#: src/Coupons/Views/dashboard/fields/product-template.php:33
+msgid "Coupon template"
+msgstr "Szablon kuponu"
+
+#: src/Coupons/Views/dashboard/fields/product-template.php:36
+msgid "Select coupon template for this product"
+msgstr "Wybierz szablon kuponu dla tego produktu"
+
+#: src/Coupons/Views/dashboard/fields/usage-limit.php:33
+msgid "Allow to multiuse"
+msgstr "Włącz wielokrotne użycie"
+
+#: src/Coupons/Views/dashboard/fields/usage-limit.php:35
+msgid ""
+"Check this option if you want to allow customer to spread the coupon value "
+"over several purchases. For example, a coupon worth $100 for two purchases "
+"of $50."
+msgstr ""
+"Zaznacz jeśli chcesz aby klient mógł rozłożyć wartość kuponu na kilka "
+"zakupów. Np. kupon o wartości 100 zł na dwa zakupy po 50 zł."
+
+#: src/Coupons/Views/dashboard/html-account.php:7
+msgid "PDF Coupons"
+msgstr "Kupony PDF"
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:11
+msgid "Coupon code:"
+msgstr "Kod kuponu:"
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:13
+msgid "View PDF"
+msgstr "Zobacz PDF"
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:13
+msgid "View"
+msgstr "Zobacz"
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:14
+msgid "Download"
+msgstr "Pobierz"
+
+#: src/Coupons/Views/dashboard/html-order-coupon.php:16
+msgid "Product name:"
+msgstr "Nazwa produktu:"
+
+#: src/Coupons/Views/dashboard/html-order-coupon.php:20
+msgid "Generate coupon"
+msgstr "Generuj kupon"
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Views/dashboard/html-product-general-settings.php:81
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:122
+msgid ""
+"Buy %1$sFlexible PDF Coupons PRO - Multiple PDFs →%2$s and enable options "
+"below"
+msgstr ""
+"Kup %1$sElastyczne Kupony PDF PRO - Multi Kupony →%2$s i włącz "
+"poniższe opcje"
+
+#: src/Coupons/Views/dashboard/settings-menu-page-html.php:14
+msgid "Save"
+msgstr "Zapisz"
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:49
+msgid "Read the %1$splugin documentation →%2$s"
+msgstr "Przeczytaj więcej w %1$sdokumentacji wtyczki →%2$s"
+
+#: src/Coupons/Views/dashboard/variation/html-variation-select.php:32
+msgid "Manage Flexible PDF Coupons settings for variation"
+msgstr "Zarządzaj ustawieniami Kuponów PDF dla wariantu"
+
+#: src/Coupons/Views/dashboard/variation/html-variation-select.php:34
+msgid "Enable individual Flexible PDF Coupons options at variation level"
+msgstr "Włącz ustawienia kuponu PDF na poziomie wariantu"
+
+#~ msgid ""
+#~ "%1$sBuy Flexible PDF Coupons PRO - Advanced Sending →%2$s and enable "
+#~ "options below"
+#~ msgstr ""
+#~ "Kup \"Kupony WooCommerce PRO - Zaawansowana Wysyłka\" i korzystaj z opcji "
+#~ "pod spodem →\n"
+#~ "Kup Elastyczne Kupony PDF PRO - Zaawansowana Wysyłka i włącz poniższe "
+#~ "opcje →"
+
+#~ msgid "Read more about Flexible Coupons in the plugin docs →"
+#~ msgstr ""
+#~ "Przeczytaj więcej o Kuponach PDF WooCommerce w dokumentacji wtyczki →"
+
+#~ msgid ""
+#~ "Buy Flexible PDF Coupons PRO - Advanced Sending and enable option below →"
+#~ msgstr ""
+#~ "Kup \"Kupony WooCommerce PRO - Zaawansowana Wysyłka\" i korzystaj z opcji "
+#~ "pod spodem →"
+
+#~ msgid "Upgrade to PRO"
+#~ msgstr "Ulepsz do PRO"

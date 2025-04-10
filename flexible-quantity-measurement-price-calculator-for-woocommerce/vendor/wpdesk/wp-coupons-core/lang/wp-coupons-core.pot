@@ -1,0 +1,587 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-08-01T11:59:53+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.10.0\n"
+"X-Domain: wp-coupons-core\n"
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:538
+msgid "<strong>%s</strong>  is required field."
+msgstr ""
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:548
+msgid "<strong>%1$s</strong>  is to short. Minimum length: %2$d."
+msgstr ""
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:558
+msgid "<strong>%1$s</strong>  is to long. Maximum length: %2$d."
+msgstr ""
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:568
+msgid "<strong>%s</strong>  has invalid email."
+msgstr ""
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:578
+msgid "<strong>%s</strong> has an invalid date."
+msgstr ""
+
+#. translators: field title.
+#: src/Coupons/Cart/Cart.php:588
+msgid "<strong>%s</strong> has a date from the past."
+msgstr ""
+
+#: src/Coupons/Coupon/GenerateCoupon.php:356
+msgid "Cannot generate coupon. Unknown order ID or item ID"
+msgstr ""
+
+#: src/Coupons/Coupon/GenerateCoupon.php:371
+msgid "Cannot generate coupon"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:11
+msgid "[{site_title}] You have received a coupon"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:16
+msgid "Hi {recipient_name},"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:17
+msgid "Thanks to {buyer_name} you get a gift voucher for use in the {site_url} ({site_title}) store."
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:18
+msgid "Download PDF with the coupon from: {coupon_url}"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:19
+msgid "Coupon information"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:20
+msgid "Coupon code: {coupon_code}"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:21
+msgid "Coupon value: {coupon_value}"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:22
+msgid "Expiry date: {coupon_expiry}"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:23
+msgid "A message from the buyer:"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:24
+msgid "{recipient_message}"
+msgstr ""
+
+#: src/Coupons/Helpers/EmailStrings.php:25
+msgid "Thanks for reading!"
+msgstr ""
+
+#: src/Coupons/Integration/SampleTemplates.php:85
+msgid "Sample template"
+msgstr ""
+
+#: src/Coupons/Order/MakeOrder.php:57
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:14
+msgid "Download PDF coupon"
+msgstr ""
+
+#: src/Coupons/Order/OrderMetaBox.php:91
+#: src/Coupons/Product/ProductEditPage.php:92
+#: src/Coupons/Product/ProductEditPage.php:141
+msgid "PDF Coupon"
+msgstr ""
+
+#: src/Coupons/PDF/Download.php:60
+msgid "This coupon not exits or expired!"
+msgstr ""
+
+#: src/Coupons/PDF/Download.php:78
+#: src/Coupons/Settings/Tabs/CouponSettings.php:148
+msgid "Coupon"
+msgstr ""
+
+#: src/Coupons/PDF/PDF.php:159
+msgid "Unknown template"
+msgstr ""
+
+#: src/Coupons/PDF/PDF.php:165
+msgid "Coupon doesn't exists."
+msgstr ""
+
+#: src/Coupons/Product/ProductEditPage.php:142
+msgid "Convert this product to PDF Coupon"
+msgstr ""
+
+#: src/Coupons/Settings/SettingsForm.php:58
+#: src/Coupons/Settings/SettingsForm.php:59
+#: src/Coupons/Views/dashboard/settings-menu-page-html.php:7
+msgid "Settings"
+msgstr ""
+
+#: src/Coupons/Settings/SettingsForm.php:104
+msgid "Your settings have been saved."
+msgstr ""
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/CouponSettings.php:44
+#: src/Coupons/Settings/Tabs/EmailSettings.php:41
+#: src/Coupons/Settings/Tabs/MainSettings.php:49
+msgid "Read more in the %1$splugin documentation →%2$s"
+msgstr ""
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/CouponSettings.php:59
+#: src/Coupons/Settings/Tabs/EmailSettings.php:60
+#: src/Coupons/Settings/Tabs/MainSettings.php:73
+#: src/Coupons/Views/dashboard/html-product-general-settings.php:54
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:94
+#: src/Coupons/Views/dashboard/variation/html-variation-select.php:17
+msgid "%1$sUpgrade to PRO →%2$s and enable options below"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:72
+#: src/Coupons/Views/dashboard/fields/coupon-code-prefix.php:39
+msgid "Coupon code prefix"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:73
+msgid "Define the prefix which will be used as a beginning of your coupon code. Leave empty if you don’t want to use the prefix. Use <code>{order_id}</code> shortcode if you want to use the order number."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:81
+#: src/Coupons/Views/dashboard/fields/coupon-code-suffix.php:38
+msgid "Coupon code suffix"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:82
+msgid "Define the suffix which will be used as a end of your coupon code. Leave empty if you don’t want to use the suffix. Use <code>{order_id}</code> shortcode if you want to use the order number."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:90
+#: src/Coupons/Views/dashboard/fields/coupon-code-length.php:44
+msgid "Number of random characters"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:91
+#: src/Coupons/Views/dashboard/fields/coupon-code-length.php:47
+msgid "The number of random characters in the coupon code. Random characters will be used for generating unique coupon codes. Choose the number between 5 and 30."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:102
+msgid "Coupon value"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:103
+#: src/Coupons/Settings/Tabs/CouponSettings.php:112
+#: src/Coupons/Settings/Tabs/CouponSettings.php:121
+msgid "Enable"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:104
+msgid "Always use the regular price of the product for the coupon value."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:111
+msgid "Show field tips"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:113
+msgid "Show tooltips for fields."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:120
+msgid "Show textarea counter"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:122
+msgid "Show character counter below textarea."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/CouponSettings.php:130
+#: src/Coupons/Settings/Tabs/EmailSettings.php:133
+#: src/Coupons/Settings/Tabs/MainSettings.php:114
+msgid "Save Changes"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:52
+msgid "Email settings"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:53
+msgid "For more specific email delay settings, visit the product edit page."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:73
+msgid "Attachments in the e-mail"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:74
+msgid "Attach PDF file to coupon email"
+msgstr ""
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/EmailSettings.php:80
+#: src/Coupons/Views/dashboard/html-product-general-settings.php:195
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:260
+msgid "Buy %1$sFlexible PDF Coupons PRO - Advanced Sending →%2$s and enable options below"
+msgstr ""
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Settings/Tabs/EmailSettings.php:95
+msgid "%1$sGet Flexible Coupons PRO with add-ons in one Bundle →%2$s"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:107
+msgid "Additional recipients"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:108
+msgid "E-mail address"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:109
+msgid "Add additional recipients"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:115
+msgid "Email subject"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:118
+#: src/Coupons/Settings/Tabs/EmailSettings.php:125
+msgid "You can use the following placeholders: {recipient_name}, {recipient_message}, {recipient_email}, {buyer_name}, {coupon_url}, {coupon_code}, {coupon_value}, {coupon_expiry}, {site_title}, {site_url}, {admin_email}, {current_date}, {site_description}"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:123
+msgid "E-mail body"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/EmailSettings.php:151
+msgid "Emails"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:60
+msgid "Automatically generate coupons"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:64
+msgid "If you want the coupon to be generated automatically, select order status. Coupon will be generated and sent automatically when order status is changed to selected status."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:86
+msgid "Expiry date format"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:87
+msgid "Define coupon expiry date format according to %1$sWordPress date formatting%2$s."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:95
+msgid "Coupon fields position on the product page"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:98
+msgid "Below Add to cart button"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:99
+msgid "Above Add to cart button"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:102
+msgid "Select where the coupon fields will be displayed on the product page."
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:107
+msgid "Allow URL Fopen"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:125
+msgid "Do not generate"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:137
+msgid "Enabled"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:137
+#: src/Coupons/Views/dashboard/fields/delay-type.php:27
+msgid "Disabled"
+msgstr ""
+
+#: src/Coupons/Settings/Tabs/MainSettings.php:154
+msgid "Main settings"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-enable.php:33
+msgid "Define own coupon code"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-enable.php:35
+msgid "Enable this option to overwrite plugin settings and configure your own coupon code settings for this product."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-prefix.php:41
+msgid "Define the prefix which will be used as a beginning of your coupon code. Leave empty if you don’t want to use the prefix. Use {order_id} shortcode if you want to use the order number."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/coupon-code-suffix.php:40
+msgid "Define the suffix which will be used as a end of your coupon code. Leave empty if you don’t want to use the suffix. Use {order_id} shortcode if you want to use the order number."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-fixed-date.php:38
+msgid "Date"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:37
+msgid "Interval"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:40
+msgid "Hours"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:41
+msgid "Days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:42
+msgid "Weeks"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-interval.php:43
+msgid "Months"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:28
+msgid "Simple Delay"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:29
+msgid "Send email on Fixed date"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:30
+msgid "Send email on Customer defined date"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:45
+msgid "Email Delay Type"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:50
+msgid "Select the type of email delay. If you do not want to delay it, you can deactivate this feature by selecting Disabled."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-type.php:52
+msgid "Read about each type of delay in the documentation →"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/delay-value.php:37
+msgid "Delay"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/disable-pdf-coupon.php:32
+msgid "Disable the PDF coupon for this variation"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date-own.php:32
+msgid "Own expiration time"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date-own.php:35
+msgid "Define own time from purchase to expiration of a generated coupon."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:28
+msgid "never"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:29
+msgid "7 days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:30
+msgid "14 days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:31
+msgid "30 days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:32
+msgid "60 days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:33
+msgid "90 days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:34
+msgid "365 days"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:35
+msgid "Set your own date"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:43
+msgid "Expiration time"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/expiring-date.php:46
+msgid "Time from purchase to expiration of a generated coupon"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/free-shipping.php:33
+msgid "Allow free shipping"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/free-shipping.php:35
+msgid "Check if you want the coupon to provide free shipping. The coupon requirement for free shipping must be included in the shipping method."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/include-categories.php:29
+msgid "Product categories"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/include-categories.php:35
+msgid "Any category"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/include-categories.php:44
+msgid "Categories for which the coupon will be used. Do not select any to apply to all categories."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/include-products.php:28
+msgid "Products"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/include-products.php:34
+msgid "Search for a product&hellip;"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/include-products.php:48
+msgid "Products for which the coupon will be used. Do not select any to apply to all products."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-enable.php:40
+msgid "Split coupons by product quantity"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-enable.php:42
+msgid "Enable this option to split coupons as different products in cart."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-forms-limit.php:40
+msgid "Limit recipient forms per product"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-forms-limit.php:42
+msgid "Enter the maximum number of recipient forms on the product page."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-send-to-first-email.php:40
+msgid "Send coupons to first recipient"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/multiple-pdfs/multiple-coupons-send-to-first-email.php:42
+msgid "Enable this option to send all bought coupons to email of first recipient. This option disables email field for other recipients."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/product-fields.php:40
+msgid "Show or hide this field in product page."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/product-fields.php:52
+msgid "Required"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/product-fields.php:54
+msgid "If checked field will be set as required."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/product-template.php:33
+msgid "Coupon template"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/product-template.php:36
+msgid "Select coupon template for this product"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/usage-limit.php:33
+msgid "Allow to multiuse"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/fields/usage-limit.php:35
+msgid "Check this option if you want to allow customer to spread the coupon value over several purchases. For example, a coupon worth $100 for two purchases of $50."
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-account.php:7
+msgid "PDF Coupons"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:11
+msgid "Coupon code:"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:13
+msgid "View PDF"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:13
+msgid "View"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-order-coupon-generated.php:14
+msgid "Download"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-order-coupon.php:16
+msgid "Product name:"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/html-order-coupon.php:20
+msgid "Generate coupon"
+msgstr ""
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Views/dashboard/html-product-general-settings.php:81
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:122
+msgid "Buy %1$sFlexible PDF Coupons PRO - Multiple PDFs →%2$s and enable options below"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/settings-menu-page-html.php:14
+msgid "Save"
+msgstr ""
+
+#. translators: %1$s: anchor opening tag, %2$s: anchor closing tag
+#: src/Coupons/Views/dashboard/variation/html-product-variation-settings.php:49
+msgid "Read the %1$splugin documentation →%2$s"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/variation/html-variation-select.php:32
+msgid "Manage Flexible PDF Coupons settings for variation"
+msgstr ""
+
+#: src/Coupons/Views/dashboard/variation/html-variation-select.php:34
+msgid "Enable individual Flexible PDF Coupons options at variation level"
+msgstr ""

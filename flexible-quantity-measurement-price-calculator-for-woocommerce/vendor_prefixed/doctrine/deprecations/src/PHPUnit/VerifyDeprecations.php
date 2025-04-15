@@ -4,6 +4,8 @@ declare (strict_types=1);
 namespace WDFQVendorFree\Doctrine\Deprecations\PHPUnit;
 
 use WDFQVendorFree\Doctrine\Deprecations\Deprecation;
+use WDFQVendorFree\PHPUnit\Framework\Attributes\After;
+use WDFQVendorFree\PHPUnit\Framework\Attributes\Before;
 use function sprintf;
 trait VerifyDeprecations
 {
@@ -20,11 +22,13 @@ trait VerifyDeprecations
         $this->doctrineNoDeprecationsExpectations[$identifier] = Deprecation::getTriggeredDeprecations()[$identifier] ?? 0;
     }
     /** @before */
+    #[Before]
     public function enableDeprecationTracking(): void
     {
         Deprecation::enableTrackingDeprecations();
     }
     /** @after */
+    #[After]
     public function verifyDeprecationsAreTriggered(): void
     {
         foreach ($this->doctrineDeprecationsExpectations as $identifier => $expectation) {

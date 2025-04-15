@@ -6,17 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
-    'WPDesk\\View\\' => array($vendorDir . '/wpdesk/wp-view/src'),
-    'WPDesk\\PluginBuilder\\' => array($vendorDir . '/wpdesk/wp-builder/src'),
-    'WPDesk\\Persistence\\' => array($vendorDir . '/wpdesk/wp-persistence/src'),
-    'WPDesk\\Notice\\' => array($vendorDir . '/wpdesk/wp-notice/src/WPDesk/Notice'),
-    'WPDesk\\Library\\WPCoupons\\' => array($vendorDir . '/wpdesk/wp-coupons-core/src/Coupons'),
-    'WPDesk\\Library\\CouponInterfaces\\' => array($vendorDir . '/wpdesk/wp-coupons-interfaces/src/Interfaces'),
-    'WPDesk\\Forms\\' => array($vendorDir . '/wpdesk/wp-forms/src'),
     'WPDesk\\FlexibleQuantityFree\\' => array($baseDir . '/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
-    'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
-    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

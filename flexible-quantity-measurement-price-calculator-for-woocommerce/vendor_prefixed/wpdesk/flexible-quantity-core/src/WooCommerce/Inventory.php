@@ -331,9 +331,7 @@ class Inventory implements Hookable
             if ($settings->is_pricing_inventory_enabled()) {
                 // save the actual item quantity (ie *2* pieces of fabric at 3 feet each)
                 if (isset($_REQUEST['quantity'])) {
-                    // add-to-cart actions
-                    $quantity = isset($_REQUEST['quantity']) && \is_numeric($_REQUEST['quantity']) ? sanitize_text_field(wp_unslash($_REQUEST['quantity'])) : 1;
-                    $quantity = (float) $quantity;
+                    $quantity = \is_numeric($_REQUEST['quantity']) ? \absint($_REQUEST['quantity']) : 1;
                     WC()->cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] += $quantity;
                     // in WC 3.0+, adding a 2nd quantity to the cart of a product with the same measurements (e.g. clicking add to cart twice)
                     // uses WC_Cart::set_quantity() and skips the woocommerce_add_cart_item filter which prevents us from changing the cart quantity to reflect

@@ -66,7 +66,7 @@ class CalculatorPriceAjax implements Hookable
         $this->price_modifier->unhooks();
         $price_html = \wc_price(\wc_get_price_to_display($product));
         $this->price_modifier->hooks();
-        $response = ['price_html' => \wp_kses_post($price_html), 'measurement_needed' => $measurement->get_value($settings->get_pricing_unit()), 'measurement_needed_unit' => $settings->get_pricing_unit()];
+        $response = ['price_html' => \wp_kses_post($price_html), 'price' => $price, 'measurement_needed' => $measurement->get_value($settings->get_pricing_unit()), 'measurement_needed_unit' => $settings->get_pricing_unit()];
         \wp_send_json_success($response);
     }
 }

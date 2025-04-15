@@ -43,8 +43,6 @@ class Cart implements Hookable
         add_filter('woocommerce_add_cart_item', [$this, 'set_product_shipping_methods'], 1, 1);
         // set the correct cart contents count
         add_filter('woocommerce_cart_contents_count', [$this, 'set_cart_contents_count']);
-        // returns the cart widget item price html string
-        add_filter('woocommerce_cart_item_price', [$this, 'get_cart_widget_item_price_html'], 9, 3);
         // "order again" handling
         add_filter('woocommerce_order_again_cart_item_data', [$this, 'order_again_cart_item_data'], 10, 3);
         // when item added successfully
@@ -513,31 +511,6 @@ class Cart implements Hookable
             $weight += (float) $item['data']->get_weight() * $this->get_item_quantity($item);
         }
         return $weight;
-    }
-    /**
-     * Returns the price HTML for the given cart item, to display in the
-     * cart Widget
-     *
-     * @since 3.0
-     * @param string $price_html the price html
-     * @param array $cart_item the cart item
-     * @param string $cart_item_key the unique cart item hash
-     * @return string the price html
-     */
-    public function get_cart_widget_item_price_html($price_html, $cart_item, $cart_item_key)
-    {
-        // if this is a pricing calculator item, and WooCommerce Product Addons hasn't already altered the price
-        if (empty($cart_item['addons']) && isset($cart_item['pricing_item_meta_data']['_price'])) {
-            $args = ['price' => (float) $cart_item['pricing_item_meta_data']['_price'], 'qty' => 1];
-            if ('incl' === get_option('woocommerce_tax_display_cart')) {
-                $price = wc_get_price_including_tax($cart_item['data'], $args);
-            } else {
-                $price = wc_get_price_excluding_tax($cart_item['data'], $args);
-            }
-            $price_html = wc_price($price);
-        }
-        // default
-        return $price_html;
     }
     /**
      * Pricing calculator calculated weight handling

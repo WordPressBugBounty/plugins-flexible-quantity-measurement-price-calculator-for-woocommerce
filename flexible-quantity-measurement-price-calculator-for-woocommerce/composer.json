@@ -46,18 +46,17 @@
 		"ext-zip": "*",
 		"psr/container": "^1.0",
 		"psr/log": "^1.0.1",
-		"wpdesk/wp-coupons-core": "^2.3",
 		"wpdesk/wp-wpdesk-helper-override": "^1.1.0"
 	},
 	"require-dev": {
 		"10up/wp_mock": "*",
 		"phpunit/phpunit": "^9",
 		"wpdesk/wp-wpdesk-composer": "^3.0",
-		"wpdesk/wp-codeception": "^2",
+		"wpdesk/wp-codeception": "2.12.1",
 		"wpdesk/wp-plugin-flow-free": "*",
 		"wpdesk/wp-logs": "^1",
 		"monolog/monolog": "*",
-		"wpdesk/flexible-quantity-core": "^2.2",
+		"wpdesk/flexible-quantity-core": "^2.3",
 		"wpdesk/ltv-dashboard-widget": "^1"
 	},
 	"extra": {

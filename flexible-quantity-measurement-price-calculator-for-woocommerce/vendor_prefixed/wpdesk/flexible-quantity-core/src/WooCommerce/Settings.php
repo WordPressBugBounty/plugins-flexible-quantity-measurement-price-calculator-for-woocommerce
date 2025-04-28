@@ -86,6 +86,9 @@ class Settings
      */
     public function get_settings()
     {
+        if (!$this->settings_container instanceof WooCommerceProductContainer) {
+            return [];
+        }
         return $this->settings_container->has(self::SETTINGS_META_KEY) === \true ? $this->settings_container->get(self::SETTINGS_META_KEY) : [];
     }
     /**

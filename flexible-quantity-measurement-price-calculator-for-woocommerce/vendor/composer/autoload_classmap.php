@@ -260,6 +260,7 @@ return array(
     'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Prices\\PriceHtml' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Prices/PriceHtml.php',
     'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Prices\\PriceModifier' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Prices/PriceModifier.php',
     'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Product\\ProductModifier' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Product/ProductModifier.php',
+    'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Quantity\\OrderQuantityModifier' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Quantity/OrderQuantityModifier.php',
     'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Settings\\Ajax\\DimensionsAjax' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/Ajax/DimensionsAjax.php',
     'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Settings\\Ajax\\SelectionAjax' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/Ajax/SelectionAjax.php',
     'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Settings\\CustomUnitsPage' => $baseDir . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/CustomUnitsPage.php',

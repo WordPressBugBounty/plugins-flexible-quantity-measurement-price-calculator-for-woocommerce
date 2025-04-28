@@ -49,8 +49,6 @@ class Cart implements Hookable
         add_action('woocommerce_add_to_cart', [$this, 'clear_inputs_cookie'], 999, 2);
         // cart_id hash can not be based on wc quantity
         \add_filter('woocommerce_cart_id', [$this, 'get_cart_id'], 10, 5);
-        // when same product is added to cart, item quantity is updated, but no price is recalculated.
-        \add_action('woocommerce_after_cart_item_quantity_update', [$this, 'add_to_cart_item_quantity_update'], 10, 1);
     }
     /**
      * Filter to check whether a product is valid to be added to the cart.
@@ -857,24 +855,6 @@ class Cart implements Hookable
         // Re-add the filter.
         \add_filter('woocommerce_cart_id', [$this, 'get_cart_id'], 10, 5);
         return $new_cart_id;
-    }
-    /**
-     * When same product is added to cart, item quantity is updated, but no price is recalculated.
-     * Due to pricing table, we need to update cart totals when add-to-cart.
-     *
-     * @param string $cart_item_key
-     *
-     * @return void
-     */
-    public function add_to_cart_item_quantity_update($cart_item_key)
-    {
-        if (!isset($_REQUEST['add-to-cart']) || !is_numeric(wp_unslash($_REQUEST['add-to-cart']))) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            return;
-        }
-        $cart_item_data = \WC()->cart->cart_contents[$cart_item_key];
-        // $this->set_product_prices( $cart_item_data ); // TODO: This is not needed i guess
-        \WC()->cart->calculate_totals();
     }
     /**
      * Checks if the measurement value is valid based on a specified increment.

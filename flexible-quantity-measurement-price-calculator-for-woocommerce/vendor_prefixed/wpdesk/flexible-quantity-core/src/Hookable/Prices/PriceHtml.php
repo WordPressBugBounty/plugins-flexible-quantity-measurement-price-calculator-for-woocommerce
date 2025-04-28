@@ -40,8 +40,6 @@ class PriceHtml implements Hookable
             if ($product->is_type('variable') && $settings->is_default_price_enabled()) {
                 return $price_html . ' ' . $settings->get_pricing_label();
             }
-            $basic_regular_price = $product->get_price();
-            $price_html = \is_numeric($basic_regular_price) ? wc_price((float) $basic_regular_price) : $price_html;
             // if this is a quantity calculator, the displayed price per unit will have to be calculated from
             // the product price and pricing measurement.  alternatively, for a pricing calculator product,
             // the price set in the admin *is* the price per unit, so we just need to format it by adding the units

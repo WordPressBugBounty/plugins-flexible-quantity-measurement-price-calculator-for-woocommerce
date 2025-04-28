@@ -30,7 +30,6 @@ class Inventory implements Hookable
         add_filter('woocommerce_widget_cart_item_quantity', [$this, 'get_widget_cart_item_quantity'], 10, 3);
         // note: no filter required for the order items table, as its unit quantity by then
         add_filter('woocommerce_checkout_cart_item_quantity', [$this, 'get_checkout_item_quantity'], 10, 2);
-        add_action('woocommerce_after_cart_item_quantity_update', [$this, 'after_cart_item_quantity_update'], 10, 2);
         add_filter('woocommerce_order_item_quantity', [$this, 'get_order_item_measurement_quantity'], 10, 3);
         add_filter('woocommerce_order_get_items', [$this, 'order_again_item_set_quantity'], 10, 2);
         add_filter('woocommerce_cart_shipping_packages', [$this, 'cart_shipping_packages']);
@@ -307,62 +306,6 @@ class Inventory implements Hookable
             $quantity_html = '<span class="quantity">' . sprintf('%s &times; %s', $cart_item['pricing_item_meta_data']['_quantity'], $product_price) . '</span>';
         }
         return $quantity_html;
-    }
-    /**
-     * Invoked after a cart item's quantity is updated, and if the item in
-     * question is for a pricing calculator product with inventory enabled, and
-     * it's being added to the cart or the cart is being updated or proceeding
-     * to checkout, we keep track of the unit quantity which is displayed to the
-     * customer.  The unit quantity would be '2' pieces of 3 foot fabric, for
-     * instance.
-     *
-     * @param string  $cart_item_key the cart item key
-     * @param numeric $quantity      the item quantity
-     *
-     * @since 3.0
-     */
-    public function after_cart_item_quantity_update(string $cart_item_key, $quantity)
-    {
-        $cart_items = WC()->cart->get_cart();
-        if (isset($cart_items[$cart_item_key]) && $cart_items[$cart_item_key]) {
-            // we want the product, not the variation
-            $product = wc_get_product($cart_items[$cart_item_key]['product_id']);
-            $settings = $this->settings_container->get($product);
-            if ($settings->is_pricing_inventory_enabled()) {
-                // save the actual item quantity (ie *2* pieces of fabric at 3 feet each)
-                if (isset($_REQUEST['quantity'])) {
-                    $quantity = \is_numeric($_REQUEST['quantity']) ? \absint($_REQUEST['quantity']) : 1;
-                    WC()->cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] += $quantity;
-                    // in WC 3.0+, adding a 2nd quantity to the cart of a product with the same measurements (e.g. clicking add to cart twice)
-                    // uses WC_Cart::set_quantity() and skips the woocommerce_add_cart_item filter which prevents us from changing the cart quantity to reflect
-                    // the total measured amount (e.g. 2 pieces of fabric at 3 feet each is a total quantity of 6, when priced on a per-foot basis).
-                    // This resets the cart quantity to the total measured amount. When we can require WC 3.1+, we can make use of the
-                    // woocommerce_add_to_cart_quantity filter added in https://github.com/woocommerce/woocommerce/commit/494fa0974c955796a3168892499bf370aa9ce8f2
-                    // to set the correct quantity prior to WC_Cart::set_quantity() being called. {MR 2017-06-21}
-                    $settings = $this->settings_container->get($product);
-                    $measurement_needed_unit = $settings->get_pricing_unit();
-                    $measurement_needed_value = null;
-                    if (isset($_REQUEST['_measurement_needed_unit'])) {
-                        $measurement_needed_unit = sanitize_text_field(wp_unslash($_REQUEST['_measurement_needed_unit']));
-                    }
-                    if (isset($_REQUEST['_measurement_needed'])) {
-                        $measurement_needed_value = sanitize_text_field(wp_unslash($_REQUEST['_measurement_needed']));
-                    }
-                    $measurement_needed = new Measurement($measurement_needed_unit, $measurement_needed_value);
-                    // quantity * measurement needed in pricing units
-                    WC()->cart->cart_contents[$cart_item_key]['quantity'] = WC()->cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] * $measurement_needed->get_value($settings->get_pricing_unit());
-                } elseif (!empty($_POST['update_cart']) || !empty($_POST['proceed'])) {
-                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    // update cart/proceed to checkout
-                    if (isset($_POST['cart']) && isset($_POST['cart'][$cart_item_key]['qty'])) {
-                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                        $qty = wc_clean(wp_unslash($_POST['cart'][$cart_item_key]['qty']));
-                        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                        WC()->cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] = preg_replace('/[^0-9\.]/', '', $qty);
-                    }
-                }
-            }
-        }
     }
     /**
      * Gets the measurement stock quantity for the given item if its a pricing

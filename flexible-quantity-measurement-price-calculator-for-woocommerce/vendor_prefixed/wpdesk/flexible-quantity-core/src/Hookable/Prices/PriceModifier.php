@@ -5,7 +5,7 @@ namespace WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Hookable\Prices;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
-use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\PriceCalculator;
+use WC_Cart;
 /**
  * Override woocommerce product price with FQ price.
  *
@@ -91,11 +91,14 @@ class PriceModifier implements Hookable
      * @param string $cart_item_key
      * @param int $quantity
      * @param int $old_quantity
-     * @param array $cart
+     * @param WC_Cart $cart
      */
     public function after_cart_item_quantity_update($cart_item_key, $quantity, $old_quantity, $cart)
     {
         $cart->cart_contents[$cart_item_key]['data']->update_meta_data('quantity', $quantity);
+        if (isset($cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'])) {
+            $cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] = $quantity;
+        }
     }
     /**
      * Sets woocommerce prices for cart items, when product is added to cart.

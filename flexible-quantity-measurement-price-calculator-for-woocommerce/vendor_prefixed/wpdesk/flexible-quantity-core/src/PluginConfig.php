@@ -82,6 +82,7 @@ class PluginConfig
             new Compatibility($product_page, $settings_container),
             new Hookable\PostType\FQTemplateType(),
             new Hookable\Stock\CartStockValidationInterceptor($settings_container),
+            new Hookable\Quantity\OrderQuantityModifier($settings_container),
             // Backend pages.
             new Hookable\Settings\TemplatePageDisplayer($renderer, $translate, $this->is_locked, $config),
             new Hookable\Settings\TemplatePageSaver(),

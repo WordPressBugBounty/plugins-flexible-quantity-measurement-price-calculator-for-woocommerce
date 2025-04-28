@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Flexible Quantity - Measurement Price Calculator for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.3.1\n"
+"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-15T09:37:51+00:00\n"
+"POT-Creation-Date: 2025-04-28T09:56:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: flexible-quantity-measurement-price-calculator-for-woocommerce\n"
@@ -57,12 +57,12 @@ msgid "Free version of plugin Flexible Quantity for WooCommerce was deactivated 
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Page/ProductPage.php:72
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:797
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:795
 msgid "Total %1$s (%2$s)"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Page/ProductPage.php:72
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:797
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:795
 msgid "Total %s"
 msgstr ""
 
@@ -127,17 +127,17 @@ msgid "Weight"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/Ajax/DimensionsAjax.php:49
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:730
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:733
 msgid "Length"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/Ajax/DimensionsAjax.php:49
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:732
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:735
 msgid "Width"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/Ajax/DimensionsAjax.php:49
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:734
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:737
 msgid "Height"
 msgstr ""
 
@@ -194,19 +194,19 @@ msgstr ""
 
 #. translators: Placeholders: %1$s - measurement label, %2$s - input measure increment value (step amount)
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Services/Validator/IncrementValidator.php:32
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:118
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:116
 msgid "%1$s value must be in increments of %2$s."
 msgstr ""
 
 #. translators: Placeholders: %1$s - measurement label, %2$s - measurement value (number)
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Services/Validator/InRangeValidator.php:28
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:105
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:103
 msgid "%1$s value must be greater than or equal to %2$s."
 msgstr ""
 
 #. translators: Placeholders: %1$s - measurement label, %2$s - measurement value (number)
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Services/Validator/InRangeValidator.php:36
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:109
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:107
 msgid "%1$s value must be less than or equal to %2$s."
 msgstr ""
 
@@ -227,63 +227,63 @@ msgid "Price (%s)"
 msgstr ""
 
 #. translators: Placeholders: %s - measurement label
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:94
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:92
 msgid "%s missing."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:137
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:135
 msgid "Product mesurment value (%1$s) must be greater than or equal to %2$s."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:143
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:141
 msgid "Product mesurment value (%1$s) must be less than or equal to %2$s."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:148
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:146
 msgid "The size of the product is %1$s, allowed increment value is %2$s, please change the size of the product."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:790
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:788
 msgid "Overage Estimate (%s)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:799
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:797
 msgid "Overage %1$s (%2$s)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:799
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:797
 msgid "Overage %s"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:806
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:804
 msgid "Overage Cost (%s%%)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:195
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:194
 msgid "Only %1$s %2$s left in stock"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:195
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:194
 msgid "In stock"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:198
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:197
 msgid "%1$s %2$s in stock"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:203
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:202
 msgid "(backorders allowed)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:424
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:367
 msgid "Backordered measure"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:431
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:374
 msgid "Backordered quantity or measure"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:549
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Inventory.php:492
 msgid "You cannot purchase this product because the stock level is below the minimum threshold."
 msgstr ""
 
@@ -295,7 +295,7 @@ msgstr ""
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Product.php:190
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Product.php:204
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Product.php:208
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:736
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:739
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Units.php:43
 msgid "Area"
 msgstr ""
@@ -342,40 +342,40 @@ msgstr ""
 msgid "This field is required."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:575
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:577
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:578
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:580
 msgid "Free!"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:712
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:715
 msgid "per %s"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:731
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:734
 msgid "Required Length"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:733
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:736
 msgid "Required Width"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:735
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:738
 msgid "Required Height"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:737
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:740
 msgid "Required Area"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:738
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:741
 msgid "Required Volume"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:739
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:742
 msgid "Required Weight"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:740
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Settings.php:743
 msgid "Distance around your room"
 msgstr ""
 

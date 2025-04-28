@@ -4,9 +4,9 @@ Contributors: wpdesk,piotrpo,marcinkolanko,amisiewicz
 Donate link: https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/
 Tags: unit of measure, quantity increment, measurement price, price calculator, product quantity
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -330,6 +330,13 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.2 - 2025-04-28 =
+* Added support for WordPress 6.8
+* Fixed incorrect cart summary calculation occurring when when another product with same measurements was present.
+* Fixed quantity is not multiplied by the measurement value in order, when calculate inventory is enabled.
+* Fixed product preview price on produc page do not responds to tax included/excluded settings.
+* Fixed fatal error on woocommerce email preview settings page
 
 = 2.3.1 - 2025-04-15 =
 * Fixed integration with Flexible Product Fields

@@ -165,7 +165,7 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		$is_pl        = 'pl_PL' === get_locale();
 		$support_url  = $is_pl ? 'https://www.wpdesk.pl/support/' : 'https://www.wpdesk.net/get-support/';
 		$settings_url = admin_url( 'admin.php?page=flexible_quantity_instructions' );
-		$docs_url     = $is_pl ? 'https://wpde.sk/flexible-quantity-pl' : 'https://wpde.sk/flexible-quantity-main';
+		$docs_url     = $is_pl ? 'https://wpdesk.link/flexible-quantity-pl' : 'https://wpdesk.link/flexible-quantity-main';
 
 		$plugin_links['docs']     = '<a href="' . esc_url( $docs_url ) . '" target="_blank">' . esc_html__( 'Documentation', 'flexible-quantity-measurement-price-calculator-for-woocommerce' ) . '</a>';
 		$plugin_links['settings'] = '<a href="' . esc_url( $settings_url ) . '" target="_blank" style="color:#d64e07;font-weight:bold;">' . esc_html__( 'How to use', 'flexible-quantity-measurement-price-calculator-for-woocommerce' ) . '</a>';

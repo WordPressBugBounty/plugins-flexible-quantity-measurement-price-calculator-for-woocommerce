@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,7 +118,7 @@ The PRO version of the plugin lets you offer WooCommerce products with new units
 
 #### Live Demo
 
-Test Flexible Quantity Measurement for WooCommerce (free and PRO) in [**your free demo**](https://wpde.sk/demo-fq).
+Test Flexible Quantity Measurement for WooCommerce (free and PRO) in [**your free demo**](https://wpdesk.link/demo-fq).
 
 ### Flexible Quantity in a nutshell
 
@@ -330,6 +330,9 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.3 - 2025-05-23 =
+* Changed promo url link
 
 = 2.3.2 - 2025-04-28 =
 * Added support for WordPress 6.8

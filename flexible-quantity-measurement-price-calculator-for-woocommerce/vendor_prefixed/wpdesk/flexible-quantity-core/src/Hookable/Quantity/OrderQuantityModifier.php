@@ -24,29 +24,32 @@ class OrderQuantityModifier implements Hookable
     /**
      * Hook to modify order item quantity.
      *
-     * @param string $quanity
+     * @param string $quantity
      * @param \WC_Order_Item_Product $order_item_product
      * @return string
      */
-    public function get_quantity($quanity, $order_item_product)
+    public function get_quantity($quantity, $order_item_product)
     {
         $product = $order_item_product->get_product();
         if (!$product instanceof WC_Product) {
-            return $quanity;
+            return $quantity;
         }
         $settings = $this->settings_container->get($product);
         if (!$settings->is_calculator_enabled()) {
-            return $quanity;
+            return $quantity;
         }
         if (!$settings->is_pricing_inventory_enabled()) {
-            return $quanity;
+            return $quantity;
         }
         if (!isset($order_item_product->get_meta('_fq_measurement_data')['_measurement_needed'])) {
-            return $quanity;
+            return $quantity;
+        }
+        if (!isset($order_item_product->get_meta('_fq_measurement_data')['_quantity'])) {
+            return $quantity;
         }
         $measurement_needed = (float) $order_item_product->get_meta('_fq_measurement_data')['_measurement_needed'];
-        $quanity = (int) $quanity;
-        return (string) ($quanity * $measurement_needed);
+        $_quantity = (int) $order_item_product->get_meta('_fq_measurement_data')['_quantity'];
+        return (string) ($_quantity * $measurement_needed);
     }
     /**
      * Adjust the quantity step based on the product settings.

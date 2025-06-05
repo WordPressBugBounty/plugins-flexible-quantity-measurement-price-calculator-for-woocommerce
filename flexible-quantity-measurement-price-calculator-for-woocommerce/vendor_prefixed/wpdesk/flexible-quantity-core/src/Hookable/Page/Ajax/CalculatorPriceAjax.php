@@ -12,6 +12,8 @@ use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Calculator\Measu
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Validator\IncrementValidator;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Validator\InRangeValidator;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\Validator\PositiveNumberValidator;
+use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Settings;
+use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\WooCommerce\Measurement;
 class CalculatorPriceAjax implements Hookable
 {
     /**
@@ -66,7 +68,25 @@ class CalculatorPriceAjax implements Hookable
         $this->price_modifier->unhooks();
         $price_html = \wc_price(\wc_get_price_to_display($product));
         $this->price_modifier->hooks();
-        $response = ['price_html' => \wp_kses_post($price_html), 'price' => $price, 'measurement_needed' => $measurement->get_value($settings->get_pricing_unit()), 'measurement_needed_unit' => $settings->get_pricing_unit()];
+        $response = ['price_html' => \wp_kses_post($price_html), 'price' => $price, 'measurement_needed' => $measurement->get_value($settings->get_pricing_unit()), 'measurement_needed_unit' => $settings->get_pricing_unit(), 'max_wc_quantity' => $this->get_max_wc_quantity($product, $measurement, $settings)];
         \wp_send_json_success($response);
+    }
+    /**
+     * Returns the maximum woocommerce quantity of items that can be purchased.
+     */
+    private function get_max_wc_quantity(\WC_Product $product, Measurement $measurement, Settings $settings): ?int
+    {
+        if (!$product->managing_stock() || $product->backorders_allowed()) {
+            return null;
+        }
+        $stock_quantity = $product->get_stock_quantity();
+        if (!$settings->is_pricing_inventory_enabled()) {
+            return $stock_quantity;
+        }
+        if ($stock_quantity === null) {
+            return null;
+        }
+        $measurement_needed = $measurement->get_value($settings->get_pricing_unit());
+        return (int) floor($stock_quantity / $measurement_needed);
     }
 }

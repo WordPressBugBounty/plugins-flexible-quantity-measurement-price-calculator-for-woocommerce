@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -49,6 +49,8 @@ Let's see more examples of how you can use the plugin!
 * **Limit quantity per WooCommerce product**,
 * Set the WooCommerce product **quantity increment value**,
 * **Calculate inventory based on the new unit of measure**, sell WooCommerce products individually, and more 😊.
+* Compatibility with custom fields with [Flexible Product Fields (WooCommerce Product Addons) – WooCommerce Product Page Editor
+](https://wordpress.org/plugins/flexible-product-fields/).
 
 **Visit** [Flexible Quantity Docs](https://www.wpdesk.net/docs/flexible-quantity-calculator-for-woocommerce-docs/) to see all features of the plugin & how to set up the measurement calculator for your WooCommerce products.
 
@@ -149,6 +151,10 @@ You can install the plugin like any other WordPress plugin.
 3. Activate the plugin through the Plugins menu in the WordPress Administration.
 
 You can also use WordPress uploader to upload the plugin zip file in WordPress menu Plugins -> Add New -> Upload Plugin. You can find and install the plugin through your Plugins menu with a search bar too.
+
+== Data use policy ==
+
+Learn about [Use of Data Policy by WP Desk Plugins](https://wpdesk.net/terms-conditions/privacy-policy-use-of-data-collected-by-wp-desk-plugins/?utm_source=wporg&utm_medium=link&utm_campaign=data-use-policy)
 
 == Frequently Asked Questions ==
 
@@ -330,6 +336,10 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.5 - 2025-06-05 =
+* Fixed shipping price calculation issue when using Flexible Shipping plugin (weight based conditional logic)
+* Fixed woocommerce product page quantity input max attribute allowed more than stock quantity
 
 = 2.3.4 - 2025-06-03 =
 * Added support for WooCommerce 9.9

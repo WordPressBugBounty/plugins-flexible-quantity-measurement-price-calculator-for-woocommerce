@@ -25,29 +25,34 @@ class WeightModifier implements Hookable
     }
     public function hooks()
     {
-        \add_filter('woocommerce_get_cart_item_from_session', [$this, 'get_cart_item_from_session'], 20, 2);
+        \add_filter('woocommerce_get_cart_item_from_session', [$this, 'adjust_cart_item_data_weight'], 20, 1);
+        \add_filter('woocommerce_add_cart_item', [$this, 'adjust_cart_item_data_weight']);
     }
     /**
      * Sets product weight for cart item.
      *
-     * @param array $session_item_data
-     * @param array $values
+     * @param array<string, mixed> $item_data
+     *
+     * @return array<string, mixed>
      */
-    public function get_cart_item_from_session($session_item_data, $values)
+    public function adjust_cart_item_data_weight($item_data)
     {
-        if (!$session_item_data['data'] instanceof \WC_Product) {
-            return $session_item_data;
+        if (!isset($item_data['data'])) {
+            return $item_data;
+        }
+        if (!$item_data['data'] instanceof \WC_Product) {
+            return $item_data;
         }
         // this is set when product is added with calculator.
-        if (!isset($values['pricing_item_meta_data']['_measurement_needed'])) {
-            return $session_item_data;
+        if (!isset($item_data['pricing_item_meta_data']['_measurement_needed'])) {
+            return $item_data;
         }
-        $product = $session_item_data['data'];
+        $product = $item_data['data'];
         $settings = $this->settings_container->get($product);
-        $measurement = new Measurement($settings->get_pricing_unit(), (float) $values['pricing_item_meta_data']['_measurement_needed']);
+        $measurement = new Measurement($settings->get_pricing_unit(), (float) $item_data['pricing_item_meta_data']['_measurement_needed']);
         $calculated_weight = $this->get_weight_calculator($product)->calculate($measurement);
-        $session_item_data['data']->set_weight($calculated_weight);
-        return $session_item_data;
+        $item_data['data']->set_weight($calculated_weight);
+        return $item_data;
     }
     private function get_weight_calculator(\WC_Product $product): WeightCalculator
     {

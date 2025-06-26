@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.3.5
+Stable tag: 2.3.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -336,6 +336,9 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.6 - 2025-06-24
+* Fixed price display suffix is displayed twice on product page
 
 = 2.3.5 - 2025-06-05 =
 * Fixed shipping price calculation issue when using Flexible Shipping plugin (weight based conditional logic)

@@ -52,7 +52,7 @@
 		"10up/wp_mock": "*",
 		"phpunit/phpunit": "^9",
 		"wpdesk/wp-wpdesk-composer": "^3.0",
-		"wpdesk/wp-codeception": "2.12.1",
+		"wpdesk/wp-codeception": "^2.13.0",
 		"wpdesk/wp-plugin-flow-free": "*",
 		"wpdesk/wp-logs": "^1",
 		"monolog/monolog": "*",

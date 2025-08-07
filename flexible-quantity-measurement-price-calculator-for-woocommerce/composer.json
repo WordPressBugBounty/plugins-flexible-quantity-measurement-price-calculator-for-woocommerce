@@ -1,5 +1,5 @@
 {
-	"name": "wpdesk/flexible-quantity-measurement-price-calculator-for-woocommerce-measurement-price-calculator-for-woocommerce",
+	"name": "wpdesk/flexible-quantity-measurement-price-calculator-for-woocommerce",
 	"description": "Flexible Quantity Free",
 	"authors": [
 		{
@@ -83,5 +83,7 @@
 			"type": "composer",
 			"url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
 		}
-	}
+	},
+	"version": "2.3.8",
+	"type": "wordpress-plugin"
 }

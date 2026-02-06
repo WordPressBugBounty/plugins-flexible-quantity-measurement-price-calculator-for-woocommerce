@@ -40,6 +40,8 @@ class TemplatePageSaver implements Hookable
         foreach ($selections as $selection_id) {
             $container->add($meta_key, $selection_id);
         }
+        // This is needed to correctly display the product prices after template price setting changes
+        $this->clear_affected_product_transients($selection_category, $selections);
     }
     private function get_selection_meta_key_by_category(string $selection_category): string
     {
@@ -52,6 +54,41 @@ class TemplatePageSaver implements Hookable
                 return 'tag_id';
             default:
                 return '';
+        }
+    }
+    /**
+     * Clear WooCommerce product transients for all products affected by template changes
+     *
+     * @param string $selection_category Type of selection (products, product_categories, product_tags)
+     * @param array<int> $selections Array of selection IDs
+     */
+    private function clear_affected_product_transients(string $selection_category, array $selections): void
+    {
+        if (empty($selections)) {
+            return;
+        }
+        $product_ids = [];
+        switch ($selection_category) {
+            case 'products':
+                $product_ids = $selections;
+                break;
+            case 'product_categories':
+                $args = ['post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'tax_query' => [['taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $selections, 'operator' => 'IN']]];
+                $query = new \WP_Query($args);
+                $product_ids = array_map('intval', $query->posts);
+                break;
+            case 'product_tags':
+                $args = ['post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'tax_query' => [['taxonomy' => 'product_tag', 'field' => 'term_id', 'terms' => $selections, 'operator' => 'IN']]];
+                $query = new \WP_Query($args);
+                $product_ids = array_map('intval', $query->posts);
+                break;
+        }
+        // Remove duplicates and clear transients for each product
+        $product_ids = array_unique($product_ids);
+        foreach ($product_ids as $product_id) {
+            if (function_exists('wc_delete_product_transients')) {
+                wc_delete_product_transients($product_id);
+            }
         }
     }
 }

@@ -64,7 +64,7 @@ class Inventory implements Hookable
      * @return int|float the calculated measurement quantity
      * @since 3.0.0
      */
-    public function get_measurement_stock_amount($quantity, string $cart_item_key = null)
+    public function get_measurement_stock_amount($quantity, ?string $cart_item_key = null)
     {
         if ($cart_item_key) {
             // This is called when updating the cart/transitioning to checkout,
@@ -374,10 +374,13 @@ class Inventory implements Hookable
                 $backordered_text = __('Backordered quantity or measure', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
             }
         } elseif ($item instanceof WC_Order_Item_Product) {
-            $settings = $this->settings_container->get($item->get_product());
-            if ($settings->is_pricing_inventory_enabled()) {
-                // in WC 3.2+ we have context to output the pricing unit for the current backordered item
-                $backordered_text .= sprintf(' (%s)', $settings->get_pricing_unit());
+            $product = $item->get_product();
+            if ($product instanceof WC_Product) {
+                $settings = $this->settings_container->get($product);
+                if ($settings->is_pricing_inventory_enabled()) {
+                    // in WC 3.2+ we have context to output the pricing unit for the current backordered item
+                    $backordered_text .= sprintf(' (%s)', $settings->get_pricing_unit());
+                }
             }
         }
         return $backordered_text;

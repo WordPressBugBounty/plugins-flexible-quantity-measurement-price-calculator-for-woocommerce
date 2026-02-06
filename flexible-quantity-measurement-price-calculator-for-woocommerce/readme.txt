@@ -1,12 +1,12 @@
 === Flexible Quantity - Measurement Price Calculator for WooCommerce ===
 
 Contributors: wpdesk,piotrpo,marcinkolanko,amisiewicz
-Donate link: https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/
+Donate link: https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-donate/
 Tags: unit of measure, quantity increment, measurement price, price calculator, product quantity
 Requires at least: 5.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.3.8
+Stable tag: 2.3.14
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -52,32 +52,32 @@ Let's see more examples of how you can use the plugin!
 * Compatibility with custom fields with [Flexible Product Fields (WooCommerce Product Addons) – WooCommerce Product Page Editor
 ](https://wordpress.org/plugins/flexible-product-fields/).
 
-**Visit** [Flexible Quantity Docs](https://www.wpdesk.net/docs/flexible-quantity-calculator-for-woocommerce-docs/) to see all features of the plugin & how to set up the measurement calculator for your WooCommerce products.
+**Visit** [Flexible Quantity Docs](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs) to see all features of the plugin & how to set up the measurement calculator for your WooCommerce products.
 
 [youtube https://www.youtube.com/watch?v=BaZwGN4CuSE]
 
 ### Measurement Price Calculator for WooCommerce Docs ⚙️
 
-[**View Flexible Quantity for WooCommerce Documentation**](https://www.wpdesk.net/docs/flexible-quantity-calculator-for-woocommerce-docs/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+[**View Flexible Quantity for WooCommerce Documentation**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs)
 
 **See the ideas and scenarios of using the plugin** 💡:
 
-* [How about a WooCommerce Price Calculator free plugin ♾️?](https://wpdesk.net/blog/woocommerce-price-calculator-free-plugin/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to change the weight unit in WooCommerce (no Code required) ⚖️!](https://wpdesk.net/blog/change-weight-unit-in-woocommerce-no-code/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [Use Measurement Price Calculator for WooCommerce (free plugin) 📏](https://wpdesk.net/blog/measurement-price-calculator-for-woocommerce-free-plugin/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [Unit of measure in WooCommerce - all that you need to know 🌡️!](https://wpdesk.net/blog/units-of-measure-in-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to limit quantity per product with minimum and maximum values; and set increment quantity in WooCommerce ✋?](https://wpdesk.net/blog/limit-quantity-per-product-minimum-quantity-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to create a WooCommerce PDF invoice with new units of measure (with free plugins) 🧾?](https://flexibleinvoices.com/blog/create-woocommerce-pdf-invoice-unit-of-measure-free-plugins/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to add product dimensions in WooCommerce 🧊?](https://wpdesk.net/blog/how-to-add-product-dimensions-in-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [Advanced product quantities, decimals, and new units in WooCommerce 📶](https://wpdesk.net/blog/advanced-product-quantities-decimal-and-units-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+* [How about a WooCommerce Price Calculator free plugin ♾️?](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-pc-free)
+* [How to change the weight unit in WooCommerce (no Code required) ⚖️!](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-chang-unit)
+* [Use Measurement Price Calculator for WooCommerce (free plugin) 📏](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-mpc-free)
+* [Unit of measure in WooCommerce - all that you need to know 🌡️!](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-units-of-measure)
+* [How to limit quantity per product with minimum and maximum values; and set increment quantity in WooCommerce ✋?](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-quantity-per-product)
+* [How to create a WooCommerce PDF invoice with new units of measure (with free plugins) 🧾?](https://flexibleinvoices.com/sk/flexible-quantity-measurement-rm-blog-pdf-invoice-unit)
+* [How to add product dimensions in WooCommerce 🧊?](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-add-product-dimensions)
+* [Advanced product quantities, decimals, and new units in WooCommerce 📶](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-blog-product-quantities)
 
 ### Support Policy
 
-We provide support for the free version in the [plugin Support Forum](https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce/). You may purchase the PRO to receive priority e-mail support as well as all PRO features. [Upgrade Now &rarr;](https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+We provide support for the free version in the [plugin Support Forum](https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce/). You may purchase the PRO to receive priority e-mail support as well as all PRO features. [Upgrade Now &rarr;](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro)
 
 ### Measurement Price Calculator for WooCommerce - PRO Features ⭐
 
-Do you need a more complex solution like setting unit dimensions, a pricing table for ranges, and shipping costs based on the product quantity? You may achieve it and better manage the cost based on measurement price calculation with [Flexible Quantity Calculator for WooCommerce PRO](https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity).
+Do you need a more complex solution like setting unit dimensions, a pricing table for ranges, and shipping costs based on the product quantity? You may achieve it and better manage the cost based on measurement price calculation with [Flexible Quantity Calculator for WooCommerce PRO](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro).
 
 ### Measurement Price Calculator for WooCommerce PRO
 
@@ -102,7 +102,7 @@ Do you need a more complex solution like setting unit dimensions, a pricing tabl
 
 As you can see, the Measurement Price Calculator for WooCommerce PRO gives you **custom units of measure, unit dimensions, and advanced product price calculations** 🚀!
 
-[**Upgrade to PRO Now &rarr;**](https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+[**Upgrade to PRO Now &rarr;**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro)
 
 #### Ideas for Measurement Price Calculator for WooCommerce PRO 💡
 
@@ -116,7 +116,7 @@ The PRO version of the plugin lets you offer WooCommerce products with new units
 * Calculate the **WooCommerce product price based on the dimensions** of the unit of measure like area or volume 💰
 * **Enable dynamic pricing** per WooCommerce product based on the quantity and shipping class 📦
 
-[**Upgrade to PRO Now &rarr;**](https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+[**Upgrade to PRO Now &rarr;**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro)
 
 #### Live Demo
 
@@ -154,7 +154,7 @@ You can also use WordPress uploader to upload the plugin zip file in WordPress m
 
 == Data use policy ==
 
-Learn about [Use of Data Policy by WP Desk Plugins](https://wpdesk.net/terms-conditions/privacy-policy-use-of-data-collected-by-wp-desk-plugins/?utm_source=wporg&utm_medium=link&utm_campaign=data-use-policy)
+Learn about [Use of Data Policy by WP Desk Plugins](https://wpdesk.net/sk/flexible-quantity-measurement-rm-data-policy)
 
 == Frequently Asked Questions ==
 
@@ -177,7 +177,7 @@ In the free version of the plugin, you can use the following product units of me
 
 = Can I add custom units of measure? =
 
-Yes. It's possible in the PRO version of the plugin. You may add multiple custom units that will then be ready to use for WooCommerce products! Read more about [**Advanced product quantities, decimals, and new units in WooCommerce**](https://wpdesk.net/blog/advanced-product-quantities-decimal-and-units-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)!
+Yes. It's possible in the PRO version of the plugin. You may add multiple custom units that will then be ready to use for WooCommerce products! Read more about [**Advanced product quantities, decimals, and new units in WooCommerce**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-pro-docs)!
 
 = How to limit the WooCommerce product quantity? =
 
@@ -187,11 +187,11 @@ So you may use the plugin to **limit quantity per WooCommerce product setting th
 
 = May I limit the quantity per product and set increment for a standard unit of measure? =
 
-Yes, it's possible. After enabling the Flexible Quantity settings for a WooCommerce product, you may stay with the default unit of measure (item). Read more on [How to limit quantity per product with minimum and maximum values; and set increment quantity in WooCommerce](https://wpdesk.net/blog/limit-quantity-per-product-minimum-quantity-woocommerce/)!
+Yes, it's possible. After enabling the Flexible Quantity settings for a WooCommerce product, you may stay with the default unit of measure (item). Read more on [How to limit quantity per product with minimum and maximum values; and set increment quantity in WooCommerce](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-limit-quantity)!
 
 = Is it possible to use decimal values? =
 
-Yes. You may use decimal quantity settings for WooCommerce products with new units of measure or a standard one (item). Decimals will work for the increment value and minimum and maximum quantity settings. Read more about [Advanced product quantities, decimals, and new units in WooCommerce](https://wpdesk.net/blog/advanced-product-quantities-decimal-and-units-woocommerce/)!
+Yes. You may use decimal quantity settings for WooCommerce products with new units of measure or a standard one (item). Decimals will work for the increment value and minimum and maximum quantity settings. Read more about [Advanced product quantities, decimals, and new units in WooCommerce](https://wpdesk.net/blog/flexible-quantity-measurement-rm-product-quantities-decimal/)!
 
 = Can I allow users to decide about the unit dimensions? =
 
@@ -199,7 +199,7 @@ Yes. You can enable the advanced settings for the unit dimensions in the PRO ver
 
 The plugin will let you add flexible and independent unit dimensions for WooCommerce products. The customer will see the instant cost calculation directly on the product page. That will enhance your WooCommerce with a flexible Measurement Price Calculator based on customer input.
 
-[**Read how to add product dimensions in WooCommerce**](https://wpdesk.net/blog/how-to-add-product-dimensions-in-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)!
+[**Read how to add product dimensions in WooCommerce**](https://wpdesk.net/sk/flexible-quantity-measurement-rm-product-dim)!
 
 = When to use the plugin? =
 
@@ -231,28 +231,28 @@ Flexibility, that's for sure! By default, WooCommerce lets you use simple quanti
 
 = Is it possible to show new units of measure on the WooCommerce invoices? =
 
-Yes. You can show new units of measure like weight, dimension, area, density, and volume on invoices with the [Flexible PDF Invoices for WooCommerce & WordPress plugin](https://wordpress.org/plugins/flexible-invoices/). The Flexible Invoices are compatible with Flexible Quantity, so the new units will appear on your WooCommerce PDF invoices automatically. Read more about [setting and adding new units of measure on such PDF invoices](https://flexibleinvoices.com/blog/create-woocommerce-pdf-invoice-unit-of-measure-free-plugins/).
+Yes. You can show new units of measure like weight, dimension, area, density, and volume on invoices with the [Flexible PDF Invoices for WooCommerce & WordPress plugin](https://wordpress.org/plugins/flexible-invoices/). The Flexible Invoices are compatible with Flexible Quantity, so the new units will appear on your WooCommerce PDF invoices automatically. Read more about [setting and adding new units of measure on such PDF invoices](https://flexibleinvoices.com/sk/ flexible-quantity-measurement-rm-fi/).
 
 = Where to read more about the Flexible Quantity Measurement Calculator for WooCommerce plugin? =
 
-[**View Flexible Quantity for WooCommerce Documentation**](https://www.wpdesk.net/docs/flexible-quantity-calculator-for-woocommerce-docs/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+[**View Flexible Quantity for WooCommerce Documentation**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs)
 
 **See the ideas and scenarios of using the plugin** 💡:
 
-* [How about a WooCommerce Price Calculator free plugin ♾️?](https://wpdesk.net/blog/woocommerce-price-calculator-free-plugin/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to change the weight unit in WooCommerce (no Code required) ⚖️!](https://wpdesk.net/blog/change-weight-unit-in-woocommerce-no-code/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [Use Measurement Price Calculator for WooCommerce (free plugin) 📏](https://wpdesk.net/blog/measurement-price-calculator-for-woocommerce-free-plugin/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [Unit of measure in WooCommerce - all that you need to know 🌡️!](https://wpdesk.net/blog/units-of-measure-in-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to limit quantity per product with minimum and maximum values; and set increment quantity in WooCommerce ✋?](https://wpdesk.net/blog/limit-quantity-per-product-minimum-quantity-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to create a WooCommerce PDF invoice with new units of measure (with free plugins) 🧾?](https://flexibleinvoices.com/blog/create-woocommerce-pdf-invoice-unit-of-measure-free-plugins/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [How to add product dimensions in WooCommerce 🧊?](https://wpdesk.net/blog/how-to-add-product-dimensions-in-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
-* [Advanced product quantities, decimals, and new units in WooCommerce 📶](https://wpdesk.net/blog/advanced-product-quantities-decimal-and-units-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+* [How about a WooCommerce Price Calculator free plugin ♾️?](https://wpdesk.net/sk/flexible-quantity-measurement-rm-price-calculator-free)
+* [How to change the weight unit in WooCommerce (no Code required) ⚖️!](https://wpdesk.net/sk/flexible-quantity-measurement-rm-change-weight-unit)
+* [Use Measurement Price Calculator for WooCommerce (free plugin) 📏](https://wpdesk.net/sk/flexible-quantity-measurement-rm-measurement-price-calculator)
+* [Unit of measure in WooCommerce - all that you need to know 🌡️!](https://wpdesk.net/sk/flexible-quantity-measurement-rm-units-of-measure)
+* [How to limit quantity per product with minimum and maximum values; and set increment quantity in WooCommerce ✋?](https://wpdesk.net/sk/flexible-quantity-measurement-rm-quantity-per-product)
+* [How to create a WooCommerce PDF invoice with new units of measure (with free plugins) 🧾?](https://flexibleinvoices.com/sk/flexible-quantity-measurement-rm-create-woocommerce-pdf)
+* [How to add product dimensions in WooCommerce 🧊?](https://wpdesk.net/sk/flexible-quantity-measurement-rm-how-to-add-product)
+* [Advanced product quantities, decimals, and new units in WooCommerce 📶](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-pro-docs)
 
 = Do you offer support? =
 
 Yes.
 
-We provide support for the free version in the [plugin Support Forum](https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce/). You may purchase the PRO to receive priority e-mail support as well as all PRO features. [Upgrade Now &rarr;](https://www.wpdesk.net/products/flexible-quantity-calculator-for-woocommerce/?utm_source=wordpress-org&utm_medium=link&utm_campaign=flexible-quantity)
+We provide support for the free version in the [plugin Support Forum](https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce/). You may purchase the PRO to receive priority e-mail support as well as all PRO features. [Upgrade Now &rarr;](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro)
 
 If you have any questions or feature requests let us know too 😊!
 
@@ -260,7 +260,7 @@ If you have any questions or feature requests let us know too 😊!
 
 Yes. You may translate it and also add your [translation for other users of the plugin](https://translate.wordpress.org/projects/wp-plugins/flexible-quantity-measurement-price-calculator-for-woocommerce).
 
-The plugin is translation ready. Read more about [translating WordPress plugins](https://www.wpdesk.net/blog/how-to-translate-a-wordpress-plugin/).
+The plugin is translation ready. Read more about [translating WordPress plugins](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-trans/).
 
 = Do you have more free plugins for WooCommerce? =
 
@@ -277,6 +277,10 @@ You can also get them from the list below.
 * [**Flexible Wishlist**](https://wordpress.org/plugins/flexible-wishlist/) - let customers create product wishlists in WooCommerce, share favorite products, or save their carts!
 * [**Flexible Refund**](https://wordpress.org/plugins/flexible-refund-and-return-order-for-woocommerce/) - process refund requests in WooCommerce much faster!
 * [**ShopMagic**](https://wordpress.org/plugins/shopmagic-for-woocommerce/) - get a free email marketing plugin for WordPress and WooCommerce (with 5 free add-ons)!
+
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the Flexible Quantity - Measurement Price Calculator for WooCommerce plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/3c1a216c-2154-4879-b70c-75264335d5fd). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Roadmap ==
 
@@ -336,6 +340,26 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.14 - 2026-01-20 =
+* Added support for WooCommerce 10.5
+* Fixed php 8.4 deprecation warnings
+
+= 2.3.13 - 2025-12-03 =
+* Added support for WordPress 6.9
+* Added support for WooCommerce 10.4
+
+= 2.3.12 - 2025-10-21 =
+* Changed plugin links
+
+= 2.3.11 - 2025-10-13 =
+* Added Patchstack Vulnerability Disclosure Program
+
+= 2.3.10 - 2025-10-07 =
+* Added support for WooCommerce 10.3
+
+= 2.3.9 - 2025-09-07 =
+* Added support for WooCommerce 10.2
 
 = 2.3.8 - 2025-08-07 =
 * Added support for WooCommerce 10.1

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'wpdesk/flexible-quantity-measurement-price-calculator-for-woocommerce-measurement-price-calculator-for-woocommerce',
-        'pretty_version' => '2.3.8',
-        'version' => '2.3.8.0',
-        'reference' => '8e4262be5cd780e47db92a65273ed0a45960374f',
+        'pretty_version' => '2.3.14',
+        'version' => '2.3.14.0',
+        'reference' => '01bbc5d2f53de56bd67bf7eedaa53170ab3eccd6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'wpdesk/flexible-quantity-measurement-price-calculator-for-woocommerce-measurement-price-calculator-for-woocommerce' => array(
-            'pretty_version' => '2.3.8',
-            'version' => '2.3.8.0',
-            'reference' => '8e4262be5cd780e47db92a65273ed0a45960374f',
+            'pretty_version' => '2.3.14',
+            'version' => '2.3.14.0',
+            'reference' => '01bbc5d2f53de56bd67bf7eedaa53170ab3eccd6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

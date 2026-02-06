@@ -4,14 +4,14 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7
+class ComposerStaticInit41657d054d1d3454c38a99898960270d
 {
     public static $prefixLengthsPsr4 = array (
-        'W' => 
+        'W' =>
         array (
             'WPDesk\\FlexibleQuantityFree\\' => 28,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
@@ -19,15 +19,15 @@ class ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7
     );
 
     public static $prefixDirsPsr4 = array (
-        'WPDesk\\FlexibleQuantityFree\\' => 
+        'WPDesk\\FlexibleQuantityFree\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
@@ -79,47 +79,6 @@ class ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7
         'WDFQVendorFree\\Doctrine\\Common\\Collections\\Selectable' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/collections/lib/Doctrine/Common/Collections/Selectable.php',
         'WDFQVendorFree\\Doctrine\\Deprecations\\Deprecation' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/deprecations/src/Deprecation.php',
         'WDFQVendorFree\\Doctrine\\Deprecations\\PHPUnit\\VerifyDeprecations' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/deprecations/src/PHPUnit/VerifyDeprecations.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\CachedWordInflector' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/CachedWordInflector.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\GenericLanguageInflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/GenericLanguageInflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Inflector' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Inflector.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Language' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Language.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\LanguageInflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/LanguageInflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\NoopWordInflector' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/NoopWordInflector.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\English\\Inflectible' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/English/Inflectible.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\English\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/English/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\English\\Rules' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/English/Rules.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\English\\Uninflected' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/English/Uninflected.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\French\\Inflectible' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/French/Inflectible.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\French\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/French/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\French\\Rules' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/French/Rules.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\French\\Uninflected' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/French/Uninflected.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\NorwegianBokmal\\Inflectible' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/NorwegianBokmal/Inflectible.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\NorwegianBokmal\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/NorwegianBokmal/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\NorwegianBokmal\\Rules' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/NorwegianBokmal/Rules.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\NorwegianBokmal\\Uninflected' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/NorwegianBokmal/Uninflected.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Pattern' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Pattern.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Patterns' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Patterns.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Portuguese\\Inflectible' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Portuguese/Inflectible.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Portuguese\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Portuguese/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Portuguese\\Rules' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Portuguese/Rules.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Portuguese\\Uninflected' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Portuguese/Uninflected.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Ruleset' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Ruleset.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Spanish\\Inflectible' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Spanish/Inflectible.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Spanish\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Spanish/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Spanish\\Rules' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Spanish/Rules.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Spanish\\Uninflected' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Spanish/Uninflected.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Substitution' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Substitution.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Substitutions' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Substitutions.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Transformation' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Transformation.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Transformations' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Transformations.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Turkish\\Inflectible' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Turkish/Inflectible.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Turkish\\InflectorFactory' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Turkish/InflectorFactory.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Turkish\\Rules' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Turkish/Rules.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Turkish\\Uninflected' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Turkish/Uninflected.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\Rules\\Word' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/Rules/Word.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\RulesetInflector' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/RulesetInflector.php',
-        'WDFQVendorFree\\Doctrine\\Inflector\\WordInflector' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/inflector/lib/Doctrine/Inflector/WordInflector.php',
         'WDFQVendorFree\\Doctrine\\Instantiator\\Exception\\ExceptionInterface' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/instantiator/src/Doctrine/Instantiator/Exception/ExceptionInterface.php',
         'WDFQVendorFree\\Doctrine\\Instantiator\\Exception\\InvalidArgumentException' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/instantiator/src/Doctrine/Instantiator/Exception/InvalidArgumentException.php',
         'WDFQVendorFree\\Doctrine\\Instantiator\\Exception\\UnexpectedValueException' => __DIR__ . '/../..' . '/vendor_prefixed/doctrine/instantiator/src/Doctrine/Instantiator/Exception/UnexpectedValueException.php',
@@ -240,7 +199,6 @@ class ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7
         'WDFQVendorFree\\Monolog\\SignalHandler' => __DIR__ . '/../..' . '/vendor_prefixed/monolog/monolog/src/Monolog/SignalHandler.php',
         'WDFQVendorFree\\Monolog\\Test\\TestCase' => __DIR__ . '/../..' . '/vendor_prefixed/monolog/monolog/src/Monolog/Test/TestCase.php',
         'WDFQVendorFree\\Monolog\\Utils' => __DIR__ . '/../..' . '/vendor_prefixed/monolog/monolog/src/Monolog/Utils.php',
-        'WDFQVendorFree\\Psr\\Clock\\ClockInterface' => __DIR__ . '/../..' . '/vendor_prefixed/psr/clock/src/ClockInterface.php',
         'WDFQVendorFree\\Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/../..' . '/vendor_prefixed/psr/container/src/ContainerExceptionInterface.php',
         'WDFQVendorFree\\Psr\\Container\\ContainerInterface' => __DIR__ . '/../..' . '/vendor_prefixed/psr/container/src/ContainerInterface.php',
         'WDFQVendorFree\\Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/../..' . '/vendor_prefixed/psr/container/src/NotFoundExceptionInterface.php',
@@ -275,9 +233,6 @@ class ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7
         'WDFQVendorFree\\Psr\\Log\\Test\\DummyTest' => __DIR__ . '/../..' . '/vendor_prefixed/psr/log/Psr/Log/Test/DummyTest.php',
         'WDFQVendorFree\\Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/../..' . '/vendor_prefixed/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'WDFQVendorFree\\Psr\\Log\\Test\\TestLogger' => __DIR__ . '/../..' . '/vendor_prefixed/psr/log/Psr/Log/Test/TestLogger.php',
-        'WDFQVendorFree\\Psr\\SimpleCache\\CacheException' => __DIR__ . '/../..' . '/vendor_prefixed/psr/simple-cache/src/CacheException.php',
-        'WDFQVendorFree\\Psr\\SimpleCache\\CacheInterface' => __DIR__ . '/../..' . '/vendor_prefixed/psr/simple-cache/src/CacheInterface.php',
-        'WDFQVendorFree\\Psr\\SimpleCache\\InvalidArgumentException' => __DIR__ . '/../..' . '/vendor_prefixed/psr/simple-cache/src/InvalidArgumentException.php',
         'WDFQVendorFree\\WPDesk\\Dashboard\\DashboardWidget' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/ltv-dashboard-widget/src/DashboardWidget.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Collections\\SettingsBag' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Collection/SettingsBag.php',
         'WDFQVendorFree\\WPDesk\\Library\\FlexibleQuantityCore\\Hookable\\Page\\Ajax\\CalculatorFormAjax' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Page/Ajax/CalculatorFormAjax.php',
@@ -491,9 +446,9 @@ class ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit996e4143c6545cd3f150f3c08ab5e0f7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit41657d054d1d3454c38a99898960270d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit41657d054d1d3454c38a99898960270d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit41657d054d1d3454c38a99898960270d::$classMap;
 
         }, null, ClassLoader::class);
     }

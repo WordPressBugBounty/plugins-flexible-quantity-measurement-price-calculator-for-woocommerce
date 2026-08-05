@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit41657d054d1d3454c38a99898960270d
+class ComposerStaticInit8ea3a5016cd6c9d26d012c6e2db07748
 {
     public static $prefixLengthsPsr4 = array (
         'W' =>
@@ -309,6 +309,12 @@ class ComposerStaticInit41657d054d1d3454c38a99898960270d
         'WDFQVendorFree\\WPDesk\\Library\\Marketing\\Boxes\\Helpers\\Markers' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-wpdesk-marketing/src/Boxes/Helpers/Markers.php',
         'WDFQVendorFree\\WPDesk\\Library\\Marketing\\Boxes\\MarketingBoxes' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-wpdesk-marketing/src/Boxes/MarketingBoxes.php',
         'WDFQVendorFree\\WPDesk\\Library\\Marketing\\RatePlugin\\RateBox' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-wpdesk-marketing/src/RatePlugin/RateBox.php',
+        'WDFQVendorFree\\WPDesk\\Library\\PluginUpdateReminder\\NoticeReminder' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/NoticeReminder.php',
+        'WDFQVendorFree\\WPDesk\\Library\\PluginUpdateReminder\\PluginsListReminder' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/PluginsListReminder.php',
+        'WDFQVendorFree\\WPDesk\\Library\\PluginUpdateReminder\\Reminder' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/Reminder.php',
+        'WDFQVendorFree\\WPDesk\\Library\\PluginUpdateReminder\\ReminderData' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/ReminderData.php',
+        'WDFQVendorFree\\WPDesk\\Library\\PluginUpdateReminder\\RemindersFactory' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/RemindersFactory.php',
+        'WDFQVendorFree\\WPDesk\\Library\\PluginUpdateReminder\\SiteHealthReminder' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/SiteHealthReminder.php',
         'WDFQVendorFree\\WPDesk\\Logger\\BasicLoggerFactory' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-logs/src/BasicLoggerFactory.php',
         'WDFQVendorFree\\WPDesk\\Logger\\LoggerFacade' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-logs/src/LoggerFacade.php',
         'WDFQVendorFree\\WPDesk\\Logger\\LoggerFactory' => __DIR__ . '/../..' . '/vendor_prefixed/wpdesk/wp-logs/src/LoggerFactory.php',
@@ -447,9 +453,9 @@ class ComposerStaticInit41657d054d1d3454c38a99898960270d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit41657d054d1d3454c38a99898960270d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit41657d054d1d3454c38a99898960270d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit41657d054d1d3454c38a99898960270d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8ea3a5016cd6c9d26d012c6e2db07748::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8ea3a5016cd6c9d26d012c6e2db07748::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8ea3a5016cd6c9d26d012c6e2db07748::$classMap;
 
         }, null, ClassLoader::class);
     }

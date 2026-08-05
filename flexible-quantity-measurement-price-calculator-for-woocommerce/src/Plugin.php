@@ -21,6 +21,7 @@ use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\AbstractPlugin;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\HookableParent;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\HookableCollection;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\PluginConfig;
+use WDFQVendorFree\WPDesk\Library\PluginUpdateReminder\RemindersFactory;
 
 /**
  * Main plugin class. The most important flow decisions are made here.
@@ -143,6 +144,14 @@ class Plugin extends AbstractPlugin implements LoggerAwareInterface, HookableCol
 		foreach ( $this->plugin_config->get_hookable_elements() as $hookable ) {
 			$this->add_hookable( $hookable );
 		}
+
+		$this->add_hookable(
+			new RemindersFactory(
+				$this->plugin_info->get_plugin_dir(),
+				$this->plugin_info->get_plugin_file_name(),
+				$this->plugin_info->get_plugin_name()
+			)
+		);
 
 		$this->hooks_on_hookable_objects();
 		( new DashboardWidget() )->hooks();

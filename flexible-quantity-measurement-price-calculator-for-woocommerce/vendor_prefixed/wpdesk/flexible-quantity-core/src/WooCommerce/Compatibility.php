@@ -6,7 +6,6 @@ use WDFQVendorFree\WC_Catalog_Restrictions_Filters;
 use WC_Order_Item;
 use WC_Order_Item_Product;
 use WC_Product;
-use WC_Product_Variable;
 use WDFQVendorFree\WPDesk\Library\FlexibleQuantityCore\Services\SettingsContainer;
 use WDFQVendorFree\WPDesk\PluginBuilder\Plugin\Hookable;
 class Compatibility implements Hookable
@@ -186,7 +185,14 @@ class Compatibility implements Hookable
      */
     public function skip_automatic_stock_adjustment($reduced_stock, $order_product)
     {
-        $settings = $this->settings_container->get($order_product->get_product());
+        if (!$order_product instanceof WC_Order_Item_Product) {
+            return $reduced_stock;
+        }
+        $product = $order_product->get_product();
+        if (!$product instanceof WC_Product) {
+            return $reduced_stock;
+        }
+        $settings = $this->settings_container->get($product);
         if (did_action('woocommerce_before_save_order_items') && $settings->is_pricing_inventory_enabled()) {
             return \false;
         }
@@ -205,10 +211,17 @@ class Compatibility implements Hookable
      */
     public function prevent_auto_stock_adjustment($prevent_adjustment, $item)
     {
-        $settings = $this->settings_container->get($item->get_product());
-        if ($item instanceof WC_Order_Item_Product && $settings->is_pricing_inventory_enabled()) {
-            $prevent_adjustment = \true;
+        if (!$item instanceof WC_Order_Item_Product) {
+            return $prevent_adjustment;
         }
-        return $prevent_adjustment;
+        $product = $item->get_product();
+        if (!$product instanceof WC_Product) {
+            return $prevent_adjustment;
+        }
+        $settings = $this->settings_container->get($product);
+        if (!$settings->is_pricing_inventory_enabled()) {
+            return $prevent_adjustment;
+        }
+        return \true;
     }
 }

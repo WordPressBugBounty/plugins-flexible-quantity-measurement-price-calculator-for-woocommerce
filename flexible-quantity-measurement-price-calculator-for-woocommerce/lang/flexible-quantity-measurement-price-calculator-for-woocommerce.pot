@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Flexible Quantity - Measurement Price Calculator for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.3.19\n"
+"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.3.20\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-06T13:15:58+00:00\n"
+"POT-Creation-Date: 2026-08-05T14:03:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: flexible-quantity-measurement-price-calculator-for-woocommerce\n"
@@ -39,20 +39,20 @@ msgstr ""
 msgid "https://www.wpdesk.net/sk/flexible-quantity-measurement-price-calculator-for-woocommerce-author"
 msgstr ""
 
-#: src/Plugin.php:170
+#: src/Plugin.php:179
 msgid "Documentation"
 msgstr ""
 
-#: src/Plugin.php:171
+#: src/Plugin.php:180
 msgid "How to use"
 msgstr ""
 
-#: src/Plugin.php:172
+#: src/Plugin.php:181
 #: vendor_prefixed/wpdesk/wp-builder/src/Plugin/AbstractPlugin.php:181
 msgid "Support"
 msgstr ""
 
-#: src/Plugin.php:197
+#: src/Plugin.php:206
 msgid "Free version of plugin Flexible Quantity for WooCommerce was deactivated because Pro version is active."
 msgstr ""
 
@@ -1062,6 +1062,38 @@ msgstr ""
 #: vendor_prefixed/wpdesk/wp-logs/src/WP/WPCapture.php:36
 #, php-format
 msgid "Can not enable WP Desk Debug log! Cannot create file %s!"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/NoticeReminder.php:53
+#, php-format
+msgid "You're using an outdated version of the following plugin: %s This may cause serious compatibility issues with WooCommerce. Update it immediately to avoid potential disruptions."
+msgid_plural "You're using outdated versions of the following plugins: %s This may cause serious compatibility issues with WooCommerce. Update them immediately to avoid potential disruptions."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/NoticeReminder.php:60
+#, php-format
+msgid "You're using an older version of the following plugin: %s This version hasn't been tested with the latest WooCommerce versions. Please update it to the latest version to ensure smooth compatibility."
+msgid_plural "You're using older versions of the following plugins: %s These versions haven't been tested with the latest WooCommerce versions. Please update them to the latest version to ensure smooth compatibility."
+msgstr[0] ""
+msgstr[1] ""
+
+#: vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/ReminderData.php:71
+#, php-format
+msgid "You're using an outdated version of %1$s plugin, which may cause serious compatibility issues with WooCommerce. %2$sUpdate immediately%3$s to avoid potential disruptions."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/ReminderData.php:75
+#, php-format
+msgid "You're using an older version of %1$s plugin that hasn't been tested with the latest WooCommerce versions. Please %2$supdate to the latest version%3$s to ensure smooth compatibility."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/SiteHealthReminder.php:39
+msgid "You should update plugin"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/wp-plugin-update-reminder/src/SiteHealthReminder.php:39
+msgid "Compatibility"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/wp-wpdesk-tracker/src/class-wpdesk-tracker.php:164

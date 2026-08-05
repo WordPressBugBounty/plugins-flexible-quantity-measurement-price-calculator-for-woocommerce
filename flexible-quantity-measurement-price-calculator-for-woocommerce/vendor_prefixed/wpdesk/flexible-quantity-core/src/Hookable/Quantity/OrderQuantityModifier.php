@@ -60,6 +60,9 @@ class OrderQuantityModifier implements Hookable
      */
     public function admin_quantity_input_step($step, $product)
     {
+        if (!$product instanceof WC_Product) {
+            return $step;
+        }
         $settings = $this->settings_container->get($product);
         if (!$settings->is_calculator_enabled()) {
             return $step;

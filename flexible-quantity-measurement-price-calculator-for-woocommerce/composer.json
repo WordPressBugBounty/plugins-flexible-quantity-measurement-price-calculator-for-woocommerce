@@ -54,7 +54,7 @@
 		"phpunit/phpunit": "^9",
 		"wpdesk/flexible-quantity-core": "^2.3.9",
 		"wpdesk/ltv-dashboard-widget": "^1",
-		"wpdesk/wp-codeception": "^2.13.0",
+		"wpdesk/wp-codeception": "^3",
 		"wpdesk/wp-logs": "^1",
 		"wpdesk/wp-plugin-flow-free": "*",
 		"wpdesk/wp-plugin-update-reminder": "^1.0",
@@ -85,6 +85,6 @@
 			"url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
 		}
 	},
-	"version": "2.3.20",
+	"version": "2.3.21",
 	"type": "wordpress-plugin"
 }

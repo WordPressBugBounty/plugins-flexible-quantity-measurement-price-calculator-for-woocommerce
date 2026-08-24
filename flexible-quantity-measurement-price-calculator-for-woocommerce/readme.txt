@@ -4,9 +4,9 @@ Contributors: wpdesk,piotrpo,marcinkolanko,amisiewicz
 Donate link: https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-donate/
 Tags: unit of measure, quantity increment, measurement price, price calculator, product quantity
 Requires at least: 5.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.20
+Stable tag: 2.3.21
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -340,6 +340,10 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.21 - 2026-08-24 =
+* Added support for WordPress 7.1
+* Added support for WooCommerce 11.1
 
 = 2.3.20 - 2026-08-05 =
 * Added support for WooCommerce 11.0

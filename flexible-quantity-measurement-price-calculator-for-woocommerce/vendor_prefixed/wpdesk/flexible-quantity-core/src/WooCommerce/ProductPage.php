@@ -533,7 +533,7 @@ class ProductPage implements Hookable
         if (Product::calculator_enabled($product, $settings)) {
             $version = 1.0;
             wp_register_script('jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', ['jquery'], defined('WC_VERSION') ? \WC_VERSION : $version, \true);
-            wp_register_script('wc-price-calculator-bignumber', $this->plugin_url . '/assets/js/vendor/bignumber.min.js', null, '9.0.1', \true);
+            wp_register_script('wc-price-calculator-bignumber', $this->plugin_url . '/assets/js/vendor/bignumber.min.js', [], '9.0.1', \true);
             wp_enqueue_script('fq-input-filter', $this->plugin_url . '/assets/js/input-filter.js', ['jquery'], $version);
             wp_enqueue_script('jquery-validate', $this->plugin_url . '/assets/js/vendor/jquery.validate.min.js', ['jquery'], $version);
             wp_enqueue_script('wc-price-calculator', $this->plugin_url . '/assets/js/frontend/fq-price-calculator.min.js', ['jquery', 'jquery-cookie', 'jquery-validate', 'jquery-tiptip', 'wc-price-calculator-bignumber', 'fq-input-filter'], $version);

@@ -28,7 +28,8 @@
             "cweagans\/composer-patches": true,
             "kylekatarnls\/update-helper": true,
             "dealerdirect\/phpcodesniffer-composer-installer": true,
-            "phpstan\/extension-installer": true
+            "phpstan\/extension-installer": true,
+            "wpdesk\/wp-codeception": true
         },
         "gitlab-domains": [
             "gitlab.wpdesk.dev"
@@ -55,6 +56,7 @@
         "phpunit\/phpunit": "^9",
         "wp-cli\/wp-cli": "^2",
         "wp-cli\/wp-cli-bundle": "^2",
+        "wpdesk\/wp-codeception": "^3",
         "wpdesk\/phpstan-rules": "^1.1",
         "wpdesk\/wp-code-sniffer": "^1.2.3"
     },

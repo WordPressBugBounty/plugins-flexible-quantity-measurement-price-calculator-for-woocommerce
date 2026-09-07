@@ -73,10 +73,9 @@ class Inventory implements Hookable
             $product = $cart[$cart_item_key]['data'];
             $settings = $this->settings_container->get($product);
             $measurement_needed = $cart[$cart_item_key]['pricing_item_meta_data']['_measurement_needed'] ?? null;
-            $measurement_needed_unit = $cart[$cart_item_key]['pricing_item_meta_data']['_measurement_needed_unit'] ?? null;
             if ($settings->is_pricing_inventory_enabled()) {
                 // quantity * measurement needed in pricing units
-                $quantity *= Measurement::convert($measurement_needed, $measurement_needed_unit, $settings->get_pricing_unit());
+                $quantity *= $measurement_needed;
             }
         }
         return $quantity;
@@ -97,11 +96,7 @@ class Inventory implements Hookable
     {
         if ($cart_item['data'] instanceof WC_Product && Product::pricing_calculator_inventory_enabled($cart_item['data'])) {
             $settings = $this->settings_container->get($cart_item['data']);
-            $measurement_needed_unit = $settings->get_pricing_unit();
             $measurement_needed_value = null;
-            if (isset($_REQUEST['_measurement_needed_unit'])) {
-                $measurement_needed_unit = sanitize_text_field(wp_unslash($_REQUEST['_measurement_needed_unit']));
-            }
             if (isset($_REQUEST['_measurement_needed'])) {
                 $measurement_needed_value = sanitize_text_field(wp_unslash($_REQUEST['_measurement_needed']));
             }
@@ -109,7 +104,7 @@ class Inventory implements Hookable
                 $measurement_needed_value = $cart_item['pricing_item_meta_data']['_measurement_needed'];
             }
             // measurement instance
-            $measurement_needed = new Measurement($measurement_needed_unit, $measurement_needed_value);
+            $measurement_needed = new Measurement($settings->get_pricing_unit(), $measurement_needed_value);
             $quantity = isset($_REQUEST['quantity']) && \is_numeric($_REQUEST['quantity']) ? sanitize_text_field(wp_unslash($_REQUEST['quantity'])) : 1;
             $quantity = (float) $quantity;
             // quantity * measurement needed in pricing units
@@ -328,7 +323,8 @@ class Inventory implements Hookable
         if (isset($item['item_meta']['_fq_measurement_data'][0]) && $item['item_meta']['_fq_measurement_data'][0] && $settings->is_pricing_inventory_enabled()) {
             $measurement_data = maybe_unserialize($item['item_meta']['_fq_measurement_data'][0]);
             // get the measurement quantity (ie item quantity is '2' pieces of fabric at 3 ft each, so the measurement quantity is '6'
-            $quantity *= Measurement::convert($measurement_data['_measurement_needed'], $measurement_data['_measurement_needed_unit'], $settings->get_pricing_unit());
+            $measurement_needed = MeasurementMeta::get_total_measurement($measurement_data, $settings->get_pricing_unit());
+            $quantity *= $measurement_needed->get_value();
         }
         return $quantity;
     }
@@ -410,7 +406,7 @@ class Inventory implements Hookable
                 $settings = $this->settings_container->get($product);
                 if (isset($item['item_meta']['_fq_measurement_data'][0]) && $item['item_meta']['_fq_measurement_data'][0] && $settings->is_pricing_inventory_enabled()) {
                     $measurement_data = maybe_unserialize($item['item_meta']['_fq_measurement_data'][0]);
-                    $total_measurement = new Measurement($measurement_data['_measurement_needed_unit'], $measurement_data['_measurement_needed']);
+                    $total_measurement = MeasurementMeta::get_total_measurement($measurement_data, $settings->get_pricing_unit());
                     // save the item quantity for order_again_cart_item_data()
                     $item['item_meta']['_quantity'][0] = $item['qty'];
                     // save the unit quantity (ie item quantity is '2' pieces of fabric at 3 ft each, so the unit quantity is '6'
@@ -447,10 +443,10 @@ class Inventory implements Hookable
         $settings = $this->settings_container->get($product);
         if (isset($order_items[$item_id]['measurement_data']) && $settings->is_pricing_inventory_enabled()) {
             $measurement_data = maybe_unserialize($order_items[$item_id]['measurement_data']);
-            $total_amount = new Measurement($measurement_data['_measurement_needed_unit'], $measurement_data['_measurement_needed']);
+            $total_amount = MeasurementMeta::get_total_measurement($measurement_data, $settings->get_pricing_unit());
             // this is a pricing calculator product so we want to return the
             // quantity in terms of units, ie 2 pieces of cloth at 3 ft each = 6
-            $quantity *= $total_amount->get_value($settings->get_pricing_unit());
+            $quantity *= $total_amount->get_value();
         }
         return $quantity;
     }

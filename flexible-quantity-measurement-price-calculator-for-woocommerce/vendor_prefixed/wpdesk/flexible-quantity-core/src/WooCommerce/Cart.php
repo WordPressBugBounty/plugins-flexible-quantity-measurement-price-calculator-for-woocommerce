@@ -129,7 +129,7 @@ class Cart implements Hookable
             $cart_item_data = $this->get_cart_item_data($cart_item_data, $product_id, $variation_id);
             if (isset($cart_item_data['pricing_item_meta_data']) && isset($cart_item_data['pricing_item_meta_data']['_measurement_needed'])) {
                 $measurements_needed_main = abs($cart_item_data['pricing_item_meta_data']['_measurement_needed']);
-                $measurements_needed_unit_str = $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit'];
+                $measurements_needed_unit_str = $settings->get_pricing_unit();
                 if (trim($product_settings['fq']['min_range']) !== '') {
                     if ((int) $product_settings['fq']['min_range'] > $measurements_needed_main) {
                         $message .= sprintf(__('Product mesurment value (%1$s) must be greater than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str, $product_settings['fq']['min_range'] . ' ' . $measurements_needed_unit_str);
@@ -178,25 +178,27 @@ class Cart implements Hookable
             // get the measurement needed, from the $_POST object for a normal add to cart action, or from the $cart_item_data for a programmatic add-to-cart
             $measurement_needed_value = $measurement_needed_value_unit = null;
             // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
-            if (isset($_POST['_measurement_needed'], $_POST['_measurement_needed_unit']) && !empty($this->measurements_needed)) {
+            if (isset($_POST['_measurement_needed']) && !empty($this->measurements_needed)) {
                 // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                // TODO: Rename $_product to $variation, to make it easier to understand what is what.
                 $measurement_needed_value = $this->calculate_measurement_needed($product, $variation_id ? $_product : null);
-                $measurement_needed_value_unit = wc_clean(wp_unslash($_POST['_measurement_needed_unit']));
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                $measurement_needed_value_unit = $settings->get_pricing_unit();
             } elseif (isset($cart_item_data['pricing_item_meta_data']['_measurement_needed_internal'])) {
+                // the internal measurement data is trusted (server-side generated), so is the unit supplied alongside it
                 $measurement_needed_value = $cart_item_data['pricing_item_meta_data']['_measurement_needed_internal'];
-                $measurement_needed_value_unit = $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit_internal'];
+                $measurement_needed_value_unit = $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit_internal'] ?? $settings->get_pricing_unit();
             }
             if ($measurement_needed_value !== null) {
-                $measurement_needed = new Measurement($measurement_needed_value_unit, (float) $measurement_needed_value);
+                // normalize the measurement to the pricing unit so pricing, inventory and cart meta are always consistent
+                $measurement_needed_value_normalized = (float) Measurement::convert($measurement_needed_value, $measurement_needed_value_unit, $settings->get_pricing_unit());
+                $measurement_needed = new Measurement($settings->get_pricing_unit(), $measurement_needed_value_normalized);
                 // get the product price
-                $price = Product::calculate_price($_product, $measurement_needed_value, $measurement_needed_value_unit, \false, $settings);
+                $price = Product::calculate_price($_product, $measurement_needed_value_normalized, $settings->get_pricing_unit(), \false, $settings);
                 // save the product total price
                 $cart_item_data['pricing_item_meta_data']['_price'] = $price;
                 // save the total measurement (length, area, volume, etc)
                 $cart_item_data['pricing_item_meta_data']['_measurement_needed'] = $measurement_needed->get_value();
-                $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit'] = $measurement_needed->get_unit();
+                $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit'] = $settings->get_pricing_unit();
+                $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit_normalized'] = \true;
             }
             // record the item quantity
             // NOTE: although it may be more ideal to record item quantity from the 'woocommerce_add_to_cart'
@@ -333,6 +335,30 @@ class Cart implements Hookable
     {
         if (isset($values['pricing_item_meta_data'])) {
             $cart_item['pricing_item_meta_data'] = $values['pricing_item_meta_data'];
+            // the cart item may have been persisted in the pricing unit which is no longer current: normalize it before any other consumer reads the data
+            $settings = $this->settings_container->get($cart_item['data']);
+            $pricing_unit = $settings->get_pricing_unit();
+            if (isset($cart_item['pricing_item_meta_data']['_measurement_needed'])) {
+                $is_normalized = !empty($cart_item['pricing_item_meta_data']['_measurement_needed_unit_normalized']);
+                $recorded_unit = MeasurementMeta::get_recorded_unit($cart_item['pricing_item_meta_data'], $pricing_unit);
+                if (!$is_normalized || $recorded_unit !== $pricing_unit) {
+                    $measurement = MeasurementMeta::get_total_measurement($cart_item['pricing_item_meta_data'], $pricing_unit);
+                    $cart_item['pricing_item_meta_data']['_measurement_needed'] = $measurement->get_value();
+                    $cart_item['pricing_item_meta_data']['_measurement_needed_unit'] = $pricing_unit;
+                    $cart_item['pricing_item_meta_data']['_measurement_needed_unit_normalized'] = \true;
+                    $cart_item['pricing_item_meta_data']['_price'] = Product::calculate_price($cart_item['data'], $measurement->get_value(), $pricing_unit, \false, $settings);
+                    // keep the overage data (recorded in the old unit) consistent with the normalized measure
+                    if (isset($cart_item['pricing_item_meta_data']['_measurement_needed_overage'])) {
+                        $cart_item['pricing_item_meta_data']['_measurement_needed_overage'] = Measurement::convert($cart_item['pricing_item_meta_data']['_measurement_needed_overage'], $recorded_unit, $pricing_unit);
+                    }
+                    if (isset($cart_item['pricing_item_meta_data']['_measurement_needed_original'])) {
+                        $cart_item['pricing_item_meta_data']['_measurement_needed_original'] = Measurement::convert($cart_item['pricing_item_meta_data']['_measurement_needed_original'], $recorded_unit, $pricing_unit);
+                    }
+                    if (isset($cart_item['pricing_item_meta_data']['_price_overage'])) {
+                        $cart_item['pricing_item_meta_data']['_price_overage'] = Product::calculate_price($cart_item['data'], $cart_item['pricing_item_meta_data']['_measurement_needed_overage'], $pricing_unit, \false, $settings);
+                    }
+                }
+            }
             $cart_item = $this->set_product_shipping_methods($cart_item);
         }
         return $cart_item;
@@ -355,8 +381,7 @@ class Cart implements Hookable
             /** @type WC_Product $product */
             $product = $cart_item_data['data'];
             $product->set_price($adjusted_price);
-            // FIXME: we should pass $settings here
-            $adjusted_price = Product::calculate_price($product, $cart_item_data['pricing_item_meta_data']['_measurement_needed'], $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit']);
+            $adjusted_price = Product::calculate_price($product, $cart_item_data['pricing_item_meta_data']['_measurement_needed'], $this->settings_container->get($product)->get_pricing_unit());
         }
         return $adjusted_price;
     }
@@ -458,7 +483,8 @@ class Cart implements Hookable
         if ($settings->is_pricing_inventory_enabled() && $measurement_data = $item->get_meta('_fq_measurement_data')) {
             // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
             if (!empty($measurement_data['_measurement_needed']) && !empty($measurement_data['_quantity'])) {
-                $quantity = $measurement_data['_measurement_needed'] * $measurement_data['_quantity'];
+                $measurement_needed = MeasurementMeta::get_total_measurement($measurement_data, $settings->get_pricing_unit());
+                $quantity = $measurement_needed->get_value() * $measurement_data['_quantity'];
             }
         }
         return $quantity;
@@ -468,7 +494,7 @@ class Cart implements Hookable
         $product = $cart_item['data'];
         $settings = $this->settings_container->get($product);
         if ($settings->is_shipping_table_enabled()) {
-            $measurement = new Measurement($cart_item['pricing_item_meta_data']['_measurement_needed_unit'], $cart_item['pricing_item_meta_data']['_measurement_needed']);
+            $measurement = new Measurement($settings->get_pricing_unit(), $cart_item['pricing_item_meta_data']['_measurement_needed']);
             $class_id = $settings->get_shipping_class_id($measurement);
             $class_id = \false === $class_id ? $product->get_shipping_class_id() : $class_id;
             $cart_item['data']->set_shipping_class_id($class_id);
@@ -556,7 +582,7 @@ class Cart implements Hookable
                     // since the customer is actually supplying the weight, but it will
                     // be in pricing units which may not be the same as the globally
                     // configured WooCommerce Weight Unit expected by other plugins and code
-                    $supplied_weight = new Measurement($values['pricing_item_meta_data']['_measurement_needed_unit'], $values['pricing_item_meta_data']['_measurement_needed']);
+                    $supplied_weight = new Measurement($settings->get_pricing_unit(), $values['pricing_item_meta_data']['_measurement_needed']);
                     $weight_value = $supplied_weight->get_value(get_option('woocommerce_weight_unit'));
                     // set the product weight as supplied by the customer, in WC Weight Units
                     $_product->set_weight($weight_value);
@@ -620,9 +646,8 @@ class Cart implements Hookable
                 $cart_item_data['pricing_item_meta_data'][$measurement->get_name()] = $measurement->get_value($current_unit);
             }
         }
-        $cart_item_data = $this->setup_measurement_overage_data($cart_item_data, $measurement_data['_measurement_needed'], $measurement_data['_measurement_needed_unit'], $product, $settings, \true);
-        // the product total measurement
-        $measurement_needed = new Measurement($measurement_data['_measurement_needed_unit'], $measurement_data['_measurement_needed']);
+        $measurement_needed = MeasurementMeta::get_total_measurement($measurement_data, $settings->get_pricing_unit());
+        $cart_item_data = $this->setup_measurement_overage_data($cart_item_data, $measurement_needed->get_value(), $settings->get_pricing_unit(), $product, $settings, \true);
         // if this calculator uses pricing rules, retrieve the price based on the product measurements
         $rule_price = $settings->get_pricing_rules_price($measurement_needed);
         if ($rule_price) {
@@ -639,7 +664,8 @@ class Cart implements Hookable
         $cart_item_data['pricing_item_meta_data']['_price'] = $price;
         // save the total measurement (length, area, volume, etc) in pricing units
         $cart_item_data['pricing_item_meta_data']['_measurement_needed'] = $measurement_needed->get_value();
-        $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit'] = $measurement_needed->get_unit();
+        $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit'] = $settings->get_pricing_unit();
+        $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit_normalized'] = \true;
         // pick up the item quantity which we set in order_again_item_set_quantity()
         if (isset($item['item_meta']['_quantity'][0])) {
             $cart_item_data['pricing_item_meta_data']['_quantity'] = $item['item_meta']['_quantity'][0];
@@ -679,7 +705,7 @@ class Cart implements Hookable
             // update cart item data
             $cart_item_data['pricing_item_meta_data']['_measurement_needed_original'] = $measurement_needed_value_original;
             $cart_item_data['pricing_item_meta_data']['_measurement_needed_overage'] = $measurement_needed_value_overage;
-            $cart_item_data['pricing_item_meta_data']['_price_overage'] = Product::calculate_price($_product, $measurement_needed_value_overage, $measurement_needed_value_unit, $settings);
+            $cart_item_data['pricing_item_meta_data']['_price_overage'] = Product::calculate_price($_product, $measurement_needed_value_overage, $settings->get_pricing_unit(), \false, $settings);
             $cart_item_data['pricing_item_meta_data']['_overage_percentage'] = $pricing_overage_percentage;
         }
         return $cart_item_data;
@@ -742,7 +768,8 @@ class Cart implements Hookable
         }
         // save the total measurement/unit
         $measurement_data['_measurement_needed'] = $cart_item_data['_measurement_needed'];
-        $measurement_data['_measurement_needed_unit'] = $cart_item_data['_measurement_needed_unit'];
+        $measurement_data['_measurement_needed_unit'] = $settings->get_pricing_unit();
+        $measurement_data['_measurement_needed_unit_normalized'] = \true;
         // special case for calculated inventory products: the actual quantity (ie *1* item 10 feet long)
         // is held in _quantity while $item['quantity'] would be '10' in this example
         if (isset($cart_item_data['_quantity']) && $settings->is_pricing_inventory_enabled()) {
@@ -790,7 +817,7 @@ class Cart implements Hookable
         // render the total measurement if this is a derived calculator (ie "Area (sq. ft.): 10" if the calculator is Area (LxW))
         if (isset($cart_item_data['_measurement_needed']) && $settings->is_calculator_type_derived() && $product_measurement = Product::get_product_measurement($product, $settings)) {
             // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
-            $product_measurement->set_unit($cart_item_data['_measurement_needed_unit']);
+            $product_measurement->set_unit($settings->get_pricing_unit());
             $product_measurement->set_value($cart_item_data['_measurement_needed']);
             $total_amount_text = apply_filters('fq_price_calculator_total_amount_text', $product_measurement->get_unit_label() ? sprintf(__('Total %1$s (%2$s)', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $product_measurement->get_label(), __($product_measurement->get_unit_label(), 'flexible-quantity-measurement-price-calculator-for-woocommerce')) : sprintf(__('Total %s', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $product_measurement->get_label()), $item);
             if (isset($cart_item_data['_measurement_needed_overage'])) {

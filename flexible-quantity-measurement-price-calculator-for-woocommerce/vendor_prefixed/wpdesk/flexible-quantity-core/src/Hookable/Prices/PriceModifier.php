@@ -75,13 +75,14 @@ class PriceModifier implements Hookable
             return $session_item_data;
         }
         // this is set when product is added with calculator.
-        if (!isset($values['pricing_item_meta_data']['_price'])) {
+        if (!isset($session_item_data['pricing_item_meta_data']['_price'])) {
             return $session_item_data;
         }
-        $session_item_data['data']->set_price($values['pricing_item_meta_data']['_price']);
+        // read the normalized cart item data (Cart::get_cart_item_from_session runs earlier on this filter and rewrites stale measures/units)
+        $session_item_data['data']->set_price($session_item_data['pricing_item_meta_data']['_price']);
         $session_item_data['data']->update_meta_data('has_price_calculated', \true);
-        $session_item_data['data']->update_meta_data('quantity', $values['quantity']);
-        $session_item_data['data']->update_meta_data('measurement_needed', $values['pricing_item_meta_data']['_measurement_needed']);
+        $session_item_data['data']->update_meta_data('quantity', $session_item_data['quantity']);
+        $session_item_data['data']->update_meta_data('measurement_needed', $session_item_data['pricing_item_meta_data']['_measurement_needed']);
         return $session_item_data;
     }
     /**

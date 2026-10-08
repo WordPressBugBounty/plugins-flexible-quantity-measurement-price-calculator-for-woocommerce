@@ -48,7 +48,7 @@ class OrderQuantityModifier implements Hookable
             return $quantity;
         }
         $measurement_needed = (float) $order_item_product->get_meta('_fq_measurement_data')['_measurement_needed'];
-        $_quantity = (int) $order_item_product->get_meta('_fq_measurement_data')['_quantity'];
+        $_quantity = (float) $order_item_product->get_meta('_fq_measurement_data')['_quantity'];
         return (string) ($_quantity * $measurement_needed);
     }
     /**

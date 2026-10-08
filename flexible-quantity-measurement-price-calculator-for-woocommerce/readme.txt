@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.22
+Stable tag: 2.3.23
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -340,6 +340,10 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.3.23 - 2026-10-08 =
+* Added support for WooCommerce 11.2
+* Fixed a security issue that allowed fractional quantities on products without a Flexible Quantity calculator. Fractional quantities remain supported for calculator products.
 
 = 2.3.22 - 2026-09-07 =
 * Fixed security issue. Add-to-cart now ignores a client-supplied measurement unit and always uses the template pricing unit for price, inventory, and shipping.

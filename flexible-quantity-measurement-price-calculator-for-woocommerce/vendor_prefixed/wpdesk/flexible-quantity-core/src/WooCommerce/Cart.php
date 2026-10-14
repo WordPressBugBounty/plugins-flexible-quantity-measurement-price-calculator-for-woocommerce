@@ -74,18 +74,12 @@ class Cart implements Hookable
         if ($valid && Product::pricing_calculator_enabled($product, $settings)) {
             $measurements = $settings->get_calculator_measurements();
             $product_settings = $settings->get_settings();
+            $cart_item_data = $this->get_cart_item_data($cart_item_data, $product_id, $variation_id);
             // the individual measurements (for simple calculators like the length or weight or area this will be just the length/weight/area/whatever,
             // while for more complicated ones like area-dimension this will be the length and width
             foreach ($measurements as $measurement) {
-                $value = null;
+                $value = $this->measurements_needed[$measurement->get_name()]['value'] ?? 0;
                 $message = '';
-                if (isset($_REQUEST[$measurement->get_name() . '_needed'])) {
-                    $sanitized_value = sanitize_text_field(wp_unslash($_REQUEST[$measurement->get_name() . '_needed']));
-                    $value = str_replace(get_option('woocommerce_price_decimal_sep'), '.', $sanitized_value);
-                } elseif (isset($cart_item_data['pricing_item_meta_data'][$measurement->get_name()])) {
-                    $value = $cart_item_data['pricing_item_meta_data'][$measurement->get_name()];
-                }
-                $value = abs((float) Measurement::convert_to_float($value));
                 // entered measurement value is undefined or invalid
                 if (!is_numeric($value) || $value <= 0) {
                     /* translators: Placeholders: %s - measurement label */
@@ -121,12 +115,7 @@ class Cart implements Hookable
                     $valid = \false;
                     continue;
                 }
-                // we're good so far: save the value of measurement needed
-                if ($value) {
-                    $this->measurements_needed[$measurement->get_name()] = ['value' => $value, 'unit' => $measurement->get_unit(), 'common_unit' => $measurement->get_unit_common()];
-                }
             }
-            $cart_item_data = $this->get_cart_item_data($cart_item_data, $product_id, $variation_id);
             if (isset($cart_item_data['pricing_item_meta_data']) && isset($cart_item_data['pricing_item_meta_data']['_measurement_needed'])) {
                 $measurements_needed_main = abs($cart_item_data['pricing_item_meta_data']['_measurement_needed']);
                 $measurements_needed_unit_str = $settings->get_pricing_unit();
@@ -173,13 +162,15 @@ class Cart implements Hookable
         $settings = $this->settings_container->get($product);
         // is this a product with a pricing calculator?
         if (Product::pricing_calculator_enabled($product, $settings)) {
+            // Store API creates cart item data before validation, so read inputs here.
+            $measurements = $settings->get_calculator_measurements();
+            list($cart_item_data, $has_request_measurements) = $this->get_measurement_inputs($cart_item_data, $measurements);
             // now we want the variation if there is one
             $_product = $variation_id ? wc_get_product($variation_id) : $product;
             // get the measurement needed, from the $_POST object for a normal add to cart action, or from the $cart_item_data for a programmatic add-to-cart
             $measurement_needed_value = $measurement_needed_value_unit = null;
             // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
-            if (isset($_POST['_measurement_needed']) && !empty($this->measurements_needed)) {
-                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            if ($has_request_measurements && count($this->measurements_needed) === count($measurements)) {
                 $measurement_needed_value = $this->calculate_measurement_needed($product, $variation_id ? $_product : null);
                 $measurement_needed_value_unit = $settings->get_pricing_unit();
             } elseif (isset($cart_item_data['pricing_item_meta_data']['_measurement_needed_internal'])) {
@@ -205,23 +196,47 @@ class Cart implements Hookable
             // action in case 3rd party plugins modify it, we need to grab it early so prices can be calculated
             // as needed.  shikata ga nai
             $cart_item_data['pricing_item_meta_data']['_quantity'] = isset($_REQUEST['quantity']) ? (float) wc_clean(wp_unslash($_REQUEST['quantity'])) : 1;
-            // the individual measurements (for simple calculators like the length or weight or area this will be the same as the measurement needed,
-            // while for more complicated ones like area-dimension this will be the length and width, while measurement_needed will be the total area)
-            // These are recorded so they can be displayed within the cart/checkout/admin
-            foreach ($settings->get_calculator_measurements() as $measurement) {
-                if (isset($_POST[$measurement->get_name() . '_needed'])) {
-                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    $measurement_needed = wc_clean(wp_unslash($_POST[$measurement->get_name() . '_needed']));
-                    // phpcs:ignore WordPress.Security.NonceVerification.Missing
-                    // if a user entered a float value without a 0 before the decimal dot, add the zero to ensure consistency
-                    if (Helper::str_starts_with($measurement_needed, '.')) {
-                        $measurement_needed = 0 . $measurement_needed;
-                    }
-                    $cart_item_data['pricing_item_meta_data'][$measurement->get_name()] = $measurement_needed;
-                }
-            }
         }
         return $cart_item_data;
+    }
+    /**
+     * Reads and normalizes raw measurement values for the current cart item.
+     *
+     * @param array<string, mixed> $cart_item_data Cart item data.
+     * @param Measurement[]        $measurements Configured measurements.
+     * @return array{0: array<string, mixed>, 1: bool} Cart item data and whether request measurements were supplied.
+     */
+    private function get_measurement_inputs(array $cart_item_data, array $measurements): array
+    {
+        $this->measurements_needed = [];
+        $has_request_measurements = \false;
+        foreach ($measurements as $measurement) {
+            $value = null;
+            if (isset($_REQUEST[$measurement->get_name() . '_needed'])) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $has_request_measurements = \true;
+                $sanitized_value = sanitize_text_field(wp_unslash($_REQUEST[$measurement->get_name() . '_needed']));
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                $value = str_replace(get_option('woocommerce_price_decimal_sep'), '.', $sanitized_value);
+            } elseif (isset($cart_item_data['pricing_item_meta_data'][$measurement->get_name()])) {
+                $value = $cart_item_data['pricing_item_meta_data'][$measurement->get_name()];
+            }
+            $value = abs((float) Measurement::convert_to_float($value));
+            if ($value > 0) {
+                $this->measurements_needed[$measurement->get_name()] = ['value' => $value, 'unit' => $measurement->get_unit(), 'common_unit' => $measurement->get_unit_common()];
+            }
+            if (isset($_POST[$measurement->get_name() . '_needed'])) {
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                $measurement_needed = wc_clean(wp_unslash($_POST[$measurement->get_name() . '_needed']));
+                // phpcs:ignore WordPress.Security.NonceVerification.Missing
+                // if a user entered a float value without a 0 before the decimal dot, add the zero to ensure consistency
+                if (Helper::str_starts_with($measurement_needed, '.')) {
+                    $measurement_needed = 0 . $measurement_needed;
+                }
+                $cart_item_data['pricing_item_meta_data'][$measurement->get_name()] = $measurement_needed;
+            }
+        }
+        return [$cart_item_data, $has_request_measurements];
     }
     /**
      * Calculates the total measurement needed.

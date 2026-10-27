@@ -101,7 +101,9 @@ class Cart implements Hookable
                         $message = sprintf(__('%1$s value must be less than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurement->get_label(), $input_maximum);
                     }
                     // the value entered is not a multiple of the specified increment
-                    if ($value > 0 && $input_increment > 0 && !(abs($value / $input_increment - round($value / $input_increment)) < 0.0001)) {
+                    $increment_ratio = $input_increment > 0 ? $value / $input_increment : 0;
+                    $rounded_increment_ratio = round($increment_ratio);
+                    if ($value > 0 && $input_increment > 0 && ($rounded_increment_ratio < 1 || abs($increment_ratio - $rounded_increment_ratio) >= 0.0001)) {
                         // maybe append to previous message string
                         if ('' !== $message) {
                             $message .= "\n";
@@ -116,9 +118,15 @@ class Cart implements Hookable
                     continue;
                 }
             }
+            $message = $message ?? '';
             if (isset($cart_item_data['pricing_item_meta_data']) && isset($cart_item_data['pricing_item_meta_data']['_measurement_needed'])) {
                 $measurements_needed_main = abs($cart_item_data['pricing_item_meta_data']['_measurement_needed']);
                 $measurements_needed_unit_str = $settings->get_pricing_unit();
+                if ($measurements_needed_main <= 0) {
+                    /* translators: %1$s - measurement value and unit. */
+                    $message .= sprintf(__('Product measurement value (%1$s) must be greater than 0.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str);
+                    $message .= '<br>';
+                }
                 if (trim($product_settings['fq']['min_range']) !== '') {
                     if ((int) $product_settings['fq']['min_range'] > $measurements_needed_main) {
                         $message .= sprintf(__('Product mesurment value (%1$s) must be greater than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str, $product_settings['fq']['min_range'] . ' ' . $measurements_needed_unit_str);

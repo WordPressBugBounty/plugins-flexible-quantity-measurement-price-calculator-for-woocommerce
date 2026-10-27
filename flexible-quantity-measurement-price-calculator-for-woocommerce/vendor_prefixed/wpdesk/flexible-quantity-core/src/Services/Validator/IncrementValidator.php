@@ -25,7 +25,8 @@ class IncrementValidator implements ValidatorInterface
             return '';
         }
         $increment_ratio = $measurement->get_value() / $input_increment;
-        $is_multiple = abs($increment_ratio - round($increment_ratio)) < 0.0001;
+        $rounded_increment_ratio = round($increment_ratio);
+        $is_multiple = $rounded_increment_ratio >= 1 && abs($increment_ratio - $rounded_increment_ratio) < 0.0001;
         if (!$is_multiple) {
             return sprintf(
                 /* translators: Placeholders: %1$s - measurement label, %2$s - input measure increment value (step amount) */

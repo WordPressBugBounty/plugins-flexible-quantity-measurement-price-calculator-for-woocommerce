@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Flexible Quantity - Measurement Price Calculator for WooCommerce plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.3.25\n"
+"Project-Id-Version: Flexible Quantity - Measurement Price Calculator for WooCommerce 2.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/flexible-quantity-measurement-price-calculator-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T14:33:35+00:00\n"
+"POT-Creation-Date: 2026-10-29T07:55:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: flexible-quantity-measurement-price-calculator-for-woocommerce\n"
@@ -80,6 +80,7 @@ msgid "Template"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/PostType/FQTemplateType.php:18
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:65
 msgid "Flexible Quantity"
 msgstr ""
 
@@ -177,7 +178,7 @@ msgid "Assign to"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplateListingPage.php:53
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:40
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:43
 msgid "Products"
 msgstr ""
 
@@ -186,16 +187,16 @@ msgid "Categories"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplateListingPage.php:61
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:50
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:53
 msgid "Tags"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageScripts.php:50
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageScripts.php:52
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/ProductPage.php:549
 msgid "Only digits allowed."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageScripts.php:53
+#: vendor_prefixed/wpdesk/flexible-quantity-core/src/Hookable/Settings/TemplatePageScripts.php:55
 msgid "Cannot edit price while a pricing table is active"
 msgstr ""
 
@@ -234,7 +235,7 @@ msgstr ""
 
 #. translators: Placeholders: %s - currency symbol
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/Shortcodes/PricingTable.php:76
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:56
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:83
 #, php-format
 msgid "Price (%s)"
 msgstr ""
@@ -253,12 +254,12 @@ msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:132
 #, php-format
-msgid "Product mesurment value (%1$s) must be greater than or equal to %2$s."
+msgid "Product measurement value (%1$s) must be greater than or equal to %2$s."
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:138
 #, php-format
-msgid "Product mesurment value (%1$s) must be less than or equal to %2$s."
+msgid "Product measurement value (%1$s) must be less than or equal to %2$s."
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/src/WooCommerce/Cart.php:143
@@ -583,81 +584,99 @@ msgstr ""
 msgid "Select the products unit whose quantity you are selling."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:58
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:59
+msgid "Price source"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:73
+msgid "Product (PRO version only)"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:73
+msgid "Product"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:85
 msgid "Set product base price."
 msgstr ""
 
 #. translators: %s: current currency symbol.
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:65
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:92
 #, php-format
 msgid "Sale price (%s)"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:67
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:94
 msgid "Set the sale price for the unit of measure."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:72
-msgid "Select to use product prices"
-msgstr ""
-
-#. translators: %1$s and %2$s: anchor opening and closing tags with right arrow
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:79
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/custom-units-page.php:60
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/dimensions/dimensions.php:24
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/pricing-table/pricing-table.php:27
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/shipping-table/shipping-table.php:26
-#, php-format
-msgid "This feature is available in the PRO version. %1$sUpgrade to PRO%2$s"
-msgstr ""
-
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:93
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:103
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/dimensions/dimension-row.php:66
 msgid "Increment"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:93
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:103
 msgid "Set the increment value for the quantity at which the price will increase."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:99
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:109
 msgid "Minimum quantity"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:99
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:109
 msgid "Set the minimum quantity range."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:105
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:115
 msgid "Maximum quantity"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:105
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:115
 msgid "Set the maximum quantity range."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:115
-msgid "Calculate Inventory"
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:122
+msgid "Advanced settings"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:115
-msgid "Check this box to define inventory per unit and calculate inventory based on the product. <br><br> If you select this option, then, e.g., 30 kg will be seen as 30 pcs. of the product. If you don't, then regardless of the purchased amount of the new unit of measurement, the stock will decrease by 1."
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:131
+msgid "Impact on stock management"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:123
-msgid "Sold individually"
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:139
+msgid "Always decrease by 1"
 msgstr ""
 
-#. translators: %1$s is double line break
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:125
-#, php-format
-msgid "Enable this to only allow one of this item to be bought in a single order.%1$s With this option, the buyer will be able to order only 1 item of the product with the new unit of measure (e.g., 5 kg.). If you don’t select that option, it will be possible to buy more pcs. of the product (e.g., 5 kg. each)."
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:143
+msgid "Example: Ordering 10 kg of product will reduce stock by 1."
 msgstr ""
 
-#. translators: %1$s is double line break, %2$s and %3$s is strong tag
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:129
-#, php-format
-msgid "Enable this to only allow one of this item to be bought in a single order.%1$s With this option, the buyer will be able to order only 1 item of the product with the new unit of measure (e.g., 5 kg.). If you don’t select that option, it will be possible to buy more pcs. of the product (e.g., 5 kg. each).%2$s It supports simple products and variable products (parents only).%3$s"
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:151
+msgid "Decrease by an amount equal to the units purchased"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:155
+msgid "Example: Ordering 10 kg of product will reduce stock by 10."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:170
+msgid "Purchasing a specific product configuration"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:178
+msgid "Unlimited"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:182
+msgid "Example: You can add 10 kg of a product to your cart. You can then re-add the same configured product."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:190
+msgid "One-time"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/basic-settings/basic-settings.php:194
+msgid "Example: You can add 10 kg of product to your cart once. You must change the unit value to something other than 10 kg to be able to add the product to your cart again."
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/custom-units-page.php:27
@@ -676,11 +695,20 @@ msgstr ""
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/custom-units-page.php:48
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/dimensions/dimensions.php:48
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/pricing-table/pricing-table.php:54
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:18
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:21
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/shipping-table/shipping-table.php:50
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/template-section.php:29
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/template-section.php:32
 #, php-format
 msgid "Read more in the %1$splugin documentation%2$s"
+msgstr ""
+
+#. translators: %1$s and %2$s: anchor opening and closing tags with right arrow
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/custom-units-page.php:60
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/dimensions/dimensions.php:24
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/pricing-table/pricing-table.php:27
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/shipping-table/shipping-table.php:26
+#, php-format
+msgid "This feature is available in the PRO version. %1$sUpgrade to PRO%2$s"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/custom-units-page.php:82
@@ -855,7 +883,7 @@ msgid "upgrade to PRO →"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/product/price-settings.php:36
-msgid "This product is assigned to the unit calculator template. To use the product prices, enable the \"Select to use product prices\" option in the "
+msgid "This product is assigned to the unit calculator template. To use the product prices, select \"Product\" as the \"Price source\" in the"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/product/price-settings.php:42
@@ -867,19 +895,23 @@ msgctxt "product_menu"
 msgid "Flexible Quantity"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:12
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:11
+msgid "Template assignment"
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:15
 msgid "Select the product(s), product categories or tags for which you are creating a template."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:31
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:34
 msgid "I am creating template for"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:35
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:38
 msgid "Template category"
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:45
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/selection-section.php:48
 msgid "Products categories"
 msgstr ""
 
@@ -911,11 +943,15 @@ msgstr ""
 msgid "New shipping class."
 msgstr ""
 
-#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/template-section.php:20
-msgid "Fill in the increment and the price that will increase by reaching it."
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/template-section.php:19
+msgid "Basic settings"
 msgstr ""
 
 #: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/template-section.php:23
+msgid "Fill in the increment and the price that will increase by reaching it."
+msgstr ""
+
+#: vendor_prefixed/wpdesk/flexible-quantity-core/templates/settings/template-section.php:26
 msgid "For area units, you can use extended options that will allow you to calculate prices based on dimensions on the product page."
 msgstr ""
 

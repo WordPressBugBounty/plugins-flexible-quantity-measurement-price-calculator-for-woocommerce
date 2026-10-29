@@ -129,13 +129,13 @@ class Cart implements Hookable
                 }
                 if (trim($product_settings['fq']['min_range']) !== '') {
                     if ((int) $product_settings['fq']['min_range'] > $measurements_needed_main) {
-                        $message .= sprintf(__('Product mesurment value (%1$s) must be greater than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str, $product_settings['fq']['min_range'] . ' ' . $measurements_needed_unit_str);
+                        $message .= sprintf(__('Product measurement value (%1$s) must be greater than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str, $product_settings['fq']['min_range'] . ' ' . $measurements_needed_unit_str);
                         $message .= '<br>';
                     }
                 }
                 if (trim($product_settings['fq']['max_range']) !== '') {
                     if ($measurements_needed_main > (float) $product_settings['fq']['max_range']) {
-                        $message .= sprintf(__('Product mesurment value (%1$s) must be less than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str, $product_settings['fq']['max_range'] . ' ' . $measurements_needed_unit_str);
+                        $message .= sprintf(__('Product measurement value (%1$s) must be less than or equal to %2$s.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), $measurements_needed_main . ' ' . $measurements_needed_unit_str, $product_settings['fq']['max_range'] . ' ' . $measurements_needed_unit_str);
                         $message .= '<br>';
                     }
                 }

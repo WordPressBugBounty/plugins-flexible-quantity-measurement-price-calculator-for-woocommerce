@@ -15,6 +15,9 @@ namespace WDFQVendorFree;
  */
 ?>
 <section id="measurement_product_data" class="template panel woocommerce_options_panel">
+	<h2><?php 
+\esc_html_e('Basic settings', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></h2>
 	<header class="measurement-header">
 		<?php 
 \esc_html_e('Fill in the increment and the price that will increase by reaching it.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');

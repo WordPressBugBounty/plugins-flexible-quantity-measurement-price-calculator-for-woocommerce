@@ -33,7 +33,7 @@ if ($is_locked) {
 } else {
     ?>
 		<?php 
-    \esc_html_e('This product is assigned to the unit calculator template. To use the product prices, enable the "Select to use product prices" option in the ', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+    \esc_html_e('This product is assigned to the unit calculator template. To use the product prices, select "Product" as the "Price source" in the', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
     ?>
 		<a target="_blank" href="<?php 
     echo \esc_url($template_url);

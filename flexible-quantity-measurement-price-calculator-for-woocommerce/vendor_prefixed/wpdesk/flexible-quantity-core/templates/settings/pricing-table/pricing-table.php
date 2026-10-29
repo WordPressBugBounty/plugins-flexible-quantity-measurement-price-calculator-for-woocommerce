@@ -14,9 +14,9 @@ namespace WDFQVendorFree;
  */
 ?>
 <div class="measurement-header">
-	<h4><?php 
+	<h2><?php 
 \esc_html_e('Pricing table', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-?></h4>
+?></h2>
 	<?php 
 if ($is_locked) {
     ?>
@@ -35,7 +35,7 @@ if ($is_locked) {
 ?>
 
 	<?php 
-\woocommerce_wp_checkbox(['id' => 'fq_pricing_table_enable', 'name' => 'fq[pricing_table][enable]', 'value' => $is_locked ? 'no' : $settings->getString('enable'), 'class' => 'checkbox fq_pricing_table_enable show_table_pricing', 'label' => \false, 'description' => \wp_kses_post(\__('Enable Pricing Table', 'flexible-quantity-measurement-price-calculator-for-woocommerce')), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
+\woocommerce_wp_checkbox(['id' => 'fq_pricing_table_enable', 'name' => 'fq[pricing_table][enable]', 'value' => $is_locked ? 'no' : $settings->getString('enable'), 'class' => 'checkbox fq_pricing_table_enable show_table_pricing', 'wrapper_class' => $is_locked ? 'fq-locked-option' : '', 'label' => \false, 'description' => \wp_kses_post(\__('Enable Pricing Table', 'flexible-quantity-measurement-price-calculator-for-woocommerce')), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
 ?>
 	<p class="form-field-desc js-price-table-info"><?php 
 \esc_html_e('The price table cannot be enabled while the "Select to use product prices" option is enabled.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');

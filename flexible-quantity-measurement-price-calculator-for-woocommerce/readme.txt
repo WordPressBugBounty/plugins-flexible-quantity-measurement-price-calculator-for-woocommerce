@@ -1,4 +1,4 @@
-=== Flexible Quantity - Measurement Price Calculator for WooCommerce ===
+=== Flexible Quantity & Price Calculator for WooCommerce ===
 
 Contributors: wpdesk,piotrpo,marcinkolanko,amisiewicz
 Donate link: https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-donate/
@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.25
+Stable tag: 2.4.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -14,7 +14,7 @@ WooCommerce price calculator. Sell products by unit, dimension or volume. Calcul
 
 == Description ==
 
-Flexible Quantity - Measurement Price Calculator for WooCommerce is a plugin that will let you sell products based on their weight, dimension, area, or volume. Your customers will be able to choose the quantity of a new unit of measure. You will be able to set the price for the unit, set the increment value of the unit, and set the minimum and maximum product quantity.
+Flexible Quantity & Price Calculator for WooCommerce is a plugin that will let you sell products based on their weight, dimension, area, or volume. Your customers will be able to choose the quantity of a new unit of measure. You will be able to set the price for the unit, set the increment value of the unit, and set the minimum and maximum product quantity.
 
 ### Measurement Price Calculator for WooCommerce - Plugin Features ✅
 
@@ -58,7 +58,7 @@ Let's see more examples of how you can use the plugin!
 
 ### Measurement Price Calculator for WooCommerce Docs ⚙️
 
-[**View Flexible Quantity for WooCommerce Documentation**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs)
+[**View Flexible Quantity & Price Calculator for WooCommerce**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs)
 
 **See the ideas and scenarios of using the plugin** 💡:
 
@@ -77,7 +77,7 @@ We provide support for the free version in the [plugin Support Forum](https://wo
 
 ### Measurement Price Calculator for WooCommerce - PRO Features ⭐
 
-Do you need a more complex solution like setting unit dimensions, a pricing table for ranges, and shipping costs based on the product quantity? You may achieve it and better manage the cost based on measurement price calculation with [Flexible Quantity Calculator for WooCommerce PRO](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro).
+Do you need a more complex solution like setting unit dimensions, a pricing table for ranges, and shipping costs based on the product quantity? You may achieve it and better manage the cost based on measurement price calculation with [Flexible Quantity & Price Calculator for WooCommerce PRO](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-go-pro).
 
 ### Measurement Price Calculator for WooCommerce PRO
 
@@ -120,11 +120,11 @@ The PRO version of the plugin lets you offer WooCommerce products with new units
 
 #### Live Demo
 
-Test Flexible Quantity Measurement for WooCommerce (free and PRO) in [**your free demo**](https://wpdesk.link/demo-fq).
+Test Flexible Quantity & Price Calculator for WooCommerce (free and PRO) in [**your free demo**](https://wpdesk.link/demo-fq).
 
-### Flexible Quantity in a nutshell
+### Flexible Quantity & Price Calculator for WooCommerce in a nutshell
 
-Flexible Quantity - Measurement Price Calculator for WooCommerce is a plugin you need when you want to sell products based on unit, size, area, weight, or volume.
+Flexible Quantity & Price Calculator for WooCommerce is a plugin you need when you want to sell products based on unit, size, area, weight, or volume.
 
 The plugin helps you create unit-based pricing in WooCommerce. Define and sell products per unit of measure. The plugin will calculate the product price based on the buyer's choices. You will also be able to choose the increment steps for your customers and set the minimum or maximum quantity of the product.
 
@@ -136,7 +136,7 @@ Also, in the PRO version, you can add **custom units of measure for your WooComm
 
 #### Languages
 
-The Flexible Quantity for WooCommerce plugin is available in:
+The Flexible Quantity & Price Calculator for WooCommerce plugin is available in:
 
 * English
 * Polish
@@ -211,7 +211,7 @@ You may benefit from the plugin if you need quantity and dimension-based prices 
 
 As you can see, there are **multiple ways to use new units of measure for your WooCommerce products** 😊!
 
-= What are the benefits of Flexible Quantity Measurement Calculator for WooCommerce? =
+= What are the benefits of Flexible Quantity & Price Calculator for WooCommerce? =
 
 Flexibility, that's for sure! By default, WooCommerce lets you use simple quantity-based prices. Here are the most important things you get with the plugin:
 
@@ -233,9 +233,9 @@ Flexibility, that's for sure! By default, WooCommerce lets you use simple quanti
 
 Yes. You can show new units of measure like weight, dimension, area, density, and volume on invoices with the [Flexible PDF Invoices for WooCommerce & WordPress plugin](https://wordpress.org/plugins/flexible-invoices/). The Flexible Invoices are compatible with Flexible Quantity, so the new units will appear on your WooCommerce PDF invoices automatically. Read more about [setting and adding new units of measure on such PDF invoices](https://flexibleinvoices.com/sk/ flexible-quantity-measurement-rm-fi/).
 
-= Where to read more about the Flexible Quantity Measurement Calculator for WooCommerce plugin? =
+= Where to read more about the Flexible Quantity & Price Calculator for WooCommerce plugin? =
 
-[**View Flexible Quantity for WooCommerce Documentation**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs)
+[**View Flexible Quantity & Price Calculator for WooCommerce Documentation**](https://www.wpdesk.net/sk/flexible-quantity-measurement-rm-docs)
 
 **See the ideas and scenarios of using the plugin** 💡:
 
@@ -280,7 +280,7 @@ You can also get them from the list below.
 
 = Where do I report security bugs found in this plugin? =
 
-Please report security bugs found in the source code of the Flexible Quantity - Measurement Price Calculator for WooCommerce plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/3c1a216c-2154-4879-b70c-75264335d5fd). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+Please report security bugs found in the source code of the Flexible Quantity & Price Calculator for WooCommerce plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/3c1a216c-2154-4879-b70c-75264335d5fd). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Roadmap ==
 
@@ -340,6 +340,9 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 48. Advanced WooCommerce product quantity options.
 
 == Changelog ==
+
+= 2.4.0 - 2026-10-29 =
+* Added template settings UI changes
 
 = 2.3.25 - 2026-10-27 =
 * Added support for WooCommerce 11.3

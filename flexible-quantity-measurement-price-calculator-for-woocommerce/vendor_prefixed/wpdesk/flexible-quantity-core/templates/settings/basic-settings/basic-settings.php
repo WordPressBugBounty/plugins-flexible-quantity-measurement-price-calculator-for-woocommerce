@@ -50,6 +50,33 @@ echo Units::unit_select(
 	<div class="fq-field-type">
 		<div class="flex-row-container decimals-fields-with-labels">
 			<div class="flex-row-item">
+				<p class="form-field">
+					<?php 
+$price_source_value = $settings->getString('default_price_enabled');
+$price_source_value = $is_locked ? 'no' : $price_source_value;
+?>
+					<label for="fq_price_source"><?php 
+\esc_html_e('Price source', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></label>
+					<select class="fq_price_source select short" name="fq[default_price_enabled]" id="fq_price_source">
+						<option value="no" <?php 
+\selected($price_source_value, 'no');
+?>><?php 
+\esc_html_e('Flexible Quantity', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></option>
+						<option value="yes" <?php 
+\selected($price_source_value, 'yes');
+?> <?php 
+\disabled($is_locked);
+?>>
+							<?php 
+echo $is_locked ? \esc_html__('Product (PRO version only)', 'flexible-quantity-measurement-price-calculator-for-woocommerce') : \esc_html__('Product', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?>
+						</option>
+					</select>
+				</p>
+			</div>
+			<div class="flex-row-item" data-price-dependent>
 				<?php 
 \woocommerce_wp_text_input(['id' => 'fq_price', 'name' => 'fq[price]', 'value' => $settings->getString('price'), 'placeholder' => '', 'class' => 'fq_price', 'label' => \sprintf(
     /* translators: Placeholders: %s - currency symbol */
@@ -58,7 +85,7 @@ echo Units::unit_select(
 ), 'desc_tip' => \true, 'description' => \esc_html__('Set product base price.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => '0.01', 'min' => '0']]);
 ?>
 			</div>
-			<div class="flex-row-item">
+			<div class="flex-row-item" data-price-dependent>
 				<?php 
 \woocommerce_wp_text_input(['id' => 'fq_sale_price', 'name' => 'fq[sale_price]', 'value' => $settings->getString('sale_price'), 'placeholder' => '', 'class' => 'fq_sale_price', 'label' => \sprintf(
     /* translators: %s: current currency symbol. */
@@ -66,23 +93,6 @@ echo Units::unit_select(
     $current_currency
 ), 'desc_tip' => \true, 'description' => \esc_html__('Set the sale price for the unit of measure.', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'type' => 'number', 'custom_attributes' => ['step' => '0.01', 'min' => '0']]);
 ?>
-			</div>
-			<div class="flex-row-item">
-				<?php 
-\woocommerce_wp_checkbox(['id' => 'fq_default_price_enabled', 'name' => 'fq[default_price_enabled]', 'value' => $is_locked ? 'no' : $settings->getString('default_price_enabled'), 'default' => '0', 'label' => '', 'class' => 'fq_default_price_enabled', 'description' => \__('Select to use product prices', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
-?>
-				<p class="bold" style="margin: 0">
-					<?php 
-if ($is_locked) {
-    \printf(
-        /* translators: %1$s and %2$s: anchor opening and closing tags with right arrow */
-        \esc_html__('This feature is available in the PRO version. %1$sUpgrade to PRO%2$s', 'flexible-quantity-measurement-price-calculator-for-woocommerce'),
-        '<a href="' . \esc_url($translate->__('url.pro.template.basic_settings')) . '" target="_blank" class="link-pro">',
-        ' →</a>'
-    );
-}
-?>
-				</p>
 			</div>
 		</div>
 
@@ -108,30 +118,84 @@ if ($is_locked) {
 			<div class="flex-row-item">&nbsp;</div>
 		</div>
 
+		<h2><?php 
+\esc_html_e('Advanced settings', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></h2>
 		<div class="flex-row-container decimals-fields-with-labels">
-
 			<div class="flex-row-item">
 				<?php 
-\woocommerce_wp_checkbox(['id' => 'fq_calculate_inventory', 'name' => 'fq[calculate_inventory]', 'value' => $settings->getString('calculate_inventory'), 'class' => 'fq_calcluate_inventory', 'label' => \esc_html__('Calculate Inventory', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'description' => \__('Check this box to define inventory per unit and calculate inventory based on the product. <br><br> If you select this option, then, e.g., 30 kg will be seen as 30 pcs. of the product. If you don\'t, then regardless of the purchased amount of the new unit of measurement, the stock will decrease by 1.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')]);
+$calculate_inventory_is_yes = $settings->getString('calculate_inventory') === 'yes';
 ?>
+				<fieldset class="form-field fq_calculate_inventory_field">
+					<legend><?php 
+\esc_html_e('Impact on stock management', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></legend>
+					<ul class="wc-radios">
+						<li>
+							<label>
+								<input type="radio" name="fq[calculate_inventory]" value="" <?php 
+\checked(!$calculate_inventory_is_yes);
+?> /><?php 
+\esc_html_e('Always decrease by 1', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?>
+							</label>
+							<span class="description"><?php 
+\esc_html_e('Example: Ordering 10 kg of product will reduce stock by 1.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></span>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="fq[calculate_inventory]" value="yes" <?php 
+\checked($calculate_inventory_is_yes);
+?> /><?php 
+\esc_html_e('Decrease by an amount equal to the units purchased', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?>
+							</label>
+							<span class="description"><?php 
+\esc_html_e('Example: Ordering 10 kg of product will reduce stock by 10.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></span>
+						</li>
+					</ul>
+				</fieldset>
 			</div>
 		</div>
 
 		<div class="flex-row-container decimals-fields-with-labels">
 			<div class="flex-row-item">
 				<?php 
-\woocommerce_wp_checkbox(['id' => 'fq_sold_individually', 'name' => 'fq[sold_individually]', 'value' => $settings->getString('sold_individually'), 'class' => 'fq_sold_individually', 'label' => \esc_html__('Sold individually', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'description' => $is_locked ? \sprintf(
-    /* translators: %1$s is double line break */
-    \__('Enable this to only allow one of this item to be bought in a single order.%1$s With this option, the buyer will be able to order only 1 item of the product with the new unit of measure (e.g., 5 kg.). If you don’t select that option, it will be possible to buy more pcs. of the product (e.g., 5 kg. each).', 'flexible-quantity-measurement-price-calculator-for-woocommerce'),
-    '<br><br>'
-) : \sprintf(
-    /* translators: %1$s is double line break, %2$s and %3$s is strong tag */
-    \__('Enable this to only allow one of this item to be bought in a single order.%1$s With this option, the buyer will be able to order only 1 item of the product with the new unit of measure (e.g., 5 kg.). If you don’t select that option, it will be possible to buy more pcs. of the product (e.g., 5 kg. each).%2$s It supports simple products and variable products (parents only).%3$s', 'flexible-quantity-measurement-price-calculator-for-woocommerce'),
-    '<br><br>',
-    '<strong>',
-    '</strong>'
-)]);
+$sold_individually_is_yes = $settings->getString('sold_individually') === 'yes';
 ?>
+				<fieldset class="form-field fq_sold_individually_field">
+					<legend><?php 
+\esc_html_e('Purchasing a specific product configuration', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></legend>
+					<ul class="wc-radios">
+						<li>
+							<label>
+								<input type="radio" name="fq[sold_individually]" value="" <?php 
+\checked(!$sold_individually_is_yes);
+?> /><?php 
+\esc_html_e('Unlimited', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?>
+							</label>
+							<span class="description"><?php 
+\esc_html_e('Example: You can add 10 kg of a product to your cart. You can then re-add the same configured product.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></span>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="fq[sold_individually]" value="yes" <?php 
+\checked($sold_individually_is_yes);
+?> /><?php 
+\esc_html_e('One-time', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?>
+							</label>
+							<span class="description"><?php 
+\esc_html_e('Example: You can add 10 kg of product to your cart once. You must change the unit value to something other than 10 kg to be able to add the product to your cart again.', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
+?></span>
+						</li>
+					</ul>
+				</fieldset>
 			</div>
 		</div>
 	</div>

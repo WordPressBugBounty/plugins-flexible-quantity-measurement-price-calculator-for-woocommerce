@@ -52,7 +52,7 @@
 		"10up/wp_mock": "*",
 		"monolog/monolog": "*",
 		"phpunit/phpunit": "^9",
-		"wpdesk/flexible-quantity-core": "^2.3.9",
+		"wpdesk/flexible-quantity-core": "2.4.0",
 		"wpdesk/ltv-dashboard-widget": "^1",
 		"wpdesk/wp-codeception": "^3",
 		"wpdesk/wp-logs": "^1",
@@ -85,6 +85,6 @@
 			"url": "https://gitlab.wpdesk.dev/api/v4/group/wpdesk/-/packages/composer/"
 		}
 	},
-	"version": "2.3.25",
+	"version": "2.4.0",
 	"type": "wordpress-plugin"
 }

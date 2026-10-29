@@ -87,7 +87,7 @@ class PluginConfig
             // Backend pages.
             new Hookable\Settings\TemplatePageDisplayer($renderer, $translate, $this->is_locked, $config),
             new Hookable\Settings\TemplatePageSaver(),
-            new Hookable\Settings\TemplatePageScripts($assets_url, $this->script_version),
+            new Hookable\Settings\TemplatePageScripts($assets_url, $this->script_version, $this->is_locked),
             new Hookable\Settings\ProductPageScripts($assets_url, $this->script_version),
             new Hookable\Settings\Ajax\DimensionsAjax($renderer, $config),
             new Hookable\Settings\Ajax\SelectionAjax($this->is_locked),

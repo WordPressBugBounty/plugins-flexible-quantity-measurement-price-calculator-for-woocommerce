@@ -11,9 +11,9 @@ namespace WDFQVendorFree;
  */
 ?>
 <div class="measurement-header">
-	<h4><?php 
+	<h2><?php 
 \esc_html_e('Unit Dimensions', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-?></h4>
+?></h2>
 	<?php 
 if ($is_locked) {
     ?>
@@ -32,7 +32,7 @@ if ($is_locked) {
 ?>
 
 	<?php 
-\woocommerce_wp_checkbox(['id' => 'fq_decimals_enabled', 'name' => 'fq[decimals_enabled]', 'value' => $is_locked ? 'no' : $settings->getString('decimals_enabled'), 'class' => 'fq_decimals_enabled', 'label' => \false, 'description' => \wp_kses_post(\__('Enable Advanced Calculator Settings.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
+\woocommerce_wp_checkbox(['id' => 'fq_decimals_enabled', 'name' => 'fq[decimals_enabled]', 'value' => $is_locked ? 'no' : $settings->getString('decimals_enabled'), 'class' => 'fq_decimals_enabled', 'wrapper_class' => $is_locked ? 'fq-locked-option' : '', 'label' => \false, 'description' => \wp_kses_post(\__('Enable Advanced Calculator Settings.', 'flexible-quantity-measurement-price-calculator-for-woocommerce')), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
 ?>
 	<p class="form-field-desc <?php 
 echo $is_locked ? 'semi-transparent' : '';

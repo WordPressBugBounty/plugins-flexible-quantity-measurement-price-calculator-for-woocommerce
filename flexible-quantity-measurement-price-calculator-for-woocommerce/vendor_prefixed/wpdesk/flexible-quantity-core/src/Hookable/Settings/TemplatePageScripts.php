@@ -17,10 +17,12 @@ class TemplatePageScripts implements Hookable
      * @var string
      */
     private $version;
-    public function __construct(string $assets_url, string $version)
+    private bool $is_locked;
+    public function __construct(string $assets_url, string $version, bool $is_locked)
     {
         $this->assets_url = $assets_url;
         $this->version = $version;
+        $this->is_locked = $is_locked;
     }
     public function hooks()
     {
@@ -52,6 +54,7 @@ class TemplatePageScripts implements Hookable
             'woocommerce_weight_unit' => 'no' !== get_option('woocommerce_enable_weight', \true) ? get_option('woocommerce_weight_unit') : '',
             'pricing_rules_enabled_notice' => __('Cannot edit price while a pricing table is active', 'flexible-quantity-measurement-price-calculator-for-woocommerce'),
             'is_variable_product_with_stock_managed' => Helper::is_variable_product_with_stock_managed(wc_get_product($post)),
+            'is_locked' => $this->is_locked,
         ]);
     }
 }

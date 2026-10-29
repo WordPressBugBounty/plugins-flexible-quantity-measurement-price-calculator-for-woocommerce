@@ -13,9 +13,9 @@ namespace WDFQVendorFree;
  */
 ?>
 <div class="measurement-header">
-	<h4><?php 
+	<h2><?php 
 \esc_html_e('Shipping class table', 'flexible-quantity-measurement-price-calculator-for-woocommerce');
-?></h4>
+?></h2>
 	<?php 
 if ($is_locked) {
     ?>
@@ -34,7 +34,7 @@ if ($is_locked) {
 ?>
 
 	<?php 
-\woocommerce_wp_checkbox(['id' => 'fq_shipping_table_enable', 'name' => 'fq[shipping_table][enable]', 'value' => $is_locked ? 'no' : $settings->getString('enable'), 'class' => 'checkbox show_table_shipping', 'label' => \false, 'description' => \__('Enable Shipping Class Table', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
+\woocommerce_wp_checkbox(['id' => 'fq_shipping_table_enable', 'name' => 'fq[shipping_table][enable]', 'value' => $is_locked ? 'no' : $settings->getString('enable'), 'class' => 'checkbox show_table_shipping', 'wrapper_class' => $is_locked ? 'fq-locked-option' : '', 'label' => \false, 'description' => \__('Enable Shipping Class Table', 'flexible-quantity-measurement-price-calculator-for-woocommerce'), 'custom_attributes' => $is_locked ? ['disabled' => 'disabled'] : []]);
 ?>
 	<p class="form-field-desc <?php 
 echo $is_locked ? 'semi-transparent' : '';

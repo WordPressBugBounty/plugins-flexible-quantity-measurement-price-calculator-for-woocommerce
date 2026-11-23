@@ -16,6 +16,10 @@ use WC_Cart;
 class PriceModifier implements Hookable
 {
     /**
+     * Price set before other plugins (e.g. product option fields) added their own.
+     */
+    private const BASE_PRICE_META = '_fq_price_modifier_base_price';
+    /**
      * @var SettingsContainer
      */
     private SettingsContainer $settings_container;
@@ -80,6 +84,7 @@ class PriceModifier implements Hookable
         }
         // read the normalized cart item data (Cart::get_cart_item_from_session runs earlier on this filter and rewrites stale measures/units)
         $session_item_data['data']->set_price($session_item_data['pricing_item_meta_data']['_price']);
+        $session_item_data['data']->update_meta_data(self::BASE_PRICE_META, $session_item_data['pricing_item_meta_data']['_price']);
         $session_item_data['data']->update_meta_data('has_price_calculated', \true);
         $session_item_data['data']->update_meta_data('quantity', $session_item_data['quantity']);
         $session_item_data['data']->update_meta_data('measurement_needed', $session_item_data['pricing_item_meta_data']['_measurement_needed']);
@@ -115,6 +120,7 @@ class PriceModifier implements Hookable
             return $cart_item;
         }
         $cart_item['data']->set_price($cart_item['pricing_item_meta_data']['_price']);
+        $cart_item['data']->update_meta_data(self::BASE_PRICE_META, $cart_item['pricing_item_meta_data']['_price']);
         $cart_item['data']->update_meta_data('has_price_calculated', \true);
         $cart_item['data']->update_meta_data('quantity', $cart_item['quantity']);
         $cart_item['data']->update_meta_data('measurement_needed', $cart_item['pricing_item_meta_data']['_measurement_needed']);
@@ -144,7 +150,13 @@ class PriceModifier implements Hookable
         $total_quantity = $quantity * $measurement_needed;
         $measurement = new Measurement($settings->get_pricing_unit(), $total_quantity);
         $rule_price = $settings->get_pricing_rules_price($measurement);
-        return $rule_price > 0 ? (float) $rule_price * $measurement_needed : $price;
+        if ($rule_price <= 0) {
+            return $price;
+        }
+        // keep the price added by other plugins on top of the pricing table price.
+        $base_price = $product->get_meta(self::BASE_PRICE_META, \true);
+        $other_plugin_fee = is_numeric($base_price) ? (float) $price - (float) $base_price : 0.0;
+        return (float) $rule_price * $measurement_needed + $other_plugin_fee;
     }
     public function woocommerce_before_calculate_totals($cart)
     {

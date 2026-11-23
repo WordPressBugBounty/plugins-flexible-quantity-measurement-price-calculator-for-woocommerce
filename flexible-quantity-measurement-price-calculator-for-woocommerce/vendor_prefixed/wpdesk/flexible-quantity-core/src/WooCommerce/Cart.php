@@ -41,6 +41,8 @@ class Cart implements Hookable
         // set the actual unit quantity (ie *2* fabrics at 3 ft each, rather than '6')
         add_filter('woocommerce_order_item_quantity', [$this, 'use_calculated_inventory_quantity'], 10, 3);
         add_filter('woocommerce_add_cart_item', [$this, 'set_product_shipping_methods'], 1, 1);
+        // record the unit quantity from the cart after WooCommerce has added it
+        add_action('woocommerce_add_to_cart', [$this, 'sync_unit_quantity'], 999, 1);
         // set the correct cart contents count
         add_filter('woocommerce_cart_contents_count', [$this, 'set_cart_contents_count']);
         // "order again" handling
@@ -199,13 +201,23 @@ class Cart implements Hookable
                 $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit'] = $settings->get_pricing_unit();
                 $cart_item_data['pricing_item_meta_data']['_measurement_needed_unit_normalized'] = \true;
             }
-            // record the item quantity
-            // NOTE: although it may be more ideal to record item quantity from the 'woocommerce_add_to_cart'
-            // action in case 3rd party plugins modify it, we need to grab it early so prices can be calculated
-            // as needed.  shikata ga nai
-            $cart_item_data['pricing_item_meta_data']['_quantity'] = isset($_REQUEST['quantity']) ? (float) wc_clean(wp_unslash($_REQUEST['quantity'])) : 1;
         }
         return $cart_item_data;
+    }
+    /**
+     * Keeps the recorded unit quantity identical to the quantity WooCommerce actually put in the cart.
+     *
+     * Store API requests send the charged quantity in the JSON body while $_REQUEST only holds the query string.
+     *
+     * @internal
+     * @param string $cart_item_key Cart item key.
+     */
+    public function sync_unit_quantity($cart_item_key): void
+    {
+        $cart = WC()->cart;
+        if (isset($cart->cart_contents[$cart_item_key]['pricing_item_meta_data'])) {
+            $cart->cart_contents[$cart_item_key]['pricing_item_meta_data']['_quantity'] = (float) $cart->cart_contents[$cart_item_key]['quantity'];
+        }
     }
     /**
      * Reads and normalizes raw measurement values for the current cart item.
@@ -358,6 +370,10 @@ class Cart implements Hookable
     {
         if (isset($values['pricing_item_meta_data'])) {
             $cart_item['pricing_item_meta_data'] = $values['pricing_item_meta_data'];
+            // a session persisted before the unit quantity was derived from the cart quantity may hold a stale value
+            if (isset($cart_item['quantity'])) {
+                $cart_item['pricing_item_meta_data']['_quantity'] = (float) $cart_item['quantity'];
+            }
             // the cart item may have been persisted in the pricing unit which is no longer current: normalize it before any other consumer reads the data
             $settings = $this->settings_container->get($cart_item['data']);
             $pricing_unit = $settings->get_pricing_unit();
@@ -476,7 +492,7 @@ class Cart implements Hookable
             return;
         }
         $measurement_data = $item->get_meta('_fq_measurement_data');
-        if (!empty($measurement_data['_quantity'])) {
+        if (isset($measurement_data['_quantity']) && (float) $measurement_data['_quantity'] > 0) {
             $item->set_quantity($measurement_data['_quantity']);
             $item->save();
         }
@@ -505,7 +521,10 @@ class Cart implements Hookable
         $settings = $this->settings_container->get($item->get_product());
         if ($settings->is_pricing_inventory_enabled() && $measurement_data = $item->get_meta('_fq_measurement_data')) {
             // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
-            if (!empty($measurement_data['_measurement_needed']) && !empty($measurement_data['_quantity'])) {
+            if (isset($measurement_data['_quantity']) && (float) $measurement_data['_quantity'] <= 0) {
+                return 0;
+            }
+            if (!empty($measurement_data['_measurement_needed']) && isset($measurement_data['_quantity'])) {
                 $measurement_needed = MeasurementMeta::get_total_measurement($measurement_data, $settings->get_pricing_unit());
                 $quantity = $measurement_needed->get_value() * $measurement_data['_quantity'];
             }
@@ -793,10 +812,10 @@ class Cart implements Hookable
         $measurement_data['_measurement_needed'] = $cart_item_data['_measurement_needed'];
         $measurement_data['_measurement_needed_unit'] = $settings->get_pricing_unit();
         $measurement_data['_measurement_needed_unit_normalized'] = \true;
-        // special case for calculated inventory products: the actual quantity (ie *1* item 10 feet long)
-        // is held in _quantity while $item['quantity'] would be '10' in this example
-        if (isset($cart_item_data['_quantity']) && $settings->is_pricing_inventory_enabled()) {
-            $measurement_data['_quantity'] = $cart_item_data['_quantity'];
+        // _quantity must match WooCommerce's charged cart line quantity. Derive it from the cart line,
+        // not persisted metadata; measured stock is calculated separately.
+        if ($settings->is_pricing_inventory_enabled() && isset($item['quantity'])) {
+            $measurement_data['_quantity'] = (float) $item['quantity'];
         }
         return $measurement_data;
     }

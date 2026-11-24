@@ -6,7 +6,7 @@ Tags: unit of measure, quantity increment, measurement price, price calculator, 
 Requires at least: 5.0
 Tested up to: 7.2
 Requires PHP: 7.4
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -290,56 +290,59 @@ Currently, we focus on better compatibility with [Flexible Invoices](https://wor
 
 == Screenshots ==
 
-1. Enable the measurement price calculator for a WooCommerce product.
-2. Set the new unit of measure for a simple product in WooCommerce.
-3. The new unit of measurement on the WooCommerce product page - price calculator based on the quantity of the new unit.
-4. Set the new unit of measure (area) per WooCommerce product.
-5. Choose the new unit of measurement - weight, dimension, area, and volume for your WooCommerce products.
-6. Calculate Inventory and Sold Individually options for better management of the WooCommerce product inventory.
-7. How to use the new unit of measurement and instructions about the plugin settings.
-8. Decimal values for WooCommerce product quantity increment.
-9. Sell WooCommerce products based on weight.
-10. Set the new unit of measure for a WooCommerce product (weight).
-11. New unit of measure - plugin settings.
-12. Sell WooCommerce products in grams.
-13. Sell a WooCommerce product by weight (oz unit).
-14. The default unit options in WooCommerce are limited.
-15. WooCommerce lets you show the unit of measure (weight) in additional information.
-16. The default product options for weight and dimensions.
-17. Boost your WooCommerce products with new units of measure!
-18. Sell WooCommerce products with new units.
-19. Set the increment value for WooCommerce product quantity (item).
-20. Limit the product quantity in WooCommerce (item).
-21. Minimum and maximum quantity of the WooCommerce product (with a new unit of measure).
-22. You may set min/max for WooCommerce products based on new units of measure.
-23. Another example of how the plugin lets you limit the WooCommerce product quantity (item).
-24. Decimal product quantity in WooCommerce.
-25. The inventory management and sold individually options for WooCommerce products with a new unit of measure.
-26. Add a new dimension unit of measure for a WooCommerce product.
-27. Sell products by square meters.
-28. Measurement Price Calculator for WooCommerce - a product page with a new unit of measure (cm).
-29. Offer WooCommerce products by meters.
-30. Sell products by cubic meters.
-31. Invoice with the product's new units of measure in WooCommerce (with a free invoicing plugin).
-32. Sell WooCommerce products by volume.
-33. Sell products based on volume in WooCommerce.
-34. Enable unit dimensions of the Measurement Price Calculator for WooCommerce plugin (PRO).
-35. Sell products in l but let customers choose them in ml (PRO).
-36. Add dimensions for a new unit of measure per WooCommerce product (PRO).
-37. Sell a WooCommerce product with dynamic pricing calculations based on unit dimensions (PRO).
-38. Flexible product quantity and price based on user input in WooCommerce (PRO).
-39. WooCommerce product page with cubic dimensions fields (PRO).
-40. Additional options in the PRO version of the Flexible Quantity plugin (PRO).
-41. Additional plugin settings for dynamic product pricing and shipping cost (PRO).
-42. Dynamic pricing for WooCommerce products based on quantity (PRO).
-43. Dynamic shipping cost based on the WooCommerce product quantity and the shipping class table (PRO).
-44. Dynamic shipping cost based on class (WooCommerce settings for additional shipping fees).
-45. Shipping cost based on the product quantity in WooCommerce - example (PRO).
-46. Add custom units of measure for WooCommerce products (PRO).
-47. Custom units of measure - plugin settings (PRO).
-48. Advanced WooCommerce product quantity options.
+1. Assign a Flexible Quantity template to a WooCommerce product to enable the measurement calculator.
+2. Set the unit, price, increment, and quantity limits in the template for a simple product.
+3. Calculate the price from the area entered on the product page.
+4. Set square meters as the unit of measure for a product template.
+5. View templates for products sold by weight, length, area, or volume.
+6. Choose how purchases affect stock and whether the same configuration can be added to the cart again.
+7. Open Start here for help setting up templates, units of measure, and inventory options.
+8. Set a fractional quantity increment of 0.25 kg in the template.
+9. Sell coffee beans by weight and calculate the price from the quantity entered.
+10. Set grams as the unit of measure in a product template.
+11. Set a weight label, price per ounce, and quantity limits in a template.
+12. Sell loose-leaf tea in grams on the product page.
+13. Sell roasted almonds in ounces on the product page.
+14. Set the default weight and dimension units in WooCommerce.
+15. Show weight and dimensions under Additional information on the product page.
+16. Enter weight and dimensions in the standard WooCommerce product shipping settings.
+17. Set kilometers as the unit of measure and define a distance increment.
+18. Sell cheese in grams and calculate the price for the selected weight.
+19. Set a purchase increment of five items in a template.
+20. Show a validation message when a customer exceeds the maximum of two items.
+21. Set the minimum and maximum item quantities in a template.
+22. Set minimum and maximum purchase quantities in kilograms.
+23. Show a validation message when a customer orders fewer than ten items.
+24. Calculate the price for a fractional quantity of 0.75 kg.
+25. Reduce stock by the purchased weight and allow each product configuration to be added once.
+26. Set meters as the unit of measure for a product sold by length.
+27. Sell artificial turf by the square meter.
+28. Sell ribbon by the centimeter.
+29. Sell sailing rope by the meter.
+30. Sell garden soil by the cubic meter.
+31. Show product units of measure on a WooCommerce PDF invoice with Flexible Invoices.
+32. Set liters as the unit of measure in a template.
+33. Sell lemon cordial by the liter and calculate the price on the product page.
+34. Enable Advanced Calculator Settings and set the input unit, increment, and limits for a dimension (PRO).
+35. Charge per liter and let customers enter the quantity in milliliters (PRO).
+36. Configure a length entered by the customer and a fixed width in the template (PRO).
+37. Calculate the price from the customer’s length and a fixed width on the product page (PRO).
+38. Calculate the price from both length and width entered by the customer (PRO).
+39. Calculate volume and price from length, width, and height (PRO).
+40. Preview Advanced Calculator Settings, Pricing table, and Shipping class table in the free version (PRO features).
+41. Set unit prices and shipping classes for quantity ranges in a template (PRO).
+42. Display a price range per meter and apply the matching price tier to the entered length (PRO).
+43. Assign a WooCommerce shipping class based on the amount added to the cart (PRO).
+44. Set an additional cost for a shipping class in the WooCommerce Flat rate settings.
+45. Show the shipping cost based on the ordered quantity in WooCommerce checkout (PRO).
+46. Add custom units such as Box, Bundle, and Pallet (PRO).
+47. Select a custom unit in the template settings (PRO).
+48. Set the sale price, increment, and quantity limits for a product sold by the item.
 
 == Changelog ==
+
+= 2.4.2 - 2026-11-24 =
+* Updated the WordPress.org screenshot gallery and captions.
 
 = 2.4.1 - 2026-11-23 =
 * Added support for WordPress 7.2
